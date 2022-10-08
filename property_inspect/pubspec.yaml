@@ -42,7 +42,7 @@ dependencies:
   # GetX State management
   
   get:
-  firebase_ui_auth: ^1.0.0-dev.0
+  flutterfire_ui: ^0.4.3+13
 
 dev_dependencies:
   flutter_test:
