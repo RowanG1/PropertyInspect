@@ -54,7 +54,14 @@ class MyApp extends StatelessWidget {
             page: () => const SignInScreen(
                   providerConfigs: [EmailProviderConfiguration()],
                 )),
-        GetPage(name: '/home', page: () => const Text('Our app'))
+        GetPage(
+            name: '/home',
+            page: () => TextButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                  },
+                  child: const Text('Logout'),
+                )),
       ],
     );
   }
