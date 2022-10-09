@@ -3,7 +3,9 @@ import 'package:flutterfire_ui/auth.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:property_inspect/ui/controllers/loginController.dart';
+import 'package:property_inspect/ui/controllers/login_controller.dart';
+import 'package:property_inspect/ui/pages/home_page.dart';
+import 'package:property_inspect/ui/pages/listing_page.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart' // new
     hide
@@ -60,7 +62,15 @@ class MyApp extends StatelessWidget {
                   onPressed: () {
                     FirebaseAuth.instance.signOut();
                   },
-                  child: const Text('Logout'),
+                  child: const HomePage(),
+                )),
+        GetPage(
+            name: '/listing',
+            page: () => TextButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                  },
+                  child: const ListingPage(),
                 )),
       ],
     );
