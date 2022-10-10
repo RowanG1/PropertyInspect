@@ -11,7 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: flutter build web && firebase deploy
+      - uses: subosito/flutter-action@v1
+      - name: 'Get flutter packages'
+        run: flutter pub get
+      - name: 'Build Web App'
+        run: flutter build web
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
