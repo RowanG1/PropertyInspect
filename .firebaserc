@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "propertyinspect-d7b4d"
-  }
+    "default": "propertyinspect-d7b4d",
+    "staging": "propertyinspect-d7b4d"
+  },
+  "targets": {},
+  "etags": {}
 }
