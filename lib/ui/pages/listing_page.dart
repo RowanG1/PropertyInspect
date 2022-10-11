@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:property_inspect/ui/pages/authenticated_page.dart';
 
 class ListingPage extends StatelessWidget {
-  const ListingPage({super.key});
+  const ListingPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

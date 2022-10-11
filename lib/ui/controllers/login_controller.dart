@@ -20,7 +20,7 @@ class LoginController extends GetxController {
     return _logoutUseCase.execute();
   }
 
-  logEventLoggedIn() {
+  logAnalyticsLoggedIn() {
     _analyticsUseCase.execute(Constants.loggedInAnalytics, {});
   }
 }

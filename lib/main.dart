@@ -39,7 +39,7 @@ initLoginController() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +47,11 @@ class MyApp extends StatelessWidget {
 
     loginController.getLoginState().listen((val) {
       if (val) {
-        loginController.logEventLoggedIn();
+        loginController.logAnalyticsLoggedIn();
       }
-      val ? Get.toNamed(Constants.homeRoute) : Get.toNamed(Constants.signInRoute);
+      val
+          ? Get.toNamed(Constants.homeRoute)
+          : Get.toNamed(Constants.signInRoute);
     });
 
     return GetMaterialApp(
