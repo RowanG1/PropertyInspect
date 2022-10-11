@@ -43,6 +43,7 @@ dependencies:
   
   get:
   flutterfire_ui: ^0.4.3+13
+  firebase_analytics: ^9.3.8
 
 dev_dependencies:
   flutter_test:

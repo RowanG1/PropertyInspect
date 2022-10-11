@@ -15,7 +15,7 @@ class AuthenticatedPage extends StatelessWidget {
 
     return Scaffold(
       body: Obx(() =>
-          loginController.isLoggedIn.value ? body : const ForbiddenPage()),
+          loginController.getLoginState().value ? body : const ForbiddenPage()),
     );
   }
 }

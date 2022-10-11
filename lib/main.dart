@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:get/get.dart';
+import 'package:property_inspect/data/repository/login_firebase.dart';
+import 'package:property_inspect/data/usecase/login_use_case.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/pages/home_page.dart';
 import 'package:property_inspect/ui/pages/listing_page.dart';
@@ -10,25 +12,17 @@ import 'package:firebase_auth/firebase_auth.dart' // new
         PhoneAuthProvider; // new
 import 'package:firebase_core/firebase_core.dart'; // new
 import 'package:cloud_firestore/cloud_firestore.dart'; // new
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'dart:async'; // new
 
 Future<void> main() async {
-  final LoginController loginController = Get.put(LoginController());
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  FirebaseAuth.instance.userChanges().listen((User? user) {
-    if (user == null) {
-      print('User is currently signed out!');
-      loginController.setLoginState(false);
-    } else {
-      print('User is signed in!');
-      loginController.setLoginState(true);
-    }
-  });
+  final LoginUseCase loginUseCase = LoginUseCase(LoginFirebase());
+  Get.put(LoginController(loginUseCase));
 
   runApp(const MyApp());
 }
@@ -41,7 +35,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final loginController = Get.find<LoginController>();
 
-    loginController.isLoggedIn.listen((val) {
+    loginController.getLoginState().listen((val) {
       // Navigate now
       val ? Get.toNamed("/home") : Get.toNamed("/signin");
     });
