@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-abstract class Login {
+abstract class LoginState {
   setLoginState(bool value);
   RxBool getLoginState();
 }

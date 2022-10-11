@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/domain/repository/login.dart';
+import 'package:property_inspect/domain/repository/login_state.dart';
 
-class LoginFirebase implements Login {
+class LoginFirebaseRepo implements LoginState {
   RxBool isLoggedIn = false.obs;
 
-  LoginFirebase() {
+  LoginFirebaseRepo() {
     FirebaseAuth.instance.userChanges().listen((User? user) {
       if (user == null) {
         setLoginState(false);

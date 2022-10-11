@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/data/repository/login_firebase.dart';
-import 'package:property_inspect/data/usecase/login_use_case.dart';
+import 'package:property_inspect/data/repository/analytics_firebase.dart';
+import 'package:property_inspect/data/repository/login_state_firebase.dart';
+import 'package:property_inspect/data/usecase/analytics_usecase.dart';
+import 'package:property_inspect/data/usecase/login_state_use_case.dart';
+import 'package:property_inspect/data/usecase/logout_use_case.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/pages/home_page.dart';
 import 'package:property_inspect/ui/pages/listing_page.dart';
+import 'data/repository/logout_firebase.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart' // new
     hide
@@ -21,8 +25,12 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  final LoginUseCase loginUseCase = LoginUseCase(LoginFirebase());
-  Get.put(LoginController(loginUseCase));
+  final LoginStateUseCase loginStateUseCase =
+      LoginStateUseCase(LoginFirebaseRepo());
+  final LogoutUseCase logoutUseCase = LogoutUseCase(LogoutFirebaseRepo());
+  final AnalyticsUseCase analyticsUseCase =
+      AnalyticsUseCase(AnalyticsFirebaseRepo());
+  Get.put(LoginController(loginStateUseCase, logoutUseCase, analyticsUseCase));
 
   runApp(const MyApp());
 }
@@ -36,7 +44,9 @@ class MyApp extends StatelessWidget {
     final loginController = Get.find<LoginController>();
 
     loginController.getLoginState().listen((val) {
-      // Navigate now
+      if (val) {
+        loginController.logEventLoggedIn();
+      }
       val ? Get.toNamed("/home") : Get.toNamed("/signin");
     });
     //  final LoginController loginController = Get.put(LoginController());
@@ -52,7 +62,7 @@ class MyApp extends StatelessWidget {
             name: '/home',
             page: () => TextButton(
                   onPressed: () {
-                    FirebaseAuth.instance.signOut();
+                    loginController.logout();
                   },
                   child: const HomePage(),
                 )),
@@ -60,7 +70,7 @@ class MyApp extends StatelessWidget {
             name: '/listing',
             page: () => TextButton(
                   onPressed: () {
-                    FirebaseAuth.instance.signOut();
+                    loginController.logout();
                   },
                   child: const ListingPage(),
                 )),

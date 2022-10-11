@@ -1,12 +1,26 @@
 import 'package:get/get.dart';
-import 'package:property_inspect/data/usecase/login_use_case.dart';
+import 'package:property_inspect/data/usecase/analytics_usecase.dart';
+import 'package:property_inspect/data/usecase/login_state_use_case.dart';
+import 'package:property_inspect/data/usecase/logout_use_case.dart';
+import 'package:property_inspect/domain/constants.dart';
 
 class LoginController extends GetxController {
-  LoginUseCase useCase;
+  final LoginStateUseCase _loginStateUseCase;
+  final LogoutUseCase _logoutUseCase;
+  final AnalyticsUseCase _analyticsUseCase;
 
-  LoginController(this.useCase);
+  LoginController(
+      this._loginStateUseCase, this._logoutUseCase, this._analyticsUseCase);
 
   RxBool getLoginState() {
-    return useCase.loginState;
+    return _loginStateUseCase.execute();
+  }
+
+  logout() {
+    return _logoutUseCase.execute();
+  }
+
+  logEventLoggedIn() {
+    _analyticsUseCase.execute(Constants.loggedInAnalytics, {});
   }
 }
