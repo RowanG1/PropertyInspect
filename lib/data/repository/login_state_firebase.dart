@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide PhoneAuthProvider;
 import 'package:get/get.dart';
 import 'package:property_inspect/domain/repository/login_state.dart';
 
