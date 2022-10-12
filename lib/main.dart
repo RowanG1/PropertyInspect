@@ -10,6 +10,8 @@ import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/pages/home_page.dart';
 import 'package:property_inspect/ui/pages/listing_page.dart';
+import 'package:property_inspect/ui/pages/registration_form.dart';
+import 'package:property_inspect/ui/pages/registration_page.dart';
 import 'data/repository/logout_firebase.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart'; // new
@@ -63,21 +65,10 @@ class MyApp extends StatelessWidget {
                   providerConfigs: [EmailProviderConfiguration()],
                 )),
         GetPage(
-            name: Constants.homeRoute,
-            page: () => TextButton(
-                  onPressed: () {
-                    loginController.logout();
-                  },
-                  child: const HomePage(),
-                )),
-        GetPage(
-            name: Constants.listingRoute,
-            page: () => TextButton(
-                  onPressed: () {
-                    loginController.logout();
-                  },
-                  child: const ListingPage(),
-                )),
+            name: Constants.userRegistrationRoute,
+            page: () => const RegistrationPage()),
+        GetPage(name: Constants.homeRoute, page: () => const HomePage()),
+        GetPage(name: Constants.listingRoute, page: () => const ListingPage()),
       ],
     );
   }

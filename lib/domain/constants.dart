@@ -5,4 +5,5 @@ class Constants {
   static const signInRoute = '/signin';
   static const homeRoute = '/home';
   static const listingRoute = '/listing';
+  static const userRegistrationRoute = '/userRegistration';
 }
