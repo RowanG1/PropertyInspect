@@ -9,6 +9,8 @@ class LoginController extends GetxController {
   final LogoutUseCase _logoutUseCase;
   final AnalyticsUseCase _analyticsUseCase;
 
+  String loginCompletionGoToRoute = "";
+
   LoginController(
       this._loginStateUseCase, this._logoutUseCase, this._analyticsUseCase);
 

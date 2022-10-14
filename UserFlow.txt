@@ -1,0 +1,63 @@
+Common flow- user has scanned QR code for specific property
+Lands on page, we check for signed in status. If not signed in, store the original page path (only for checkin type), then proceed to login page.
+
+Sign in page
+  OnSuccess-
+    If already have a preference Visitor or Lister
+      Visitor flow
+        if already registered,
+          registeredVisitor: if original path present, then route to original path, else go to home page.
+        else
+          go to registration page, then do registeredVisitor flow above
+
+
+      Lister flow
+        Go to menu for listers (create/edit/delete/view)
+    else
+      Show menu to select visitor or lister
+        if select visitor, do visitor flow above
+        if select lister, do lister flow above
+
+
+
+  Registration page for visitors
+    Name, surname, phone, email, suburb
+    On submit
+
+  Lister menu:
+    Create listing button
+    Table of listings, with edit, delete button, view (for qr code show).
+
+  Listing form:
+    Address
+    Agent Phone
+    Url for listing (like domain)
+
+  Checkin form:
+      Show property address.
+      Has checkin button -> show success tick when successful
+
+
+Path forward for dev
+  Do visitor registration page - 3 hours with firestore
+  Do Select User type menu
+  Do visitor flow
+  Do home page
+
+  Do create Listing page = insert new listing for user id
+  Do listing CRUD page - show listing where user id matches
+  Do listing flow
+
+  Do checkin page, use QR code library
+
+  Urls:
+    checkin/propertyid (authetnicated)
+    listing/create (authenticated)
+    listing/view/id (authenticated)
+    listing/edit/id (authenticated)
+    registerVisitor (authenticated)
+    home (unautheticated, but with auth awareness)
+
+
+
+

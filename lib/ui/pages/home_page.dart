@@ -24,6 +24,12 @@ class HomePage extends StatelessWidget {
           Get.toNamed(Constants.userRegistrationRoute);
         },
         child: const Text("User registration"),
+      ),
+      TextButton(
+        onPressed: () {
+          Get.toNamed(Constants.signInRoute, arguments: {'myPlace': 'good'});
+        },
+        child: const Text("User sign up - continue flow"),
       )
     ]);
   }

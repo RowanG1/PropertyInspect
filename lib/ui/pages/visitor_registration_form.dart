@@ -1,28 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:property_inspect/ui/controllers/user_registration_controller.dart';
 
-class MyCustomForm extends StatefulWidget {
-  const MyCustomForm({super.key});
+class VisitorRegistrationForm extends StatefulWidget {
+  const VisitorRegistrationForm({super.key});
 
   @override
-  MyCustomFormState createState() {
-    return MyCustomFormState();
+  VisitorRegistrationFormState createState() {
+    return VisitorRegistrationFormState();
   }
 }
 
 // Create a corresponding State class.
 // This class holds data related to the form.
-class MyCustomFormState extends State<MyCustomForm> {
+class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
   //
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
+  final VisitorRegistrationController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
+
     return Form(
       key: _formKey,
       child: Column(
@@ -55,6 +59,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             },
           ),
           TextFormField(
+            controller: controller.phoneController,
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),
               labelText: 'Enter your phone',
@@ -68,6 +73,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             },
           ),
           TextFormField(
+            controller: controller.emailController,
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),
               labelText: 'Enter your email',
@@ -101,9 +107,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 if (_formKey.currentState!.validate()) {
                   // If the form is valid, display a snackbar. In the real world,
                   // you'd often call a server or save the information in a database.
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing Data')),
-                  );
+                  controller.createUser();
                 }
               },
               child: const Text('Submit'),
