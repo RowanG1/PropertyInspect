@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/ui/controllers/user_registration_controller.dart';
-import 'package:property_inspect/ui/widgets/center_horizontal.dart';
+
+import '../../domain/constants.dart';
 
 class VisitorRegistrationForm extends StatefulWidget {
   const VisitorRegistrationForm({super.key});
@@ -31,24 +32,25 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: EdgeInsets.all(Constants.largePadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 32.0),
-              child: Text("Please complete your registration.",  style: TextStyle(fontSize: 25)),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
+              child: Text(Constants.visitorRegistrationHeading,
+                  style: TextStyle(fontSize: Constants.headingSize)),
             ),
             TextFormField(
               controller: controller.nameController,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
-                labelText: 'Enter your first name',
+                labelText: Constants.nameLabel,
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
+                  return Constants.defaultPlaceholderLabel;
                 }
                 return null;
               },
@@ -57,12 +59,12 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
               controller: controller.lastNameController,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
-                labelText: 'Enter your family name',
+                labelText: Constants.lastNameLabel,
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
+                  return Constants.defaultPlaceholderLabel;
                 }
                 return null;
               },
@@ -71,12 +73,12 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
               controller: controller.phoneController,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
-                labelText: 'Enter your phone',
+                labelText: Constants.phoneLabel,
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
+                  return Constants.defaultPlaceholderLabel;
                 }
                 return null;
               },
@@ -85,12 +87,12 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
               controller: controller.emailController,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
-                labelText: 'Enter your email',
+                labelText: Constants.emailLabel,
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
+                if (!controller.isEmailValid(value)) {
+                  return Constants.defaultPlaceholderLabel;
                 }
                 return null;
               },
@@ -99,18 +101,18 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
               controller: controller.suburbController,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
-                labelText: 'Enter your home suburb',
+                labelText: Constants.suburbLabel,
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
+                  return Constants.defaultPlaceholderLabel;
                 }
                 return null;
               },
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 32.0),
+              padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
               child: ElevatedButton(
                 onPressed: () {
                   // Validate returns true if the form is valid, or false otherwise.
@@ -120,7 +122,7 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
                     controller.createUser();
                   }
                 },
-                child: const Text('Submit'),
+                child: const Text(Constants.submitLabel),
               ),
             ),
           ],

@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import '../../data/usecase/create_visitor_registration.dart';
+import '../../domain/usecase/create_visitor_registration.dart';
+import '../../domain/utils/field_validation.dart';
 
 class VisitorRegistrationController extends GetxController {
   CreateVisitorRegistrationUseCase visitorRegistration;
+  FieldValidation validation = FieldValidation();
 
   VisitorRegistrationController(this.visitorRegistration);
 
@@ -21,5 +23,9 @@ class VisitorRegistrationController extends GetxController {
     final suburb = suburbController.value.text;
 
     visitorRegistration.execute(name, lastName, email, phone, suburb);
+  }
+
+  bool isEmailValid(String? email) {
+    return validation.isEmailValid(email);
   }
 }

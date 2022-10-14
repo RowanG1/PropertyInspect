@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:property_inspect/data/usecase/analytics_usecase.dart';
-import 'package:property_inspect/data/usecase/login_state_use_case.dart';
-import 'package:property_inspect/data/usecase/logout_use_case.dart';
+import 'package:property_inspect/domain/usecase/analytics_usecase.dart';
+import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
+import 'package:property_inspect/domain/usecase/logout_use_case.dart';
 import 'package:property_inspect/domain/constants.dart';
 
 class LoginController extends GetxController {
