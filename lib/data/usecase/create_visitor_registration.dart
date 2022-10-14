@@ -6,8 +6,9 @@ class CreateVisitorRegistrationUseCase {
 
   CreateVisitorRegistrationUseCase(this.visitorRegistrationRepo);
 
-  execute(String email, String phone) {
-    final visitor = Visitor(email, phone);
+  execute(String name, String lastName, String email, String phone,
+      String suburb) {
+    final visitor = Visitor(name, lastName, email, phone, suburb);
     return visitorRegistrationRepo.createVisitorRegistration(visitor);
   }
 }

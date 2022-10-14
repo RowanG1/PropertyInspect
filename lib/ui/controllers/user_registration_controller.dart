@@ -7,12 +7,19 @@ class VisitorRegistrationController extends GetxController {
 
   VisitorRegistrationController(this.visitorRegistration);
 
+  final nameController = TextEditingController();
+  final lastNameController = TextEditingController();
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
+  final suburbController = TextEditingController();
 
   createUser() {
+    final name = nameController.value.text;
+    final lastName = lastNameController.value.text;
     final email = emailController.value.text;
     final phone = phoneController.value.text;
-    visitorRegistration.execute(email, phone);
+    final suburb = suburbController.value.text;
+
+    visitorRegistration.execute(name, lastName, email, phone, suburb);
   }
 }
