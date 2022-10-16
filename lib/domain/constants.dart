@@ -7,6 +7,7 @@ class Constants {
   static const listingRoute = '/listing';
   static const userRegistrationRoute = '/userRegistration';
   static const createListingRoute = '/createListing';
+  static const checkinRoute = '/checkin';
 
   //Padding
   static final largePadding = 32.toDouble();

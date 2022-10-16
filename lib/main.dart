@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/data/repository/analytics_firebase.dart';
@@ -7,7 +9,8 @@ import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 import 'package:property_inspect/domain/usecase/logout_use_case.dart';
 import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
-import 'package:property_inspect/ui/pages/SignInContainer.dart';
+import 'package:property_inspect/ui/pages/signin_container.dart';
+import 'package:property_inspect/ui/pages/checkin_page.dart';
 import 'package:property_inspect/ui/pages/create_listing_page.dart';
 import 'package:property_inspect/ui/pages/home_page.dart';
 import 'package:property_inspect/ui/pages/listing_page.dart';
@@ -37,7 +40,8 @@ initLoginController() {
   final AnalyticsUseCase analyticsUseCase =
       AnalyticsUseCase(AnalyticsFirebaseRepo());
 
-  Get.put(LoginController(loginStateUseCase, logoutUseCase, analyticsUseCase));
+  final controller = Get.put(LoginController(loginStateUseCase, logoutUseCase,
+      analyticsUseCase));
 }
 
 class MyApp extends StatelessWidget {
@@ -45,30 +49,44 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loginController = Get.find<LoginController>();
-    loginController.getLoginState().listen((val) {
-      if (val) {
-        loginController.logAnalyticsLoggedIn();
-      }
-      val
-          ? Get.toNamed(Constants.homeRoute)
-          : Get.toNamed(Constants.signInRoute);
-    });
+    setupRoutingAfterLogin();
 
     return GetMaterialApp(
       initialRoute: Constants.signInRoute,
       getPages: [
         GetPage(
-            name: Constants.signInRoute, page: () => const SignInContainer()),
+            name: Constants.signInRoute, page: () => SignInContainer()),
         GetPage(
             name: Constants.userRegistrationRoute,
             page: () => VisitorRegistrationPage()),
         GetPage(
             name: Constants.createListingRoute,
             page: () => CreateListingPage()),
+        GetPage(
+            name: Constants.checkinRoute,
+            page: () => const CheckinPage()),
         GetPage(name: Constants.homeRoute, page: () => const HomePage()),
         GetPage(name: Constants.listingRoute, page: () => const ListingPage()),
       ],
     );
+  }
+
+  setupRoutingAfterLogin() {
+    final loginController = Get.find<LoginController>();
+
+    loginController.getLoginState().listen((val) {
+      if (val) {
+        loginController.logAnalyticsLoggedIn();
+
+        final loginCompletionGoToRoute = loginController.loginCompletionGoToRoute;
+        if (loginCompletionGoToRoute != null) {
+          Get.toNamed(loginCompletionGoToRoute);
+        } else {
+          Get.toNamed(Constants.homeRoute);
+        }
+      } else {
+        Get.toNamed(Constants.signInRoute);
+      }
+    });
   }
 }
