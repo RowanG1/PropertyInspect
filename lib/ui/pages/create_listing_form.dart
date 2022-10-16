@@ -1,28 +1,30 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/ui/controllers/user_registration_controller.dart';
-import '../../domain/constants.dart';
-import '../../domain/utils/field_validation.dart';
+import 'package:property_inspect/domain/utils/field_validation.dart';
+import 'package:property_inspect/ui/controllers/create_listing_controller.dart';
 
-class VisitorRegistrationForm extends StatefulWidget {
-  const VisitorRegistrationForm({super.key});
+import '../../domain/constants.dart';
+
+class CreateListingForm extends StatefulWidget {
+  const CreateListingForm({super.key});
 
   @override
-  VisitorRegistrationFormState createState() {
-    return VisitorRegistrationFormState();
+  CreateListingFormState createState() {
+    return CreateListingFormState();
   }
 }
 
 // Create a corresponding State class.
 // This class holds data related to the form.
-class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
+class CreateListingFormState extends State<CreateListingForm> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
   //
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
-  final VisitorRegistrationController controller = Get.find();
+  final CreateListingController controller = Get.find();
   final FieldValidation validation = FieldValidation();
 
   @override
@@ -38,14 +40,14 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
-              child: Text(Constants.visitorRegistrationHeading,
+              child: Text(Constants.createListingHeading,
                   style: TextStyle(fontSize: Constants.headingSize)),
             ),
             TextFormField(
-              controller: controller.nameController,
+              controller: controller.addressController,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
-                labelText: Constants.nameLabel,
+                labelText: Constants.addressLabel,
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
@@ -54,10 +56,22 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
               },
             ),
             TextFormField(
-              controller: controller.lastNameController,
+              controller: controller.suburbController,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
-                labelText: Constants.lastNameLabel,
+                labelText: Constants.suburbListingLabel,
+              ),
+              // The validator receives the text that the user has entered.
+              validator: (value) {
+                return validation.getNonEmptyValidation(
+                    value, Constants.defaultPlaceholderLabel);
+              },
+            ),
+            TextFormField(
+              controller: controller.postCodeController,
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: Constants.postCodeLabel,
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
@@ -77,32 +91,6 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
                     value, Constants.defaultPlaceholderLabel);
               },
             ),
-            TextFormField(
-              controller: controller.emailController,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: Constants.emailLabel,
-              ),
-              // The validator receives the text that the user has entered.
-              validator: (value) {
-                if (!validation.isEmailValid(value)) {
-                  return Constants.defaultPlaceholderLabel;
-                }
-                return null;
-              },
-            ),
-            TextFormField(
-              controller: controller.suburbController,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: Constants.suburbLabel,
-              ),
-              // The validator receives the text that the user has entered.
-              validator: (value) {
-                return validation.getNonEmptyValidation(
-                    value, Constants.defaultPlaceholderLabel);
-              },
-            ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
               child: ElevatedButton(
@@ -111,7 +99,7 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
                   if (_formKey.currentState!.validate()) {
                     // If the form is valid, display a snackbar. In the real world,
                     // you'd often call a server or save the information in a database.
-                    controller.createUser();
+                    controller.createListing();
                   }
                 },
                 child: const Text(Constants.submitLabel),

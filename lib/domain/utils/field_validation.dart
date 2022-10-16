@@ -7,4 +7,11 @@ class FieldValidation {
             r".[a-zA-Z]+")
         .hasMatch(email);
   }
+
+  String? getNonEmptyValidation(String? value, String prompt) {
+    if (value == null || value.isEmpty) {
+      return prompt;
+    }
+    return null;
+  }
 }

@@ -8,6 +8,7 @@ import 'package:property_inspect/domain/usecase/logout_use_case.dart';
 import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/pages/SignInContainer.dart';
+import 'package:property_inspect/ui/pages/create_listing_page.dart';
 import 'package:property_inspect/ui/pages/home_page.dart';
 import 'package:property_inspect/ui/pages/listing_page.dart';
 import 'package:property_inspect/ui/pages/visitor_registration_page.dart';
@@ -62,6 +63,9 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: Constants.userRegistrationRoute,
             page: () => VisitorRegistrationPage()),
+        GetPage(
+            name: Constants.createListingRoute,
+            page: () => CreateListingPage()),
         GetPage(name: Constants.homeRoute, page: () => const HomePage()),
         GetPage(name: Constants.listingRoute, page: () => const ListingPage()),
       ],

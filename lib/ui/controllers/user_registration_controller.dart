@@ -24,8 +24,4 @@ class VisitorRegistrationController extends GetxController {
 
     visitorRegistration.execute(name, lastName, email, phone, suburb);
   }
-
-  bool isEmailValid(String? email) {
-    return validation.isEmailValid(email);
-  }
 }

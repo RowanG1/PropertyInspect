@@ -1,5 +1,5 @@
 import '../entities/visitor.dart';
 
 abstract class VisitorRegistration {
-  void createVisitorRegistration(Visitor pet);
+  void createVisitorRegistration(Visitor visitor);
 }
