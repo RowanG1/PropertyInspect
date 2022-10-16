@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/ui/controllers/user_registration_controller.dart';
+import 'package:property_inspect/ui/controllers/visitor_registration_controller.dart';
 import '../../domain/constants.dart';
 import '../../domain/utils/field_validation.dart';
 
 class VisitorRegistrationForm extends StatefulWidget {
-  const VisitorRegistrationForm({super.key});
+  const VisitorRegistrationForm({Key? key}) : super(key: key);
 
   @override
   VisitorRegistrationFormState createState() {
@@ -23,7 +23,6 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
   final VisitorRegistrationController controller = Get.find();
-  final FieldValidation validation = FieldValidation();
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +48,7 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
-                return validation.getNonEmptyValidation(
-                    value, Constants.defaultPlaceholderLabel);
+                return controller.validate(controller.nameController);
               },
             ),
             TextFormField(
@@ -61,8 +59,7 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
-                return validation.getNonEmptyValidation(
-                    value, Constants.defaultPlaceholderLabel);
+                return controller.validate(controller.lastNameController);
               },
             ),
             TextFormField(
@@ -73,8 +70,7 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
-                return validation.getNonEmptyValidation(
-                    value, Constants.defaultPlaceholderLabel);
+                return controller.validate(controller.phoneController);
               },
             ),
             TextFormField(
@@ -85,10 +81,7 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
-                if (!validation.isEmailValid(value)) {
-                  return Constants.defaultPlaceholderLabel;
-                }
-                return null;
+                controller.validate(controller.emailController);
               },
             ),
             TextFormField(
@@ -99,8 +92,7 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
-                return validation.getNonEmptyValidation(
-                    value, Constants.defaultPlaceholderLabel);
+                return controller.validate(controller.suburbController);
               },
             ),
             Padding(

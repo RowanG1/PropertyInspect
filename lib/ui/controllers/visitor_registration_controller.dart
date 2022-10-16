@@ -24,4 +24,13 @@ class VisitorRegistrationController extends GetxController {
 
     visitorRegistration.execute(name, lastName, email, phone, suburb);
   }
+
+  String? validate(TextEditingController controller) {
+    if (controller == emailController) {
+      return validation.getEmailValidation(controller.text);
+    } else {
+      return validation.getNonEmptyValidation(
+          controller.text);
+    }
+  }
 }

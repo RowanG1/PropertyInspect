@@ -7,7 +7,7 @@ import 'package:property_inspect/ui/controllers/create_listing_controller.dart';
 import '../../domain/constants.dart';
 
 class CreateListingForm extends StatefulWidget {
-  const CreateListingForm({super.key});
+  const CreateListingForm({Key? key}) : super(key: key);
 
   @override
   CreateListingFormState createState() {
@@ -51,8 +51,7 @@ class CreateListingFormState extends State<CreateListingForm> {
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
-                return validation.getNonEmptyValidation(
-                    value, Constants.defaultPlaceholderLabel);
+                return controller.validate(controller.addressController);
               },
             ),
             TextFormField(
@@ -63,8 +62,7 @@ class CreateListingFormState extends State<CreateListingForm> {
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
-                return validation.getNonEmptyValidation(
-                    value, Constants.defaultPlaceholderLabel);
+                return controller.validate(controller.suburbController);
               },
             ),
             TextFormField(
@@ -75,8 +73,7 @@ class CreateListingFormState extends State<CreateListingForm> {
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
-                return validation.getNonEmptyValidation(
-                    value, Constants.defaultPlaceholderLabel);
+                return controller.validate(controller.postCodeController);
               },
             ),
             TextFormField(
@@ -87,8 +84,7 @@ class CreateListingFormState extends State<CreateListingForm> {
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
-                return validation.getNonEmptyValidation(
-                    value, Constants.defaultPlaceholderLabel);
+                return controller.validate(controller.phoneController);
               },
             ),
             Padding(

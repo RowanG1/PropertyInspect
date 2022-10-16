@@ -23,7 +23,8 @@ class Constants {
   static const submitLabel = 'Submit';
   static const addressLabel = 'Enter the address';
   static const postCodeLabel = 'Enter the post code';
-  static const defaultPlaceholderLabel = 'Please enter some text';
+  static const defaultValidationLabel = 'Please enter some text';
+  static const emailValidationLabel = 'Please enter a valid email';
 
   // Text sizes
 static final headingSize = 25.toDouble();

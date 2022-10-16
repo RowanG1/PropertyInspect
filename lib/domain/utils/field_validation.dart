@@ -1,3 +1,5 @@
+import '../constants.dart';
+
 class FieldValidation {
   bool isEmailValid(String? email) {
     if (email == null) {
@@ -8,9 +10,13 @@ class FieldValidation {
         .hasMatch(email);
   }
 
-  String? getNonEmptyValidation(String? value, String prompt) {
+  String? getEmailValidation(String? email) {
+   return  isEmailValid(email) ? null : Constants.emailValidationLabel;
+  }
+
+  String? getNonEmptyValidation(String? value) {
     if (value == null || value.isEmpty) {
-      return prompt;
+      return Constants.defaultValidationLabel;
     }
     return null;
   }
