@@ -81,6 +81,7 @@ class MyApp extends StatelessWidget {
         final loginCompletionGoToRoute = loginController.loginCompletionGoToRoute;
         if (loginCompletionGoToRoute != null) {
           Get.toNamed(loginCompletionGoToRoute);
+          loginController.loginCompletionGoToRoute = null;
         } else {
           Get.toNamed(Constants.homeRoute);
         }
