@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/pages/signin_container.dart';
-import '../../domain/constants.dart';
-import '../controllers/login_controller.dart';
+
+import '../controllers/continue_referrer_controller.dart';
 
 class ResumeAfterAuthenticatedPage extends StatelessWidget {
   final Widget body;
-  final String? continuePage;
+  final LoginController loginController = Get.find();
+  final referrerController = Get.find<ContinueReferrerController>();
 
-  const ResumeAfterAuthenticatedPage({required this.body, this.continuePage,
-    Key? key})
+  ResumeAfterAuthenticatedPage({required this.body, Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final loginController = Get.find<LoginController>();
-    loginController.loginCompletionGoToRoute = continuePage;
-
+    referrerController.setReferrer(Get.currentRoute);
     return Scaffold(
       body: Obx(() =>
-      loginController.getLoginState().value ? body : const SignInContainer
-        ()),
+      loginController.getLoginState().value ? body : SignInContainer()),
     );
   }
 }

@@ -8,6 +8,7 @@ import 'package:property_inspect/domain/usecase/analytics_usecase.dart';
 import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 import 'package:property_inspect/domain/usecase/logout_use_case.dart';
 import 'package:property_inspect/domain/constants.dart';
+import 'package:property_inspect/ui/controllers/continue_referrer_controller.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/pages/signin_container.dart';
 import 'package:property_inspect/ui/pages/checkin_page.dart';
@@ -23,6 +24,8 @@ import 'dart:async'; // new
 Future<void> main() async {
   await initFirebase();
   initLoginController();
+  setupLogout();
+  Get.put(ContinueReferrerController());
   runApp(const MyApp());
 }
 
@@ -31,6 +34,15 @@ initFirebase() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+}
+
+setupLogout() {
+  final loginController = Get.find<LoginController>();
+
+  loginController.getLoginState().listen((val) {
+    if (!val)
+      Get.toNamed(Constants.signInRoute);
+    });
 }
 
 initLoginController() {
@@ -49,8 +61,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    setupRoutingAfterLogin();
-
     return GetMaterialApp(
       initialRoute: Constants.signInRoute,
       getPages: [
@@ -64,30 +74,10 @@ class MyApp extends StatelessWidget {
             page: () => CreateListingPage()),
         GetPage(
             name: Constants.checkinRoute,
-            page: () => const CheckinPage()),
+            page: () =>  CheckinPage()),
         GetPage(name: Constants.homeRoute, page: () => const HomePage()),
         GetPage(name: Constants.listingRoute, page: () => const ListingPage()),
       ],
     );
-  }
-
-  setupRoutingAfterLogin() {
-    final loginController = Get.find<LoginController>();
-
-    loginController.getLoginState().listen((val) {
-      if (val) {
-        loginController.logAnalyticsLoggedIn();
-
-        final loginCompletionGoToRoute = loginController.loginCompletionGoToRoute;
-        if (loginCompletionGoToRoute != null) {
-          Get.toNamed(loginCompletionGoToRoute);
-          loginController.loginCompletionGoToRoute = null;
-        } else {
-          Get.toNamed(Constants.homeRoute);
-        }
-      } else {
-        Get.toNamed(Constants.signInRoute);
-      }
-    });
   }
 }
