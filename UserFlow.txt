@@ -39,16 +39,16 @@ Sign in page
 
 
 Path forward for dev
-  Do visitor registration page - 3 hours with firestore
+  Do visitor registration page - 3 hours with firestore ✅
   Do Select User type menu
+  Do checkin page for visitor
   Do visitor flow
   Do home page
 
-  Do create Listing page = insert new listing for user id
-  Do listing CRUD page - show listing where user id matches
+  Do create Listing page = insert new listing for user id ✅
+  Do listing table page, with options to CRUD
+  Use QR code library for show listing.
   Do listing flow
-
-  Do checkin page, use QR code library
 
   Urls:
     checkin/propertyid (authetnicated)

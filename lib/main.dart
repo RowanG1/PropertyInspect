@@ -8,7 +8,6 @@ import 'package:property_inspect/domain/usecase/analytics_usecase.dart';
 import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 import 'package:property_inspect/domain/usecase/logout_use_case.dart';
 import 'package:property_inspect/domain/constants.dart';
-import 'package:property_inspect/ui/controllers/continue_referrer_controller.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/pages/signin_container.dart';
 import 'package:property_inspect/ui/pages/checkin_page.dart';
