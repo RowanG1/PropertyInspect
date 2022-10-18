@@ -25,7 +25,6 @@ Future<void> main() async {
   await initFirebase();
   initLoginController();
   setupLogout();
-  Get.put(ContinueReferrerController());
   runApp(const MyApp());
 }
 
