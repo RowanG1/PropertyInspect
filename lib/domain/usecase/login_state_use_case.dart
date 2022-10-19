@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:property_inspect/data/repository/login_state_firebase.dart';
 import '../../domain/repository/login_state.dart';
 
 class LoginStateUseCase {

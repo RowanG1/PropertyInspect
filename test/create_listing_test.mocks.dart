@@ -4,7 +4,7 @@
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:property_inspect/domain/entities/listing.dart' as _i3;
-import 'package:property_inspect/domain/repository/create_listing.dart' as _i2;
+import 'package:property_inspect/domain/repository/listing_repo.dart' as _i2;
 
 // ignore_for_file: comment_references
 // ignore_for_file: unnecessary_parenthesis
@@ -16,7 +16,7 @@ import 'package:property_inspect/domain/repository/create_listing.dart' as _i2;
 /// A class which mocks [CreateListing].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockCreateListing extends _i1.Mock implements _i2.CreateListing {
+class MockCreateListing extends _i1.Mock implements _i2.ListingRepo {
   MockCreateListing() {
     _i1.throwOnMissingStub(this);
   }

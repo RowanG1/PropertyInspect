@@ -4,11 +4,13 @@ import 'package:property_inspect/domain/repository/login_state.dart';
 
 class LoginFirebaseRepo implements LoginState {
   RxBool isLoggedIn = false.obs;
+  String? userId;
 
   LoginFirebaseRepo() {
     FirebaseAuth.instance.userChanges().listen((User? user) {
       if (user == null) {
         setLoginState(false);
+        setUserId(user?.uid);
       } else {
         setLoginState(true);
       }
@@ -23,5 +25,15 @@ class LoginFirebaseRepo implements LoginState {
   @override
   RxBool getLoginState() {
     return isLoggedIn;
+  }
+
+  @override
+  setUserId(String? userId) {
+    this.userId = userId;
+  }
+
+  @override
+  String? getUserId() {
+    return userId;
   }
 }

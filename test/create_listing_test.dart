@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/domain/constants.dart';
-import 'package:property_inspect/domain/repository/create_listing.dart';
+import 'package:property_inspect/domain/repository/listing_repo.dart';
 import 'package:property_inspect/domain/repository/visitor_registration.dart';
 import 'package:mockito/annotations.dart';
 import 'package:property_inspect/domain/usecase/create_listing_use_case.dart';
@@ -12,10 +12,10 @@ import 'package:property_inspect/ui/controllers/visitor_registration_controller.
 import 'create_listing_test.mocks.dart';
 import 'visitor_registration_test.mocks.dart';
 
-@GenerateMocks([CreateListing])
+@GenerateMocks([ListingRepo])
 void main() {
   group('Visitor registration controller', () {
-    CreateListing createListingRepo;
+    ListingRepo createListingRepo;
     CreateListingUseCase createListingUseCase;
     late CreateListingController controller;
 

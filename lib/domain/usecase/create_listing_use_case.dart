@@ -1,10 +1,9 @@
-import 'package:property_inspect/domain/entities/visitor.dart';
-import 'package:property_inspect/domain/repository/create_listing.dart';
+import 'package:property_inspect/domain/repository/listing_repo.dart';
 
 import '../entities/listing.dart';
 
 class CreateListingUseCase {
-  CreateListing createListingRepo;
+  ListingRepo createListingRepo;
 
   CreateListingUseCase(this.createListingRepo);
 

@@ -13,4 +13,16 @@ class LoginRepoTest implements LoginState {
   setLoginState(bool value) {
     isLoggedIn.value = value;
   }
+
+  @override
+  String? getUserId() {
+    // TODO: implement getUserId
+    throw UnimplementedError();
+  }
+
+  @override
+  setUserId(String? userId) {
+    // TODO: implement setUserId
+    throw UnimplementedError();
+  }
 }
