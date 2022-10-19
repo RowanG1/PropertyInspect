@@ -58,9 +58,11 @@ class CheckinController extends GetxController {
     try {
       _propertyAvailableState.value = PropertyAvailableState(loading: true);
       final isAvailable = _listingAvailableUseCase.execute(_propertyId!);
-      _propertyAvailableState.bindStream(isAvailable.map((event) =>
-          PropertyAvailableState(content: event)));
+      final mappedPropertyAvailableState = isAvailable.map<PropertyAvailableState>((event) {
+          return PropertyAvailableState(content: event);});
+      _propertyAvailableState.bindStream(mappedPropertyAvailableState);
     } catch(e) {
+      print(e);
       _propertyAvailableState.value = PropertyAvailableState(error: Exception("Could not "
           "get property available state."));
     }

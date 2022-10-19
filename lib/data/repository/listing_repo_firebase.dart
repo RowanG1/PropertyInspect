@@ -13,11 +13,10 @@ class ListingRepoFirebase implements ListingRepo {
   }
 
   @override
-  Future<bool> isListingAvailable(String propertyId) {
+  Stream<bool> isListingAvailable(String propertyId) {
     return collection
         .doc(propertyId)
         .snapshots()
-        .map((value) => value.exists)
-        .first;
+        .map((value) => value.exists);
   }
 }

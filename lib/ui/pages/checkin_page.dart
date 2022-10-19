@@ -17,13 +17,14 @@ class CheckinPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final propertyId = checkinController.getPropertyId();
     return ResumeAfterAuthenticatedPage(
         body: Obx(() => Center(
             child: checkinController.getIsLoading() ? Text('Loading content') :
             checkinController
             .isValidConfig()
                 ? ValidCheckinContent()
-                : Text('Invalid config'))));
+                : Text('Invalid config for id: $propertyId'))));
   }
 }
 
