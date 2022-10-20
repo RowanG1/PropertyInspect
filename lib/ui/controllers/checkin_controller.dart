@@ -58,9 +58,25 @@ class CheckinController extends GetxController {
     try {
       _propertyAvailableState.value = PropertyAvailableState(loading: true);
       final isAvailable = _listingAvailableUseCase.execute(_propertyId!);
-      final mappedPropertyAvailableState = isAvailable.map<PropertyAvailableState>((event) {
+      final Stream<PropertyAvailableState> mappedPropertyAvailableState = isAvailable
+          .map<PropertyAvailableState>((event) {
           return PropertyAvailableState(content: event);});
-      _propertyAvailableState.bindStream(mappedPropertyAvailableState);
+
+      //Play-TODO: revert to above.
+     // var data = [PropertyAvailableState(), null]; // some sample data
+      final Stream<PropertyAvailableState> stream  = Stream.periodic(const
+    Duration(seconds: 1), (int
+    count) {
+        if (count < 2 || count > 6) {
+          return PropertyAvailableState(content:
+        true);
+        }
+        throw Exception('Woops');
+      });
+
+      _propertyAvailableState.bindStream(stream
+          .handleError((onError) => _propertyAvailableState.value =
+          PropertyAvailableState(error: onError)));
     } catch(e) {
       print(e);
       _propertyAvailableState.value = PropertyAvailableState(error: Exception("Could not "
@@ -70,5 +86,9 @@ class CheckinController extends GetxController {
   bool isValidConfig() {
     return _propertyId != null &&
         _propertyAvailableState.value.content == true;
+  }
+
+  Rx<PropertyAvailableState> propertyIsAvailable() {
+    return _propertyAvailableState;
   }
 }
