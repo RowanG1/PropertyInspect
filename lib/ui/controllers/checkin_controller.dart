@@ -62,19 +62,7 @@ class CheckinController extends GetxController {
           .map<PropertyAvailableState>((event) {
           return PropertyAvailableState(content: event);});
 
-      //Play-TODO: revert to above.
-     // var data = [PropertyAvailableState(), null]; // some sample data
-      final Stream<PropertyAvailableState> stream  = Stream.periodic(const
-    Duration(seconds: 1), (int
-    count) {
-        if (count < 2 || count > 6) {
-          return PropertyAvailableState(content:
-        true);
-        }
-        throw Exception('Woops');
-      });
-
-      _propertyAvailableState.bindStream(stream
+      _propertyAvailableState.bindStream(mappedPropertyAvailableState
           .handleError((onError) => _propertyAvailableState.value =
           PropertyAvailableState(error: onError)));
     } catch(e) {
