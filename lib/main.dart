@@ -14,6 +14,7 @@ import 'package:property_inspect/ui/pages/checkin_page.dart';
 import 'package:property_inspect/ui/pages/create_listing_page.dart';
 import 'package:property_inspect/ui/pages/home_page.dart';
 import 'package:property_inspect/ui/pages/listing_page.dart';
+import 'package:property_inspect/ui/pages/signin_route_home.dart';
 import 'package:property_inspect/ui/pages/visitor_registration_page.dart';
 import 'data/repository/logout_firebase_repo.dart';
 import 'firebase_options.dart';
@@ -50,7 +51,7 @@ initLoginController() {
   final AnalyticsUseCase analyticsUseCase =
       AnalyticsUseCase(AnalyticsFirebaseRepo());
 
-  final controller = Get.put(LoginController(loginStateUseCase, logoutUseCase,
+  Get.put(LoginController(loginStateUseCase, logoutUseCase,
       analyticsUseCase));
 }
 
@@ -60,10 +61,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: Constants.signInRoute,
+      initialRoute: Constants.homeRoute,
       getPages: [
         GetPage(
-            name: Constants.signInRoute, page: () => SignInContainer()),
+            name: Constants.signInRoute, page: () => SignInRouteHome()),
         GetPage(
             name: Constants.userRegistrationRoute,
             page: () => VisitorRegistrationPage()),
