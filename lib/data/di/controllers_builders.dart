@@ -4,7 +4,8 @@ import 'package:property_inspect/ui/controllers/checkin_controller.dart';
 class CheckinControllerBuilder {
   CheckinController make() {
     return CheckinController(CheckedInUseCaseBuilder().make(),
-        ListingAvailableUseCaseBuilder().make(), GetLoginIdUseCaseBuilder().make());
+        ListingAvailableUseCaseBuilder().make(), GetLoginIdUseCaseBuilder()
+          .make(), DoCheckInUseCaseBuilder().make());
   }
 }
 

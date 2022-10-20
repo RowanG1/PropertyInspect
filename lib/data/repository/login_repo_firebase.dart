@@ -8,9 +8,9 @@ class LoginFirebaseRepo implements LoginRepo {
 
   LoginFirebaseRepo() {
     FirebaseAuth.instance.userChanges().listen((User? user) {
+      setUserId(user?.uid);
       if (user == null) {
         setLoginState(false);
-        setUserId(user?.uid);
       } else {
         setLoginState(true);
       }
@@ -29,6 +29,7 @@ class LoginFirebaseRepo implements LoginRepo {
 
   @override
   setUserId(String? userId) {
+    print('Setting user id in fire repo $userId');
     this.userId = userId;
   }
 

@@ -43,7 +43,12 @@ class ValidCheckinContent extends StatelessWidget {
         'content') : checkinController
         .getIsCheckedIn()
         ? Text('You have already checked in.')
-        : Text('Please check in to property: $propertyId'
-        '.'));
+        : ElevatedButton(
+      onPressed: () {
+        // Validate returns true if the form is valid, or false otherwise.
+       checkinController.doCheckin();
+      },
+      child: Text('Click to check in to property: $propertyId'),
+    ));
   }
 }

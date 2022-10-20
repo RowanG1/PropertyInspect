@@ -4,29 +4,34 @@ import 'package:property_inspect/domain/entities/checkin_state.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import '../../domain/entities/property_available_state.dart';
 import '../../domain/usecase/checked_in_use_case.dart';
+import '../../domain/usecase/do_checkin_use_case.dart';
 import '../../domain/usecase/get_listing_available_use_case.dart';
 
 class CheckinController extends GetxController {
   final CheckedInUseCase _isCheckedInUseCase;
   final GetListingAvailableUseCase _listingAvailableUseCase;
   final GetLoginIdUseCase _getLoginIdUseCase;
+  final DoCheckinUseCase _doCheckinUseCase;
 
   String? _propertyId;
-  String? _userId;
   final Rx<CheckinState> _checkinState = CheckinState().obs;
   final Rx<PropertyAvailableState> _propertyAvailableState = PropertyAvailableState
     ().obs;
 
   CheckinController(this._isCheckedInUseCase,
-      this._listingAvailableUseCase, this._getLoginIdUseCase) {
-    _userId = _getLoginIdUseCase.execute();
+      this._listingAvailableUseCase, this._getLoginIdUseCase, this._doCheckinUseCase) {
+    print('Setting user id $_getUserId()');
     _getIsCheckedIn();
+  }
+
+  String? _getUserId() {
+    return _getLoginIdUseCase.execute();
   }
 
   _getIsCheckedIn() {
     try {
       _checkinState.value = CheckinState(loading: true);
-      final isCheckedIn = _isCheckedInUseCase.execute(_userId!, _propertyId!);
+      final isCheckedIn = _isCheckedInUseCase.execute(_getUserId()!, _propertyId!);
       final mappedCheckin = isCheckedIn.map((event) =>
           CheckinState(content: event));
 
@@ -81,5 +86,16 @@ class CheckinController extends GetxController {
 
   Rx<PropertyAvailableState> propertyIsAvailable() {
     return _propertyAvailableState;
+  }
+
+  void doCheckin() {
+    print('Doing checkin');
+    _checkinState.value = CheckinState(loading: true);
+    try {
+      _doCheckinUseCase.execute(_getUserId()!, _propertyId!);
+    } catch(e) {
+      print('Woops, error $e');
+      _checkinState.value = CheckinState(error: Exception('$e'));
+    }
   }
 }

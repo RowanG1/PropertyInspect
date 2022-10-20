@@ -5,10 +5,11 @@ import '../dto/checkin_mapper.dart';
 
 class CheckinFirebaseRepo implements CheckinRepo {
   final CollectionReference collection =
-  FirebaseFirestore.instance.collection('checkin');
+  FirebaseFirestore.instance.collection('checkins');
 
   @override
   void createCheckin(String visitorId, String propertyId) {
+    print('Creating checkin');
     collection.add(CheckinMapper().toJson(visitorId, propertyId));
   }
 
