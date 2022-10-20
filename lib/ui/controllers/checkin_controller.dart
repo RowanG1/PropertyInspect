@@ -27,11 +27,14 @@ class CheckinController extends GetxController {
     try {
       _checkinState.value = CheckinState(loading: true);
       final isCheckedIn = _isCheckedInUseCase.execute(_userId!, _propertyId!);
-      _checkinState.bindStream(isCheckedIn.map((event) =>
-          CheckinState(content: event)));
+      final mappedCheckin = isCheckedIn.map((event) =>
+          CheckinState(content: event));
+
+      _checkinState.bindStream(mappedCheckin.handleError((onError) => _checkinState
+          .value =
+          CheckinState(error: onError)));
     } catch(e) {
-      _checkinState.value = CheckinState(error: Exception("Could not "
-          "get checkin state."));
+      _checkinState.value = CheckinState(error: Exception("$e"));
     }
   }
 
@@ -54,7 +57,7 @@ class CheckinController extends GetxController {
     return _propertyId;
   }
 
-  _getPropertyIsAvailable() async {
+  _getPropertyIsAvailable() {
     try {
       _propertyAvailableState.value = PropertyAvailableState(loading: true);
       final isAvailable = _listingAvailableUseCase.execute(_propertyId!);

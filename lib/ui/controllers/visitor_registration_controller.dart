@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import '../../domain/usecase/create_visitor_registration.dart';
+import '../../domain/usecase/create_visitor_registration_use_case.dart';
 import '../../domain/utils/field_validation.dart';
 
 class VisitorRegistrationController extends GetxController {

@@ -2,9 +2,9 @@ import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/data/repository/analytics_firebase.dart';
-import 'package:property_inspect/data/repository/login_state_firebase.dart';
-import 'package:property_inspect/domain/usecase/analytics_usecase.dart';
+import 'package:property_inspect/data/repository/analytics_firebase_repo.dart';
+import 'package:property_inspect/data/repository/login_repo_firebase.dart';
+import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
 import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 import 'package:property_inspect/domain/usecase/logout_use_case.dart';
 import 'package:property_inspect/domain/constants.dart';
@@ -15,7 +15,7 @@ import 'package:property_inspect/ui/pages/create_listing_page.dart';
 import 'package:property_inspect/ui/pages/home_page.dart';
 import 'package:property_inspect/ui/pages/listing_page.dart';
 import 'package:property_inspect/ui/pages/visitor_registration_page.dart';
-import 'data/repository/logout_firebase.dart';
+import 'data/repository/logout_firebase_repo.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart'; // new
 import 'dart:async'; // new

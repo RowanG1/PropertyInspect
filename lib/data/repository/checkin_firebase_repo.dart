@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
-import 'package:property_inspect/domain/entities/visitor.dart';
-import 'package:property_inspect/domain/repository/checkin.dart';
+import 'package:property_inspect/domain/repository/checkin_repo.dart';
 
 import '../dto/checkin_mapper.dart';
 
-class CheckinFirebase implements CheckinRepo {
+class CheckinFirebaseRepo implements CheckinRepo {
   final CollectionReference collection =
   FirebaseFirestore.instance.collection('checkin');
 

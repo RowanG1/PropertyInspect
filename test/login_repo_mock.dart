@@ -1,7 +1,7 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:property_inspect/domain/repository/login_state.dart';
+import 'package:property_inspect/domain/repository/login_repo.dart';
 
-class LoginRepoTest implements LoginState {
+class LoginRepoTest implements LoginRepo {
   RxBool isLoggedIn = false.obs;
 
   @override

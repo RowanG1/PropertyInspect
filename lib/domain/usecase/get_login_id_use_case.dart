@@ -1,7 +1,7 @@
-import '../repository/login_state.dart';
+import '../repository/login_repo.dart';
 
 class GetLoginIdUseCase {
-  LoginState loginRepo;
+  LoginRepo loginRepo;
 
   GetLoginIdUseCase(this.loginRepo);
 

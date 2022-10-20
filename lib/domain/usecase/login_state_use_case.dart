@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import '../../domain/repository/login_state.dart';
+import '../../domain/repository/login_repo.dart';
 
 class LoginStateUseCase {
-  LoginState loginRepo;
+  LoginRepo loginRepo;
   late RxBool _loginState;
 
   LoginStateUseCase(this.loginRepo) {

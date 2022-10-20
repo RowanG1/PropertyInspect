@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart' hide PhoneAuthProvider;
 import 'package:get/get.dart';
-import 'package:property_inspect/domain/repository/login_state.dart';
+import 'package:property_inspect/domain/repository/login_repo.dart';
 
-class LoginFirebaseRepo implements LoginState {
-  RxBool isLoggedIn = false.obs;
+class LoginFirebaseRepo implements LoginRepo {
+  final RxBool _isLoggedIn = false.obs;
   String? userId;
 
   LoginFirebaseRepo() {
@@ -19,12 +19,12 @@ class LoginFirebaseRepo implements LoginState {
 
   @override
   setLoginState(bool value) {
-    isLoggedIn.value = value;
+    _isLoggedIn.value = value;
   }
 
   @override
   RxBool getLoginState() {
-    return isLoggedIn;
+    return _isLoggedIn;
   }
 
   @override

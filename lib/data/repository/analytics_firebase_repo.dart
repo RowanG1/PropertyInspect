@@ -1,7 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:property_inspect/domain/repository/analytics.dart';
+import 'package:property_inspect/domain/repository/analytics_repo.dart';
 
-class AnalyticsFirebaseRepo implements Analytics {
+class AnalyticsFirebaseRepo implements AnalyticsRepo {
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
   @override

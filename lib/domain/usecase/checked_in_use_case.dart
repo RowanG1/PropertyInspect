@@ -1,4 +1,4 @@
-import '../repository/checkin.dart';
+import '../repository/checkin_repo.dart';
 
 class CheckedInUseCase {
 final CheckinRepo checkin;

@@ -1,16 +1,16 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/domain/usecase/analytics_usecase.dart';
+import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
 import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 import 'package:property_inspect/domain/usecase/logout_use_case.dart';
-import 'package:property_inspect/domain/repository/analytics.dart';
+import 'package:property_inspect/domain/repository/analytics_repo.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
-import 'package:property_inspect/domain/repository/logout.dart';
+import 'package:property_inspect/domain/repository/logout_repo.dart';
 import 'login_repo_mock.dart';
 import 'package:mockito/annotations.dart';
 import 'login_controller_test.mocks.dart';
 
-@GenerateMocks([Logout, Analytics])
+@GenerateMocks([LogoutRepo, AnalyticsRepo])
 void main() {
   group('Login controller', () {
     test('set login state', () {

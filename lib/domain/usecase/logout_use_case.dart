@@ -1,7 +1,7 @@
-import '../../domain/repository/logout.dart';
+import '../../domain/repository/logout_repo.dart';
 
 class LogoutUseCase {
-  Logout logoutRepo;
+  LogoutRepo logoutRepo;
 
   LogoutUseCase(this.logoutRepo);
 

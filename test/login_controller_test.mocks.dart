@@ -3,8 +3,8 @@
 // Do not manually edit this file.
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:property_inspect/domain/repository/analytics.dart' as _i3;
-import 'package:property_inspect/domain/repository/logout.dart' as _i2;
+import 'package:property_inspect/domain/repository/analytics_repo.dart' as _i3;
+import 'package:property_inspect/domain/repository/logout_repo.dart' as _i2;
 
 // ignore_for_file: comment_references
 // ignore_for_file: unnecessary_parenthesis
@@ -16,7 +16,7 @@ import 'package:property_inspect/domain/repository/logout.dart' as _i2;
 /// A class which mocks [Logout].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLogout extends _i1.Mock implements _i2.Logout {
+class MockLogout extends _i1.Mock implements _i2.LogoutRepo {
   MockLogout() {
     _i1.throwOnMissingStub(this);
   }
@@ -25,7 +25,7 @@ class MockLogout extends _i1.Mock implements _i2.Logout {
 /// A class which mocks [Analytics].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAnalytics extends _i1.Mock implements _i3.Analytics {
+class MockAnalytics extends _i1.Mock implements _i3.AnalyticsRepo {
   MockAnalytics() {
     _i1.throwOnMissingStub(this);
   }

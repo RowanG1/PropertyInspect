@@ -1,8 +1,8 @@
 import 'package:property_inspect/domain/entities/visitor.dart';
-import 'package:property_inspect/domain/repository/visitor_registration.dart';
+import 'package:property_inspect/domain/repository/visitor_registration_repo.dart';
 
 class CreateVisitorRegistrationUseCase {
-  VisitorRegistration visitorRegistrationRepo;
+  VisitorRegistrationRepo visitorRegistrationRepo;
 
   CreateVisitorRegistrationUseCase(this.visitorRegistrationRepo);
 

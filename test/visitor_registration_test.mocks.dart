@@ -4,7 +4,7 @@
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:property_inspect/domain/entities/visitor.dart' as _i3;
-import 'package:property_inspect/domain/repository/visitor_registration.dart'
+import 'package:property_inspect/domain/repository/visitor_registration_repo.dart'
     as _i2;
 
 // ignore_for_file: comment_references
@@ -18,7 +18,7 @@ import 'package:property_inspect/domain/repository/visitor_registration.dart'
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockVisitorRegistration extends _i1.Mock
-    implements _i2.VisitorRegistration {
+    implements _i2.VisitorRegistrationRepo {
   MockVisitorRegistration() {
     _i1.throwOnMissingStub(this);
   }

@@ -1,7 +1,7 @@
-import 'package:property_inspect/domain/repository/analytics.dart';
+import 'package:property_inspect/domain/repository/analytics_repo.dart';
 
 class AnalyticsUseCase {
-  final Analytics _analytics;
+  final AnalyticsRepo _analytics;
 
   AnalyticsUseCase(this._analytics);
 
