@@ -1,21 +1,22 @@
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:property_inspect/domain/entities/optional.dart';
 import 'package:property_inspect/domain/repository/login_repo.dart';
+import 'package:rxdart/rxdart.dart';
 
 class LoginRepoTest implements LoginRepo {
-  RxBool isLoggedIn = false.obs;
+  BehaviorSubject<bool> _isLoggedIn = BehaviorSubject<bool>.seeded(false);
 
   @override
-  RxBool getLoginState() {
-    return isLoggedIn;
+  Stream<bool> getLoginState() {
+    return _isLoggedIn;
   }
 
   @override
   setLoginState(bool value) {
-    isLoggedIn.value = value;
+    _isLoggedIn.value = value;
   }
 
   @override
-  String? getUserId() {
+  Stream<Optional<String>> getUserId() {
     // TODO: implement getUserId
     throw UnimplementedError();
   }

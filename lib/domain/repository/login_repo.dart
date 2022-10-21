@@ -1,8 +1,8 @@
-import 'package:get/get.dart';
+import 'package:property_inspect/domain/entities/optional.dart';
 
 abstract class LoginRepo {
   setLoginState(bool value);
-  RxBool getLoginState();
+  Stream<bool> getLoginState();
   setUserId(String? userId);
-  String? getUserId();
+  Stream<Optional<String>> getUserId();
 }

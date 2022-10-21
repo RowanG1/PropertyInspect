@@ -1,3 +1,5 @@
+import 'package:property_inspect/domain/entities/optional.dart';
+
 import '../repository/login_repo.dart';
 
 class GetLoginIdUseCase {
@@ -5,7 +7,7 @@ class GetLoginIdUseCase {
 
   GetLoginIdUseCase(this.loginRepo);
 
-  execute() {
+  Stream<Optional<String>> execute() {
     return  loginRepo.getUserId();
   }
 }

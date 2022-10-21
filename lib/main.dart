@@ -24,7 +24,6 @@ import 'dart:async'; // new
 Future<void> main() async {
   await initFirebase();
   initLoginController();
-  setupLogout();
   runApp(const MyApp());
 }
 
@@ -33,15 +32,6 @@ initFirebase() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-}
-
-setupLogout() {
-  final loginController = Get.find<LoginController>();
-
-  loginController.getLoginState().listen((val) {
-    if (!val)
-      Get.toNamed(Constants.signInRoute);
-    });
 }
 
 initLoginController() {

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/data/di/controllers_builders.dart';
-import 'package:property_inspect/ui/controllers/checkin_controller.dart';
+import 'package:property_inspect/ui/controllers/check_in_controller.dart';
 import 'package:property_inspect/ui/pages/resume_after_authenticated_page.dart';
 
 class CheckinPage extends StatelessWidget {
@@ -12,10 +12,6 @@ class CheckinPage extends StatelessWidget {
   CheckinPage({Key? key}) : super(key: key) {
     String? id = Get.parameters['id'];
     checkinController.setPropertyId(id);
-
-    checkinController.propertyIsAvailable().listen((p0) {
-      print('Prop is available state:' + p0.content.toString());
-    });
   }
 
   @override

@@ -10,12 +10,24 @@ class LoginController extends GetxController {
   final AnalyticsUseCase _analyticsUseCase;
 
   String? loginCompletionGoToRoute;
+  final RxBool _loginState = false.obs;
 
   LoginController(
-      this._loginStateUseCase, this._logoutUseCase, this._analyticsUseCase);
+      this._loginStateUseCase, this._logoutUseCase, this._analyticsUseCase) {
+    _loginState.bindStream(_loginStateUseCase.execute().skip(1));
+  }
+
+  @override
+  void onInit() {
+    getLoginState().stream.listen((val) {
+      if (!val) {
+        Get.toNamed(Constants.signInRoute);
+      }
+    });
+  }
 
   RxBool getLoginState() {
-    return _loginStateUseCase.execute();
+    return _loginState;
   }
 
   logout() {

@@ -1,5 +1,6 @@
 import 'package:property_inspect/data/di/use_case_builders.dart';
-import 'package:property_inspect/ui/controllers/checkin_controller.dart';
+import 'package:property_inspect/ui/controllers/check_in_controller.dart';
+import 'package:property_inspect/ui/controllers/sign_in_route_home_controller.dart';
 
 class CheckinControllerBuilder {
   CheckinController make() {
@@ -9,3 +10,8 @@ class CheckinControllerBuilder {
   }
 }
 
+class SigninRouteHomeControllerBuilder {
+  SigninRouteHomeController make() {
+    return SigninRouteHomeController(LoginStateUseCaseBuilder().make());
+  }
+}

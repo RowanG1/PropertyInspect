@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart' hide PhoneAuthProvider;
-import 'package:get/get.dart';
+import 'package:property_inspect/domain/entities/optional.dart';
 import 'package:property_inspect/domain/repository/login_repo.dart';
+import 'package:rxdart/rxdart.dart';
 
 class LoginFirebaseRepo implements LoginRepo {
-  final RxBool _isLoggedIn = false.obs;
-  String? userId;
+  final BehaviorSubject<bool> _isLoggedIn = BehaviorSubject.seeded(false);
+  final BehaviorSubject<Optional<String>> _userId = BehaviorSubject.seeded
+    (Optional<String>(null));
 
   LoginFirebaseRepo() {
     FirebaseAuth.instance.userChanges().listen((User? user) {
@@ -19,22 +21,22 @@ class LoginFirebaseRepo implements LoginRepo {
 
   @override
   setLoginState(bool value) {
-    _isLoggedIn.value = value;
+    _isLoggedIn.add(value);
   }
 
   @override
-  RxBool getLoginState() {
-    return _isLoggedIn;
+  Stream<bool> getLoginState() {
+    return _isLoggedIn.stream;
   }
 
   @override
   setUserId(String? userId) {
     print('Setting user id in fire repo $userId');
-    this.userId = userId;
+    _userId.add(Optional<String>(userId));
   }
 
   @override
-  String? getUserId() {
-    return userId;
+  Stream<Optional<String>> getUserId() {
+    return _userId.stream;
   }
 }
