@@ -22,13 +22,13 @@ void main() {
       final analyticsUseCase = AnalyticsUseCase(analyticsRepo);
 
       var controller =
-          LoginController(loginUseCase, logoutUseCase, analyticsUseCase);
+          LoginController(loginUseCase, logoutUseCase, analyticsUseCase,
+              shouldAutoRoute: false);
 
       Get.put(controller);
       expect(controller.getLoginState().value, false);
-
       loginRepo.setLoginState(true);
-      expect(controller.getLoginState().value, true);
+      expectLater(controller.getLoginState().stream, emitsInOrder([true]));
     });
   });
 }

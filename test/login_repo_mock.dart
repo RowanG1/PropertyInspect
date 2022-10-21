@@ -7,12 +7,12 @@ class LoginRepoTest implements LoginRepo {
 
   @override
   Stream<bool> getLoginState() {
-    return _isLoggedIn;
+    return _isLoggedIn.stream;
   }
 
   @override
   setLoginState(bool value) {
-    _isLoggedIn.value = value;
+    _isLoggedIn.add(value);
   }
 
   @override

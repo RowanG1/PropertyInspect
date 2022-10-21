@@ -11,19 +11,28 @@ class LoginController extends GetxController {
 
   String? loginCompletionGoToRoute;
   final RxBool _loginState = false.obs;
+  final bool _shouldAutoRoute;
 
   LoginController(
-      this._loginStateUseCase, this._logoutUseCase, this._analyticsUseCase) {
+      this._loginStateUseCase, this._logoutUseCase, this._analyticsUseCase,
+      {bool shouldAutoRoute = true})
+      : _shouldAutoRoute = shouldAutoRoute {
     _loginState.bindStream(_loginStateUseCase.execute().skip(1));
   }
 
   @override
   void onInit() {
-    getLoginState().stream.listen((val) {
-      if (!val) {
-        Get.toNamed(Constants.signInRoute);
-      }
-    });
+    setupAutoRouting();
+  }
+
+  void setupAutoRouting() {
+    if (_shouldAutoRoute) {
+      getLoginState().stream.listen((val) {
+        if (!val) {
+          Get.toNamed(Constants.signInRoute);
+        }
+      });
+    }
   }
 
   RxBool getLoginState() {
