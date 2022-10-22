@@ -1,11 +1,9 @@
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:property_inspect/domain/entities/check_in_state.dart';
 import 'package:property_inspect/domain/entities/optional.dart';
 import 'package:property_inspect/domain/usecase/get_is_visitor_registerd_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
-import '../../domain/entities/property_available_state.dart';
 import '../../domain/entities/state.dart';
 import '../../domain/usecase/checked_in_use_case.dart';
 import '../../domain/usecase/do_checkin_use_case.dart';
@@ -20,9 +18,9 @@ class CheckinController extends GetxController {
 
   String? _propertyId;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
-  final Rx<CheckInState> _checkInState = CheckInState().obs;
-  final Rx<PropertyAvailableState> _propertyAvailableState =
-      PropertyAvailableState().obs;
+  final Rx<State<bool>> _checkInState = State<bool>().obs;
+  final Rx<State<bool>> _propertyAvailableState =
+      State<bool>().obs;
   final Rx<State<Optional<bool>>> _isRegisteredState = State<Optional<bool>>()
       .obs;
 
@@ -52,16 +50,16 @@ class CheckinController extends GetxController {
       final userId = _getUserId().value;
       print('Getting checkin state with userid $userId, propertyId '
           '$_propertyId');
-      _checkInState.value = CheckInState(loading: true);
+      _checkInState.value = State<bool>(loading: true);
       final isCheckedIn =
           _isCheckedInUseCase.execute(_getUserId().value!, _propertyId!);
       final mappedCheckin =
-          isCheckedIn.map((event) => CheckInState(content: event));
+          isCheckedIn.map((event) => State<bool>(content: event));
 
       _checkInState.bindStream(mappedCheckin.handleError(
-          (onError) => _checkInState.value = CheckInState(error: onError)));
+          (onError) => _checkInState.value = State<bool>(error: onError)));
     } catch (e) {
-      _checkInState.value = CheckInState(error: Exception("$e"));
+      _checkInState.value = State<bool>(error: Exception("$e"));
     }
   }
 
@@ -88,19 +86,19 @@ class CheckinController extends GetxController {
 
   _getPropertyIsAvailable() {
     try {
-      _propertyAvailableState.value = PropertyAvailableState(loading: true);
+      _propertyAvailableState.value = State<bool>(loading: true);
       final isAvailable = _listingAvailableUseCase.execute(_propertyId!);
-      final Stream<PropertyAvailableState> mappedPropertyAvailableState =
-          isAvailable.map<PropertyAvailableState>((event) {
-        return PropertyAvailableState(content: event);
+      final Stream<State<bool>> mappedPropertyAvailableState =
+          isAvailable.map<State<bool>>((event) {
+        return State<bool>(content: event);
       });
 
       _propertyAvailableState.bindStream(mappedPropertyAvailableState
           .handleError((onError) => _propertyAvailableState.value =
-              PropertyAvailableState(error: onError)));
+              State<bool>(error: onError)));
     } catch (e) {
       print(e);
-      _propertyAvailableState.value = PropertyAvailableState(
+      _propertyAvailableState.value = State<bool>(
           error: Exception("Could not "
               "get property available state."));
     }
@@ -110,18 +108,18 @@ class CheckinController extends GetxController {
     return _propertyId != null && _propertyAvailableState.value.content == true;
   }
 
-  Rx<PropertyAvailableState> propertyIsAvailable() {
+  Rx<State<bool>> propertyIsAvailable() {
     return _propertyAvailableState;
   }
 
   void doCheckin() {
     print('Doing checkin');
-    _checkInState.value = CheckInState(loading: true);
+    _checkInState.value = State<bool>(loading: true);
     try {
       _doCheckinUseCase.execute(_getUserId().value!, _propertyId!);
     } catch (e) {
       print('Woops, error $e');
-      _checkInState.value = CheckInState(error: Exception('$e'));
+      _checkInState.value = State<bool>(error: Exception('$e'));
     }
   }
 
