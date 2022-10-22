@@ -5,11 +5,12 @@ Sign in page
   OnSuccess-
     If already have a preference Visitor or Lister
       Visitor flow
+      Visitor scans a qr code, it launches the checkin page.
         if already registered,
           registeredVisitor: if original path present, then route to original path, else go to home page.
+           , they checkin, see success page.
         else
           go to registration page, then do registeredVisitor flow above
-
 
       Lister flow
         Go to menu for listers (create/edit/delete/view)
@@ -17,8 +18,6 @@ Sign in page
       Show menu to select visitor or lister
         if select visitor, do visitor flow above
         if select lister, do lister flow above
-
-
 
   Registration page for visitors
     Name, surname, phone, email, suburb
@@ -41,8 +40,9 @@ Sign in page
 Path forward for dev
   Do visitor registration page - 3 hours with firestore ✅
   Do Select User type menu
-  Do checkin page for visitor
-  Do visitor flow
+  Do checkin page skeleton for visitor ✅
+  Do checkin detail UI for visitor
+  Do visitor flow.
   Do home page
 
   Do create Listing page = insert new listing for user id ✅

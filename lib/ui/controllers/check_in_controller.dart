@@ -3,9 +3,10 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:property_inspect/domain/entities/check_in_state.dart';
 import 'package:property_inspect/domain/entities/optional.dart';
+import 'package:property_inspect/domain/usecase/get_is_visitor_registerd_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
-import 'package:rxdart/rxdart.dart' as RawRx;
 import '../../domain/entities/property_available_state.dart';
+import '../../domain/entities/state.dart';
 import '../../domain/usecase/checked_in_use_case.dart';
 import '../../domain/usecase/do_checkin_use_case.dart';
 import '../../domain/usecase/get_listing_available_use_case.dart';
@@ -15,15 +16,18 @@ class CheckinController extends GetxController {
   final GetListingAvailableUseCase _listingAvailableUseCase;
   final GetLoginIdUseCase _getLoginIdUseCase;
   final DoCheckinUseCase _doCheckinUseCase;
+  final GetIsVisitorRegisteredUseCase _isVisitorRegisteredUseCase;
 
   String? _propertyId;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<CheckInState> _checkInState = CheckInState().obs;
   final Rx<PropertyAvailableState> _propertyAvailableState =
       PropertyAvailableState().obs;
+  final Rx<State<Optional<bool>>> _isRegisteredState = State<Optional<bool>>()
+      .obs;
 
   CheckinController(this._isCheckedInUseCase, this._listingAvailableUseCase,
-      this._getLoginIdUseCase, this._doCheckinUseCase);
+      this._getLoginIdUseCase, this._doCheckinUseCase, this._isVisitorRegisteredUseCase);
 
   @override
   void onInit() {
@@ -34,6 +38,7 @@ class CheckinController extends GetxController {
     ever(_userId, (value) {
       if (value.value != null) {
         _getIsCheckedIn();
+        _checkIsRegistered();
       }
     });
   }
@@ -65,7 +70,8 @@ class CheckinController extends GetxController {
   }
 
   getIsLoading() {
-    return _propertyAvailableState.value.loading || _checkInState.value.loading;
+    return _propertyAvailableState.value.loading || _checkInState.value
+        .loading || _isRegisteredState.value.loading;
   }
 
   void setPropertyId(String? propertyId) {
@@ -117,5 +123,26 @@ class CheckinController extends GetxController {
       print('Woops, error $e');
       _checkInState.value = CheckInState(error: Exception('$e'));
     }
+  }
+
+  void _checkIsRegistered() {
+    try {
+      final userId = _getUserId().value;
+      print('Getting is registered state with userid $userId');
+      _isRegisteredState.value = State(loading: true);
+      final isRegistered =
+      _isVisitorRegisteredUseCase.execute(_getUserId().value!);
+      final mappedRegistration =
+      isRegistered.map((event) => State(content: event));
+
+      _isRegisteredState.bindStream(mappedRegistration.handleError(
+              (onError) => _isRegisteredState.value = State(error: onError)));
+    } catch (e) {
+      _isRegisteredState.value = State(error: Exception("$e"));
+    }
+  }
+
+  bool isRegistered() {
+    return _isRegisteredState.value.content?.value == true;
   }
 }
