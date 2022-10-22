@@ -6,9 +6,7 @@ import 'package:property_inspect/domain/repository/visitor_registration_repo.dar
 import 'package:mockito/annotations.dart';
 import 'package:property_inspect/domain/usecase/create_visitor_registration_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
-import 'package:property_inspect/domain/usecase/get_is_visitor_registerd_use_case.dart';
 import 'package:property_inspect/ui/controllers/visitor_registration_controller.dart';
-
 import 'login_repo_mock.dart';
 import 'visitor_registration_test.mocks.dart';
 

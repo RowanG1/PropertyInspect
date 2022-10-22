@@ -18,7 +18,7 @@ class LoginRepoTest implements LoginRepo {
   @override
   Stream<Optional<String>> getUserId() {
     // TODO: implement getUserId
-    throw UnimplementedError();
+    return Stream.value(Optional("345"));
   }
 
   @override
