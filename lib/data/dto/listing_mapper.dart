@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/listing.dart';
 
 class ListingMapper {
@@ -10,11 +11,12 @@ class ListingMapper {
     };
   }
 
-  Listing fromJson(Map<String, dynamic> json) {
-    final address = json['address'] as String;
-    final suburb = json['suburb'] as String;
-    final postCode = json['postCode'] as String;
-    final phone = json['phone'] as String;
-    return Listing(address, suburb, postCode, phone);
+  Listing fromSnapshot(DocumentSnapshot snapshot) {
+      final data = snapshot.data() as Map<String, dynamic>;
+      final address = data['address'] as String;
+      final suburb = data['suburb'] as String;
+      final postCode = data['postCode'] as String;
+      final phone = data['phone'] as String;
+      return Listing(address, suburb, postCode, phone);
   }
 }

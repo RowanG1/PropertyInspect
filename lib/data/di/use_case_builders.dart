@@ -7,6 +7,7 @@ import 'package:property_inspect/domain/usecase/checked_in_use_case.dart';
 import 'package:property_inspect/domain/usecase/do_checkin_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_is_visitor_registerd_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_listing_available_use_case.dart';
+import 'package:property_inspect/domain/usecase/get_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 
@@ -38,6 +39,12 @@ class GetLoginIdUseCaseBuilder {
 class ListingAvailableUseCaseBuilder {
   GetListingAvailableUseCase make() {
     return GetListingAvailableUseCase(ListingRepoFirebase());
+  }
+}
+
+class GetListingUseCaseBuilder {
+  GetListingUseCase make() {
+    return GetListingUseCase(ListingRepoFirebase());
   }
 }
 

@@ -3,7 +3,9 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:property_inspect/domain/entities/optional.dart';
 import 'package:property_inspect/domain/usecase/get_is_visitor_registerd_use_case.dart';
+import 'package:property_inspect/domain/usecase/get_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
+import '../../domain/entities/listing.dart';
 import '../../domain/entities/state.dart';
 import '../../domain/usecase/checked_in_use_case.dart';
 import '../../domain/usecase/do_checkin_use_case.dart';
@@ -15,17 +17,21 @@ class CheckinController extends GetxController {
   final GetLoginIdUseCase _getLoginIdUseCase;
   final DoCheckinUseCase _doCheckinUseCase;
   final GetIsVisitorRegisteredUseCase _isVisitorRegisteredUseCase;
+  final GetListingUseCase _getListingUseCase;
 
   String? _propertyId;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<State<bool>> _checkInState = State<bool>().obs;
   final Rx<State<bool>> _propertyAvailableState =
       State<bool>().obs;
+  final Rx<State<Listing>> _propertyState =
+      State<Listing>().obs;
   final Rx<State<Optional<bool>>> _isRegisteredState = State<Optional<bool>>()
       .obs;
 
   CheckinController(this._isCheckedInUseCase, this._listingAvailableUseCase,
-      this._getLoginIdUseCase, this._doCheckinUseCase, this._isVisitorRegisteredUseCase);
+      this._getLoginIdUseCase, this._doCheckinUseCase, this
+          ._isVisitorRegisteredUseCase, this._getListingUseCase);
 
   @override
   void onInit() {
@@ -76,6 +82,7 @@ class CheckinController extends GetxController {
     _propertyId = propertyId;
     if (propertyId != null) {
       _getPropertyIsAvailable();
+      _getProperty();
       _getIsCheckedIn();
     }
   }
@@ -102,6 +109,30 @@ class CheckinController extends GetxController {
           error: Exception("Could not "
               "get property available state."));
     }
+  }
+
+  _getProperty() {
+    try {
+      _propertyState.value = State<Listing>(loading: true);
+      final isAvailable = _getListingUseCase.execute(_propertyId!);
+      final Stream<State<Listing>> mappedPropertyAvailableState =
+      isAvailable.map<State<Listing>>((event) {
+        return State<Listing>(content: event);
+      });
+
+      _propertyState.bindStream(mappedPropertyAvailableState
+          .handleError((onError) => _propertyState.value =
+          State<Listing>(error: onError)));
+    } catch (e) {
+      print(e);
+      _propertyState.value = State<Listing>(
+          error: Exception("Could not "
+              "get property available state."));
+    }
+  }
+
+  Rx<State<Listing?>> getListing() {
+    return  _propertyState;
   }
 
   bool isValidConfig() {

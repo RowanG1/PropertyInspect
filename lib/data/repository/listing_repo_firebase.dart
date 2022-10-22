@@ -19,4 +19,13 @@ class ListingRepoFirebase implements ListingRepo {
         .snapshots()
         .map((value) => value.exists);
   }
+
+  @override
+  Stream<Listing?> getListing(listingId) {
+    return collection
+        .doc(listingId)
+        .snapshots().map((event) {
+          return ListingMapper().fromSnapshot(event);
+    });
+  }
 }
