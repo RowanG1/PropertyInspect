@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
-import '../../domain/entities/optional.dart';
+import '../../data/types/optional.dart';
 import '../../domain/usecase/create_visitor_registration_use_case.dart';
 import '../../domain/utils/field_validation.dart';
 

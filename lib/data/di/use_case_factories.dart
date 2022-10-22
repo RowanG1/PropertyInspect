@@ -2,7 +2,7 @@ import 'package:property_inspect/data/di/repo_factories.dart';
 import 'package:property_inspect/data/repository/checkin_firebase_repo.dart';
 import 'package:property_inspect/data/repository/listing_repo_firebase.dart';
 import 'package:property_inspect/data/repository/login_repo_firebase.dart';
-import 'package:property_inspect/data/repository/visitor_registration_firebase.dart';
+import 'package:property_inspect/data/repository/visitor_registration_firebase_repo.dart';
 import 'package:property_inspect/domain/repository/visitor_registration_repo.dart';
 import 'package:property_inspect/domain/usecase/checked_in_use_case.dart';
 import 'package:property_inspect/domain/usecase/do_checkin_use_case.dart';

@@ -1,4 +1,4 @@
-import 'package:property_inspect/domain/entities/optional.dart';
+import 'package:property_inspect/data/types/optional.dart';
 
 import '../repository/login_repo.dart';
 

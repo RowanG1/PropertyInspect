@@ -1,6 +1,6 @@
 import 'package:property_inspect/domain/entities/listing.dart';
 
-import '../entities/optional.dart';
+import '../../data/types/optional.dart';
 
 abstract class ListingRepo {
   void createListing(Listing listing);

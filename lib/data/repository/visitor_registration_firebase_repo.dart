@@ -1,5 +1,5 @@
 import 'package:property_inspect/data/dto/visitor_mapper.dart';
-import 'package:property_inspect/domain/entities/optional.dart';
+import 'package:property_inspect/data/types/optional.dart';
 import 'package:property_inspect/domain/entities/visitor.dart';
 import 'package:property_inspect/domain/repository/visitor_registration_repo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

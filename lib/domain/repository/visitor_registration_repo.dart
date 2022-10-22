@@ -1,4 +1,4 @@
-import '../entities/optional.dart';
+import '../../data/types/optional.dart';
 import '../entities/visitor.dart';
 
 abstract class VisitorRegistrationRepo {
