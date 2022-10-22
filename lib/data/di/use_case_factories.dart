@@ -1,3 +1,4 @@
+import 'package:property_inspect/data/di/repo_factories.dart';
 import 'package:property_inspect/data/repository/checkin_firebase_repo.dart';
 import 'package:property_inspect/data/repository/listing_repo_firebase.dart';
 import 'package:property_inspect/data/repository/login_repo_firebase.dart';
@@ -14,54 +15,54 @@ import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 import '../../domain/usecase/create_visitor_registration_use_case.dart';
 import '../../domain/usecase/get_visitor_use_case.dart';
 
-class CheckedInUseCaseBuilder {
+class CheckedInUseCaseFactory {
   CheckedInUseCase make() {
     return CheckedInUseCase(CheckinFirebaseRepo());
   }
 }
 
-class DoCheckInUseCaseBuilder {
+class DoCheckInUseCaseFactory {
   DoCheckinUseCase make() {
     return DoCheckinUseCase(CheckinFirebaseRepo());
   }
 }
 
-class LoginStateUseCaseBuilder {
+class LoginStateUseCaseFactory {
   LoginStateUseCase make() {
-    return LoginStateUseCase(LoginFirebaseRepo());
+    return LoginStateUseCase(LoginRepoFactory.get());
   }
 }
-class GetLoginIdUseCaseBuilder {
+class GetLoginIdUseCaseFactory {
   GetLoginIdUseCase make() {
-    return GetLoginIdUseCase(LoginFirebaseRepo());
+    return GetLoginIdUseCase(LoginRepoFactory.get());
   }
 }
 
-class ListingAvailableUseCaseBuilder {
+class ListingAvailableUseCaseFactory {
   GetListingAvailableUseCase make() {
     return GetListingAvailableUseCase(ListingRepoFirebase());
   }
 }
 
-class GetListingUseCaseBuilder {
+class GetListingUseCaseFactory {
   GetListingUseCase make() {
     return GetListingUseCase(ListingRepoFirebase());
   }
 }
 
-class CreateVisitorRegistrationUseCaseBuilder {
+class CreateVisitorRegistrationUseCaseFactory {
   CreateVisitorRegistrationUseCase make() {
     return CreateVisitorRegistrationUseCase(VisitorRegistrationFirebaseRepo());
   }
 }
 
-class IsVisitorRegisteredUseCaseBuilder {
+class IsVisitorRegisteredUseCaseFactory {
   GetIsVisitorRegisteredUseCase make() {
     return GetIsVisitorRegisteredUseCase(VisitorRegistrationFirebaseRepo());
   }
 }
 
-class GetVisitorUseCaseBuilder {
+class GetVisitorUseCaseFactory {
   GetVisitorUseCase make() {
     return GetVisitorUseCase(VisitorRegistrationFirebaseRepo());
   }

@@ -6,11 +6,11 @@ import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/ui/controllers/sign_in_route_home_controller.dart';
-import '../../data/di/controllers_builders.dart';
+import '../../data/di/controllers_factories.dart';
 
 class SignInRouteHome extends StatelessWidget {
   final SigninRouteHomeController controller = Get.put
-    (SigninRouteHomeControllerBuilder().make());
+    (SigninRouteHomeControllerFactory().make());
 
   SignInRouteHome({Key? key}) : super(key: key);
 

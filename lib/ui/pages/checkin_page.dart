@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/data/di/controllers_builders.dart';
+import 'package:property_inspect/data/di/controllers_factories.dart';
 import 'package:property_inspect/ui/controllers/check_in_controller.dart';
 import 'package:property_inspect/ui/pages/resume_after_authenticated_page.dart';
 import 'package:property_inspect/ui/pages/visitor_registration_form.dart';
@@ -12,9 +12,9 @@ import '../controllers/visitor_registration_controller.dart';
 
 class CheckinPage extends StatelessWidget {
   final CheckinController checkinController =
-      Get.put(CheckinControllerBuilder().make());
+      Get.put(CheckinControllerFactory().make());
   final VisitorRegistrationController registrationController =
-      Get.put(VisitorRegistrationControllerBuilder().make());
+      Get.put(VisitorRegistrationControllerFactory().make());
 
   CheckinPage({Key? key}) : super(key: key) {
     String? id = Get.parameters['id'];
@@ -46,7 +46,7 @@ class ValidCheckinContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final property = checkinController.getListing().value.content;
     final visitor = checkinController.getVisitor();
-    
+
     return Obx(() => checkinController.getIsLoading()
         ? const Text('Loading '
             'content')
