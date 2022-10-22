@@ -9,7 +9,7 @@ class CheckinControllerBuilder {
         ListingAvailableUseCaseBuilder().make(), GetLoginIdUseCaseBuilder()
           .make(), DoCheckInUseCaseBuilder().make(),
         IsVisitorRegisteredUseCaseBuilder().make(), GetListingUseCaseBuilder().make
-          ());
+          (), GetVisitorUseCaseBuilder().make());
   }
 }
 

@@ -12,6 +12,7 @@ import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 
 import '../../domain/usecase/create_visitor_registration_use_case.dart';
+import '../../domain/usecase/get_visitor_use_case.dart';
 
 class CheckedInUseCaseBuilder {
   CheckedInUseCase make() {
@@ -57,5 +58,11 @@ class CreateVisitorRegistrationUseCaseBuilder {
 class IsVisitorRegisteredUseCaseBuilder {
   GetIsVisitorRegisteredUseCase make() {
     return GetIsVisitorRegisteredUseCase(VisitorRegistrationFirebaseRepo());
+  }
+}
+
+class GetVisitorUseCaseBuilder {
+  GetVisitorUseCase make() {
+    return GetVisitorUseCase(VisitorRegistrationFirebaseRepo());
   }
 }

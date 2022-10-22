@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../domain/entities/visitor.dart';
 
 class VisitorMapper {
@@ -12,13 +14,14 @@ class VisitorMapper {
     };
   }
 
-  Visitor fromJson(Map<String, dynamic> json) {
-    final id = json['id'] as String;
-    final name = json['name'] as String;
-    final lastName = json['lastName'] as String;
-    final email = json['email'] as String;
-    final phone = json['phone'] as String;
-    final suburb = json['suburb'] as String;
+  Visitor fromSnapshot(DocumentSnapshot snapshot) {
+    final data = snapshot.data() as Map<String, dynamic>;
+    final id = data['id'] as String;
+    final name = data['name'] as String;
+    final lastName = data['lastName'] as String;
+    final email = data['email'] as String;
+    final phone = data['phone'] as String;
+    final suburb = data['suburb'] as String;
     return Visitor(id, name, lastName, email, phone, suburb);
   }
 }

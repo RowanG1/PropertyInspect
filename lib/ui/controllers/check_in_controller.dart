@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:property_inspect/domain/entities/optional.dart';
+import 'package:property_inspect/domain/entities/visitor.dart';
 import 'package:property_inspect/domain/usecase/get_is_visitor_registerd_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
@@ -10,6 +11,7 @@ import '../../domain/entities/state.dart';
 import '../../domain/usecase/checked_in_use_case.dart';
 import '../../domain/usecase/do_checkin_use_case.dart';
 import '../../domain/usecase/get_listing_available_use_case.dart';
+import '../../domain/usecase/get_visitor_use_case.dart';
 
 class CheckinController extends GetxController {
   final CheckedInUseCase _isCheckedInUseCase;
@@ -18,6 +20,7 @@ class CheckinController extends GetxController {
   final DoCheckinUseCase _doCheckinUseCase;
   final GetIsVisitorRegisteredUseCase _isVisitorRegisteredUseCase;
   final GetListingUseCase _getListingUseCase;
+  final GetVisitorUseCase _getVisitorUseCase;
 
   String? _propertyId;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
@@ -28,10 +31,12 @@ class CheckinController extends GetxController {
       State<Listing>().obs;
   final Rx<State<Optional<bool>>> _isRegisteredState = State<Optional<bool>>()
       .obs;
+  final Rx<State<Visitor>> _getVisitorState = State<Visitor>()
+      .obs;
 
   CheckinController(this._isCheckedInUseCase, this._listingAvailableUseCase,
       this._getLoginIdUseCase, this._doCheckinUseCase, this
-          ._isVisitorRegisteredUseCase, this._getListingUseCase);
+          ._isVisitorRegisteredUseCase, this._getListingUseCase, this._getVisitorUseCase);
 
   @override
   void onInit() {
@@ -41,6 +46,7 @@ class CheckinController extends GetxController {
 
     ever(_userId, (value) {
       if (value.value != null) {
+        _getVisitor();
         _getIsCheckedIn();
         _checkIsRegistered();
       }
@@ -156,8 +162,6 @@ class CheckinController extends GetxController {
 
   void _checkIsRegistered() {
     try {
-      final userId = _getUserId().value;
-      print('Getting is registered state with userid $userId');
       _isRegisteredState.value = State(loading: true);
       final isRegistered =
       _isVisitorRegisteredUseCase.execute(_getUserId().value!);
@@ -173,5 +177,24 @@ class CheckinController extends GetxController {
 
   bool isRegistered() {
     return _isRegisteredState.value.content?.value == true;
+  }
+
+  void _getVisitor() {
+    try {
+      _getVisitorState.value = State(loading: true);
+      final visitor =
+      _getVisitorUseCase.execute(_getUserId().value!);
+      final mappedVisitor =
+      visitor.map((event) => State(content: event));
+
+      _getVisitorState.bindStream(mappedVisitor.handleError(
+              (onError) => _getVisitorState.value = State(error: onError)));
+    } catch (e) {
+      _getVisitorState.value = State(error: Exception("$e"));
+    }
+  }
+
+  Visitor? getVisitor() {
+    return _getVisitorState.value.content;
   }
 }

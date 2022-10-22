@@ -20,5 +20,14 @@ class VisitorRegistrationFirebaseRepo implements VisitorRegistrationRepo {
          return Optional(value.exists);
         });
   }
+
+  @override
+  Stream<Visitor> getVisitor(String id) {
+    return collection
+        .doc(id)
+        .snapshots().map((event) {
+      return VisitorMapper().fromSnapshot(event);
+    });
+  }
   
 }

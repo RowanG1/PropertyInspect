@@ -1,5 +1,3 @@
-import 'dart:js_util';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +5,9 @@ import 'package:property_inspect/data/di/controllers_builders.dart';
 import 'package:property_inspect/ui/controllers/check_in_controller.dart';
 import 'package:property_inspect/ui/pages/resume_after_authenticated_page.dart';
 import 'package:property_inspect/ui/pages/visitor_registration_form.dart';
+import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
+import '../../domain/entities/visitor.dart';
 import '../controllers/visitor_registration_controller.dart';
 
 class CheckinPage extends StatelessWidget {
@@ -47,35 +47,49 @@ class ValidCheckinContent extends StatelessWidget {
     return Obx(() => checkinController.getIsLoading()
         ? const Text('Loading '
             'content')
-        : checkinController.getIsCheckedIn()
-            ? const Text('You have already checked in.')
-            : CheckinContent(property: property));
+        : CheckinContent(
+            property: property, checkedIn: checkinController.getIsCheckedIn()
+      , visitor: checkinController.getVisitor(),));
   }
 }
 
 class CheckinContent extends StatelessWidget {
   final Listing? property;
+  final bool checkedIn;
+  final Visitor? visitor;
   final CheckinController checkinController = Get.find<CheckinController>();
 
-  CheckinContent({Key? key, this.property}) : super(key: key);
+  CheckinContent({Key? key, this.property, required this.checkedIn, this
+      .visitor })
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final address = property?.address;
 
-      if (property != null) {
-        return Column(children: [
-          Text('Welcome to property: $address'),
-          ElevatedButton(
-            onPressed: () {
-              // Validate returns true if the form is valid, or false otherwise.
-             checkinController.doCheckin();
-            },
-            child: Text('Check in.'),
-          )
-        ]);
-      } else {
-        return Text('Sorry, a problem occurred.');
-      }
+    if (property != null && visitor != null) {
+      final name = visitor!.name;
+      return Column(children: [
+        Padding(
+            padding: EdgeInsets.all(Constants.largePadding),
+            child: Text('Welcome $name', style: TextStyle(fontSize: Constants
+                .headingSize))),
+        Padding(
+            padding: EdgeInsets.all(Constants.largePadding),
+            child: Text('🏠 Address: $address')),
+        !checkedIn
+            ? ElevatedButton(
+                onPressed: () {
+                  // Validate returns true if the form is valid, or false otherwise.
+                  checkinController.doCheckin();
+                },
+                child: Text('Check in'),
+              )
+            : Text('You have successfully checked in ✅', style: TextStyle
+          (fontWeight: FontWeight.bold))
+      ]);
+    } else {
+      return Text('Sorry, a problem occurred.');
+    }
   }
 }
