@@ -22,4 +22,8 @@ class SigninRouteHomeController extends GetxController {
       }
     });
   }
+
+  RxBool getIsLoggedIn() {
+    return _isLoggedIn;
+  }
 }

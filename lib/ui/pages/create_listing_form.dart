@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/domain/utils/field_validation.dart';
 import 'package:property_inspect/ui/controllers/create_listing_controller.dart';
-
 import '../../domain/constants.dart';
 
 class CreateListingForm extends StatefulWidget {
