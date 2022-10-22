@@ -24,6 +24,7 @@ class CheckinPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final propertyId = checkinController.getPropertyId();
+
     return ResumeAfterAuthenticatedPage(
         body: Obx(() => Center(
             child: checkinController.getIsLoading()
@@ -44,52 +45,52 @@ class ValidCheckinContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final property = checkinController.getListing().value.content;
+    final visitor = checkinController.getVisitor();
+    
     return Obx(() => checkinController.getIsLoading()
         ? const Text('Loading '
             'content')
         : CheckinContent(
-            property: property, checkedIn: checkinController.getIsCheckedIn()
-      , visitor: checkinController.getVisitor(),));
+            property: property!,
+            checkedIn: checkinController.getIsCheckedIn(),
+            visitor: visitor!,
+          ));
   }
 }
 
 class CheckinContent extends StatelessWidget {
-  final Listing? property;
+  final Listing property;
   final bool checkedIn;
-  final Visitor? visitor;
+  final Visitor visitor;
   final CheckinController checkinController = Get.find<CheckinController>();
 
-  CheckinContent({Key? key, this.property, required this.checkedIn, this
-      .visitor })
+  CheckinContent(
+      {Key? key, required this.property, required this.checkedIn, required this.visitor})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final address = property?.address;
+    final address = property.address;
+    final name = visitor.name;
 
-    if (property != null && visitor != null) {
-      final name = visitor!.name;
-      return Column(children: [
-        Padding(
-            padding: EdgeInsets.all(Constants.largePadding),
-            child: Text('Welcome $name', style: TextStyle(fontSize: Constants
-                .headingSize))),
-        Padding(
-            padding: EdgeInsets.all(Constants.largePadding),
-            child: Text('🏠 Address: $address')),
-        !checkedIn
-            ? ElevatedButton(
-                onPressed: () {
-                  // Validate returns true if the form is valid, or false otherwise.
-                  checkinController.doCheckin();
-                },
-                child: Text('Check in'),
-              )
-            : Text('You have successfully checked in ✅', style: TextStyle
-          (fontWeight: FontWeight.bold))
-      ]);
-    } else {
-      return Text('Sorry, a problem occurred.');
-    }
+    return Column(children: [
+      Padding(
+          padding: EdgeInsets.all(Constants.largePadding),
+          child: Text('Welcome $name',
+              style: TextStyle(fontSize: Constants.headingSize))),
+      Padding(
+          padding: EdgeInsets.all(Constants.largePadding),
+          child: Text('🏠 Address: $address')),
+      !checkedIn
+          ? ElevatedButton(
+              onPressed: () {
+                // Validate returns true if the form is valid, or false otherwise.
+                checkinController.doCheckin();
+              },
+              child: Text('Check in'),
+            )
+          : Text('You have successfully checked in ✅',
+              style: TextStyle(fontWeight: FontWeight.bold))
+    ]);
   }
 }

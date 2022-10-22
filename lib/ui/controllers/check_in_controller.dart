@@ -142,7 +142,9 @@ class CheckinController extends GetxController {
   }
 
   bool isValidConfig() {
-    return _propertyId != null && _propertyAvailableState.value.content == true;
+    return _propertyId != null && _propertyAvailableState.value.content ==
+        true && _propertyState.value.content != null && _getVisitorState
+        .value.content != null;
   }
 
   Rx<State<bool>> propertyIsAvailable() {
