@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:property_inspect/domain/repository/checkin_repo.dart';
-
 import '../dto/checkin_mapper.dart';
 
 class CheckinFirebaseRepo implements CheckinRepo {

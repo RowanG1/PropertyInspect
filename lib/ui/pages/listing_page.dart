@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../data/di/controllers_factories.dart';
-import '../../domain/constants.dart';
 
 class ListingPage extends StatelessWidget {
   final controller = Get.put(ViewListingControllerFactory().make());
