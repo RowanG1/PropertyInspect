@@ -15,6 +15,8 @@ class Constants {
 
 // Text strings
   static const visitorRegistrationHeading = 'Please complete your registration.';
+  static const listerRegistrationHeading = 'Please complete your registration'
+      '.';
   static const createListingHeading = 'Please complete your listing form.';
   static const nameLabel = 'Enter your first name';
   static const lastNameLabel = 'Enter your family name';

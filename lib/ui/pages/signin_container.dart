@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 
 class SignInContainer extends StatelessWidget {

@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/data/repository/analytics_firebase_repo.dart';
@@ -9,7 +7,6 @@ import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 import 'package:property_inspect/domain/usecase/logout_use_case.dart';
 import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
-import 'package:property_inspect/ui/pages/signin_container.dart';
 import 'package:property_inspect/ui/pages/checkin_page.dart';
 import 'package:property_inspect/ui/pages/create_listing_page.dart';
 import 'package:property_inspect/ui/pages/home_page.dart';

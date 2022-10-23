@@ -1,15 +1,18 @@
 import 'package:property_inspect/data/di/repo_factories.dart';
 import 'package:property_inspect/data/repository/checkin_firebase_repo.dart';
+import 'package:property_inspect/data/repository/lister_registration_repo_firebase.dart';
 import 'package:property_inspect/data/repository/listing_repo_firebase.dart';
 import 'package:property_inspect/data/repository/login_repo_firebase.dart';
 import 'package:property_inspect/data/repository/visitor_registration_firebase_repo.dart';
 import 'package:property_inspect/domain/repository/visitor_registration_repo.dart';
 import 'package:property_inspect/domain/usecase/checked_in_use_case.dart';
+import 'package:property_inspect/domain/usecase/create_lister_registration.dart';
 import 'package:property_inspect/domain/usecase/do_checkin_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_is_visitor_registerd_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_listing_available_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
+import 'package:property_inspect/domain/usecase/is_lister_registered_use_case.dart';
 import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 
 import '../../domain/usecase/create_visitor_registration_use_case.dart';
@@ -65,5 +68,17 @@ class IsVisitorRegisteredUseCaseFactory {
 class GetVisitorUseCaseFactory {
   GetVisitorUseCase make() {
     return GetVisitorUseCase(VisitorRegistrationFirebaseRepo());
+  }
+}
+
+class CreateListerRegistrationUseCaseFactory {
+  CreateListerRegistrationUseCase make() {
+    return CreateListerRegistrationUseCase(ListerRegistrationRepoFirebase());
+  }
+}
+
+class IsListerRegisteredUseCaseFactory {
+  IsListerRegisteredUseCase make() {
+    return IsListerRegisteredUseCase(ListerRegistrationRepoFirebase());
   }
 }
