@@ -12,11 +12,11 @@ class ListingMapper {
   }
 
   Listing fromSnapshot(DocumentSnapshot snapshot) {
-      final data = snapshot.data() as Map<String, dynamic>;
-      final address = data['address'] as String;
-      final suburb = data['suburb'] as String;
-      final postCode = data['postCode'] as String;
-      final phone = data['phone'] as String;
-      return Listing(address, suburb, postCode, phone);
+    final data = snapshot.data() as Map<String, dynamic>;
+    final address = data['address'] as String;
+    final suburb = data['suburb'] as String;
+    final postCode = data['postCode'] as String;
+    final phone = data['phone'] as String;
+    return Listing(address, suburb, postCode, phone);
   }
 }

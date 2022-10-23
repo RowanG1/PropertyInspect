@@ -4,6 +4,7 @@ import 'package:property_inspect/ui/controllers/check_in_controller.dart';
 import 'package:property_inspect/ui/controllers/lister_registration_controller.dart';
 import 'package:property_inspect/ui/controllers/sign_in_route_home_controller.dart';
 import '../../ui/controllers/lister_flow_controller.dart';
+import '../../ui/controllers/view_listing_controller.dart';
 import '../../ui/controllers/visitor_registration_controller.dart';
 
 class CheckinControllerFactory {
@@ -46,5 +47,12 @@ class ListerRegistrationControllerFactory {
     return ListerRegistrationController(
         CreateListerRegistrationUseCaseFactory().make(),
         GetLoginIdUseCaseFactory().make());
+  }
+}
+
+class ViewListingControllerFactory {
+  ViewListingController make() {
+    return ViewListingController(
+        GetListingUseCaseFactory().make());
   }
 }
