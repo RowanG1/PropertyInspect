@@ -139,6 +139,10 @@ class CheckinController extends GetxController {
     return  _propertyState;
   }
 
+  Listing? getListingValue() {
+    return _propertyState.value.content;
+  }
+
   bool isValidConfig() {
     return _propertyId != null && _propertyAvailableState.value.content ==
         true && _propertyState.value.content != null && _getVisitorState

@@ -22,7 +22,7 @@ class ListingRepoFirebase implements ListingRepo {
   }
 
   @override
-  Stream<Listing> getListing(listingId) {
+  Stream<Listing?> getListing(listingId) {
     return collection
         .doc(listingId)
         .snapshots().map((event) {

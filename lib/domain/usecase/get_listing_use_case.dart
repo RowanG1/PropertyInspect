@@ -7,7 +7,7 @@ class GetListingUseCase {
 
   GetListingUseCase(this.listingRepo);
 
-  Stream<Listing> execute(String propertyId) {
+  Stream<Listing?> execute(String propertyId) {
     return listingRepo.getListing(propertyId);
   }
 }

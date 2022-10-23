@@ -11,8 +11,9 @@ class ListingMapper {
     };
   }
 
-  Listing fromSnapshot(DocumentSnapshot snapshot) {
-    final data = snapshot.data() as Map<String, dynamic>;
+  Listing? fromSnapshot(DocumentSnapshot snapshot) {
+    final data = snapshot.data() as Map<String, dynamic>?;
+    if (data == null) { return null; }
     final address = data['address'] as String;
     final suburb = data['suburb'] as String;
     final postCode = data['postCode'] as String;

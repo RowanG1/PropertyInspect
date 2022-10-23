@@ -44,16 +44,13 @@ class ValidCheckinContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final property = checkinController.getListing().value.content;
-    final visitor = checkinController.getVisitor();
-
-    return Obx(() => checkinController.getIsLoading()
+     return Obx(() => checkinController.getIsLoading()
         ? const Text('Loading '
             'content')
         : CheckinContent(
-            property: property!,
+            property: checkinController.getListingValue()!,
             checkedIn: checkinController.getIsCheckedIn(),
-            visitor: visitor!,
+            visitor: checkinController.getVisitor()!,
           ));
   }
 }

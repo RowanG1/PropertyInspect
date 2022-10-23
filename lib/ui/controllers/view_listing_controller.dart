@@ -17,6 +17,8 @@ class ViewListingController extends GetxController {
       final propertyStream = _getListingUseCase.execute(_propertyId!);
       final Stream<State<Listing>> mappedPropertyStream =
           propertyStream.map<State<Listing>>((event) {
+            print("Mapped value:");
+            print(event);
         return State<Listing>(content: event);
       });
 
