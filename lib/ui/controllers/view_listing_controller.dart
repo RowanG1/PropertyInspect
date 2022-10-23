@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:property_inspect/domain/usecase/get_listing_use_case.dart';
+import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
 import '../../domain/entities/state.dart';
 
@@ -51,5 +52,13 @@ class ViewListingController extends GetxController {
 
   bool isLoading() {
     return _propertyState.value.loading;
+  }
+
+  String getQRCodeUrl() {
+    final listingId = getPropertyId();
+    final origin = Uri.base.origin;
+    const checkinRoute = Constants.checkinBaseRoute;
+    final checkinUrl = '$origin/#$checkinRoute/$listingId';
+    return checkinUrl;
   }
 }

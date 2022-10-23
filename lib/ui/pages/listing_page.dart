@@ -17,21 +17,21 @@ class ListingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final listing = controller.getListing();
     final address = listing?.address;
-    final listingId = controller.getPropertyId();
-    final origin = Uri.base.origin;
-    final checkinRoute = Constants.checkinBaseRoute;
-    final checkinUrl = '$origin/#$checkinRoute/$listingId';
-    print('Checkin url: $checkinUrl');
+
     return ListerFlow(
         // This is where you give you custom widget it's data.
         body: Obx(() => controller.isLoading()
             ? Text('Please wait.')
-            : Center(child: Column(children: [Text('🏠 Address: $address'), QrImage(
-          data: checkinUrl,
-          version: QrVersions.auto,
-          size: 200.0,
-        )],
-            crossAxisAlignment:
-        CrossAxisAlignment.center))));
+            : Center(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                    Text('🏠 Address: $address'),
+                    QrImage(
+                      data: controller.getQRCodeUrl(),
+                      version: QrVersions.auto,
+                      size: 200.0,
+                    )
+                  ]))));
   }
 }
