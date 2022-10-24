@@ -13,20 +13,20 @@ import 'package:property_inspect/domain/repository/logout_repo.dart' as _i2;
 
 // ignore_for_file: avoid_redundant_argument_values
 
-/// A class which mocks [Logout].
+/// A class which mocks [LogoutRepo].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLogout extends _i1.Mock implements _i2.LogoutRepo {
-  MockLogout() {
+class MockLogoutRepo extends _i1.Mock implements _i2.LogoutRepo {
+  MockLogoutRepo() {
     _i1.throwOnMissingStub(this);
   }
 }
 
-/// A class which mocks [Analytics].
+/// A class which mocks [AnalyticsRepo].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAnalytics extends _i1.Mock implements _i3.AnalyticsRepo {
-  MockAnalytics() {
+class MockAnalyticsRepo extends _i1.Mock implements _i3.AnalyticsRepo {
+  MockAnalyticsRepo() {
     _i1.throwOnMissingStub(this);
   }
 

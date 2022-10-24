@@ -15,7 +15,9 @@ class CreateListingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListerFlow(
       // This is where you give you custom widget it's data.
-      body: Center(child: CreateListingForm()),
+      body: Obx(() => controller.getIsLoading()
+          ? Text('Please wait')
+          : Center(child: CreateListingForm())),
     );
   }
 }

@@ -16,9 +16,9 @@ void main() {
     test('set login state', () {
       final loginRepo = LoginRepoTest();
       final loginUseCase = LoginStateUseCase(loginRepo);
-      final logout = MockLogout();
+      final logout = MockLogoutRepo();
       final logoutUseCase = LogoutUseCase(logout);
-      final analyticsRepo = MockAnalytics();
+      final analyticsRepo = MockAnalyticsRepo();
       final analyticsUseCase = AnalyticsUseCase(analyticsRepo);
 
       var controller =

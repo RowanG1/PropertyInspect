@@ -9,7 +9,7 @@ class ListingRepoFirebase implements ListingRepo {
   FirebaseFirestore.instance.collection('listings');
 
   @override
-  Future<DocumentReference> createListing(Listing listing) {
+  Future<void> createListing(Listing listing) {
     return collection.add(ListingMapper().toJson(listing));
   }
 

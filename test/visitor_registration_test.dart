@@ -20,7 +20,7 @@ void main() {
     late VisitorRegistrationController controller;
 
     setUp((){
-      visitorRepo = MockVisitorRegistration();
+      visitorRepo = MockVisitorRegistrationRepo();
       visitorRegisterUseCase = CreateVisitorRegistrationUseCase(visitorRepo);
       loginRepo = LoginRepoTest();
       loginIdUseCase = GetLoginIdUseCase(loginRepo);

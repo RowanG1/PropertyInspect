@@ -20,13 +20,22 @@ class ListingsPage extends StatelessWidget {
                 ? Text('Please wait........................')
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [ Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Text('Listings', style: const TextStyle
+                    children: [ const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Text('Listings', style: TextStyle
                         (fontWeight: FontWeight.bold, fontSize: 18)),
                     ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: TextButton(
+                            onPressed: () {
+                              const route = '${Constants.createListingRoute}';
+                              Get.toNamed('$route');
+                            },
+                            child: const Text("Create Listing")),
+                      ),
                         Table(
-                            defaultColumnWidth: FixedColumnWidth(120.0),
+                            defaultColumnWidth: const FixedColumnWidth(120.0),
                             border: TableBorder.all(
                                 color: Colors.black,
                                 style: BorderStyle.solid,
@@ -48,10 +57,10 @@ class ListingsPage extends StatelessWidget {
     return TableRow(children: [TableCell(
       verticalAlignment: TableCellVerticalAlignment.middle,
       child: Row(
-        children: <Widget>[
+        children: const <Widget>[
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('Address', textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold)),
+            padding: EdgeInsets.all(8.0),
+            child: Text('Address', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
           )
         ],
       ),

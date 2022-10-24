@@ -3,9 +3,12 @@ import 'package:get/get.dart';
 import 'package:property_inspect/domain/usecase/create_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import '../../data/types/optional.dart';
+import '../../domain/constants.dart';
 import '../../domain/utils/field_validation.dart';
+import '../../domain/entities/state.dart' as s;
 
 class CreateListingController extends GetxController {
+  final Rx<s.State<bool>> _state = s.State<bool>().obs;
   CreateListingUseCase createListingUseCase;
   GetLoginIdUseCase _getLoginIdUseCase;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
@@ -17,6 +20,12 @@ class CreateListingController extends GetxController {
   void onInit() {
     super.onInit();
     _userId.bindStream(_getLoginIdUseCase.execute());
+
+    ever(_state, (value) {
+      if (value.content == true) {
+        Get.toNamed(Constants.listingsRoute);
+      }
+      });
   }
 
   final addressController = TextEditingController();
@@ -24,7 +33,7 @@ class CreateListingController extends GetxController {
   final postCodeController = TextEditingController();
   final phoneController = TextEditingController();
 
-  createListing() {
+  createListing() async {
     final address = addressController.value.text;
     final suburb = suburbController.value.text;
     final postCode = postCodeController.value.text;
@@ -32,12 +41,19 @@ class CreateListingController extends GetxController {
 
     final loginId = _userId.value.value;
     if (loginId != null) {
-      createListingUseCase.execute(loginId, address, suburb, postCode, phone);
+      _state.value = s.State(loading: true);
+      await createListingUseCase.execute(loginId, address, suburb, postCode,
+          phone);
+      _state.value = s.State(content: true);
     }
   }
 
   validate(TextEditingController controller) {
     return validation.getNonEmptyValidation(
         controller.text);
+  }
+
+  bool getIsLoading() {
+    return _state.value.loading;
   }
 }

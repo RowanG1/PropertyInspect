@@ -21,7 +21,7 @@ void main() {
 
     setUp((){
       loginRepo = LoginRepoTest();
-      createListingRepo = MockCreateListing();
+      createListingRepo = MockListingRepo();
       createListingUseCase = CreateListingUseCase(createListingRepo);
       loginIdUseCase = GetLoginIdUseCase(loginRepo);
       controller =
