@@ -22,8 +22,7 @@ void main() {
       final analyticsUseCase = AnalyticsUseCase(analyticsRepo);
 
       var controller =
-          LoginController(loginUseCase, logoutUseCase, analyticsUseCase,
-              shouldAutoRoute: false);
+          LoginController(loginUseCase, logoutUseCase, analyticsUseCase);
 
       Get.put(controller);
       expect(controller.getLoginState().value, false);

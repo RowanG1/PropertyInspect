@@ -15,6 +15,7 @@ class HomePage extends StatelessWidget {
     final logoutWidget = TextButton(
       onPressed: () {
         loginController.logout();
+        Get.toNamed(Constants.homeRoute);
       },
       child: const Text("Click to log out"),
     );
