@@ -61,6 +61,7 @@ class ViewListingControllerFactory {
 class ViewListingsControllerFactory {
   ListingsController make() {
     return ListingsController(
-        GetListingsUseCaseFactory().make(), GetLoginIdUseCaseFactory().make());
+        GetListingsUseCaseFactory().make(), GetLoginIdUseCaseFactory().make()
+      , DeleteListingUseCaseFactory().make());
   }
 }

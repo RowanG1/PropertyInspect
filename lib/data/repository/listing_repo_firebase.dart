@@ -40,4 +40,9 @@ class ListingRepoFirebase implements ListingRepo {
               .toList();
     });
   }
+
+  @override
+  Future<void> deleteListing(String listingId) {
+    return collection.doc(listingId).delete();
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:property_inspect/domain/usecase/delete_listing_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../domain/entities/listing.dart';
 import '../../domain/entities/state.dart';
@@ -8,9 +9,11 @@ import '../../domain/usecase/get_login_id_use_case.dart';
 class ListingsController extends GetxController {
   GetListingsUseCase _getListingsUseCase;
   GetLoginIdUseCase _getLoginIdUseCase;
+  DeleteListingUseCase _deleteListingUseCase;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<State<List<Listing>>> _propertiesState = State<List<Listing>>().obs;
-  ListingsController(this._getListingsUseCase, this._getLoginIdUseCase);
+  ListingsController(this._getListingsUseCase, this._getLoginIdUseCase, this
+      ._deleteListingUseCase);
 
   @override
   void onInit() {
@@ -53,6 +56,10 @@ class ListingsController extends GetxController {
     print('Listings:');
     print(listings);
     return _propertiesState.value.content ?? [];
+  }
+
+  deleteListing(String listingId) async {
+    await _deleteListingUseCase.execute(listingId);
   }
 
   bool isLoading() {

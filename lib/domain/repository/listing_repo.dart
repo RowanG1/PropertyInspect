@@ -5,4 +5,5 @@ abstract class ListingRepo {
   Stream<bool> isListingAvailable(String propertyId);
   Stream<Listing?> getListing(listingId);
   Stream<List<Listing>> getListings(userId);
+  Future<void> deleteListing(String listingId);
 }

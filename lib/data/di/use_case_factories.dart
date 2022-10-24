@@ -17,6 +17,7 @@ import 'package:property_inspect/domain/usecase/is_lister_registered_use_case.da
 import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 
 import '../../domain/usecase/create_visitor_registration_use_case.dart';
+import '../../domain/usecase/delete_listing_use_case.dart';
 import '../../domain/usecase/get_listings_use_case.dart';
 import '../../domain/usecase/get_visitor_use_case.dart';
 
@@ -94,5 +95,11 @@ class IsListerRegisteredUseCaseFactory {
 class CreateListingUseCaseFactory {
   CreateListingUseCase make() {
     return CreateListingUseCase(ListingRepoFirebase());
+  }
+}
+
+class DeleteListingUseCaseFactory {
+  DeleteListingUseCase make() {
+    return DeleteListingUseCase(ListingRepoFirebase());
   }
 }
