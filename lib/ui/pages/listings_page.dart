@@ -15,35 +15,53 @@ class ListingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListerFlow(
         // This is where you give you custom widget it's data.
-        body: Obx(() => Center(
-            child: controller.isLoading()
-                ? Text('Please wait........................')
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                        const Padding(
-                          padding: EdgeInsets.all(20.0),
-                          child: Text('Listings',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: TextButton(
-                              onPressed: () {
-                                const route = '${Constants.createListingRoute}';
-                                Get.toNamed('$route');
-                              },
-                              child: const Text("Create Listing")),
-                        ),
-                        Table(
-                            defaultColumnWidth: const FixedColumnWidth(120.0),
-                            border: TableBorder.all(
-                                color: Colors.black,
-                                style: BorderStyle.solid,
-                                width: 2),
-                            children: getRows())
-                      ]))));
+        body: Obx(() => Column(crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        Get.toNamed(Constants.homeRoute);
+                      },
+                      child: const Text("Go to home")),
+                ),
+                Center(
+                    child: controller.isLoading()
+                        ? Text('Please wait........................')
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                                const Padding(
+                                  padding: EdgeInsets.all(20.0),
+                                  child: Text('Listings',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18)),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        const route =
+                                            '${Constants.createListingRoute}';
+                                        Get.toNamed('$route');
+                                      },
+                                      child: const Text("Create Listing")),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(14.0),
+                                  child: Table(
+                                      defaultColumnWidth:
+                                          const FixedColumnWidth(120.0),
+                                      border: TableBorder.all(
+                                          color: Colors.black,
+                                          style: BorderStyle.solid,
+                                          width: 2),
+                                      children: getRows()),
+                                )
+                              ])),
+              ],
+            )));
   }
 
   List<TableRow> getRows() {
