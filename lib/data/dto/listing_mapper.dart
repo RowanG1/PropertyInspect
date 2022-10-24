@@ -15,11 +15,14 @@ class ListingMapper {
   Listing? fromSnapshot(DocumentSnapshot snapshot) {
     final data = snapshot.data() as Map<String, dynamic>?;
     if (data == null) { return null; }
-    final id = data['userId'] as String;
+    final userId = data['userId'] as String;
     final address = data['address'] as String;
     final suburb = data['suburb'] as String;
     final postCode = data['postCode'] as String;
     final phone = data['phone'] as String;
-    return Listing(id, address, suburb, postCode, phone);
+    return Listing(id: snapshot.id, userId: userId, address: address, suburb:
+    suburb,
+        postCode: postCode,
+        phone: phone);
   }
 }

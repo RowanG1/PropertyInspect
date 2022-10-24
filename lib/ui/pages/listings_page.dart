@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
 import '../../data/di/controllers_factories.dart';
+import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
 
 class ListingsPage extends StatelessWidget {
@@ -19,26 +20,70 @@ class ListingsPage extends StatelessWidget {
                 ? Text('Please wait........................')
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [ Text('Listings'),
+                    children: [ Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text('Listings', style: const TextStyle
+                        (fontWeight: FontWeight.bold, fontSize: 18)),
+                    ),
                         Table(
                             defaultColumnWidth: FixedColumnWidth(120.0),
                             border: TableBorder.all(
                                 color: Colors.black,
                                 style: BorderStyle.solid,
                                 width: 2),
-                            children: controller.getListings().map<TableRow>((item) {
-                              return getTableRow(item);
-                            }).toList())
+                            children: getRows())
                       ]))));
+  }
+
+  List<TableRow> getRows() {
+    return [getListingsHeader(), ...controller
+        .getListings()
+        .map<TableRow>
+      ((item) {
+      return getTableRow(item);
+    }).toList()];
+  }
+
+  TableRow getListingsHeader() {
+    return TableRow(children: [TableCell(
+      verticalAlignment: TableCellVerticalAlignment.middle,
+      child: Row(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Address', textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold)),
+          )
+        ],
+      ),
+    ), TableCell(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[],
+      ),
+    )]);
   }
 
   TableRow getTableRow(Listing item) {
     return TableRow(children: [TableCell(
+      verticalAlignment: TableCellVerticalAlignment.middle,
+      child: Row(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(item.address, textAlign: TextAlign.center),
+          )
+        ],
+      ),
+    ), TableCell(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          new Text('Address:'),
-          new Text(item.address),
+          TextButton(
+              onPressed: () {
+                final route = '${Constants.listingBaseRoute}/${item.id}';
+                Get.toNamed('$route');
+              },
+              child: const Text("View"))
         ],
       ),
     )]);
