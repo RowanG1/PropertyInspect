@@ -32,7 +32,7 @@ class CheckinPage extends StatelessWidget {
                 : checkinController.isRegistered()
                     ? checkinController.isValidConfig()
                         ? ValidCheckinContent()
-                        : Text('Invalid config for id: $propertyId')
+                        : Text('Sorry, we encountered a problem.')
                     : VisitorRegistrationForm())));
   }
 }

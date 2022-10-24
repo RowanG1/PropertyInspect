@@ -7,8 +7,9 @@ class CreateListingUseCase {
 
   CreateListingUseCase(this.createListingRepo);
 
-  execute(String address, String suburb, String postCode, String phone) {
-    final listing = Listing(address, suburb, postCode, phone);
+  execute(String userId, String address, String suburb, String postCode, String
+  phone) {
+    final listing = Listing(userId, address, suburb, postCode, phone);
     return createListingRepo.createListing(listing);
   }
 }

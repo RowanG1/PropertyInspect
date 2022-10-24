@@ -4,4 +4,5 @@ abstract class ListingRepo {
   void createListing(Listing listing);
   Stream<bool> isListingAvailable(String propertyId);
   Stream<Listing?> getListing(listingId);
+  Stream<List<Listing>> getListings(userId);
 }

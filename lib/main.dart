@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       initialRoute: Constants.homeRoute,
       getPages: [
+        GetPage(name: Constants.homeRoute, page: () => const HomePage()),
         GetPage(
             name: Constants.signInRoute, page: () => SignInRouteHome()),
         GetPage(
@@ -61,7 +62,6 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: Constants.checkinRoute,
             page: () =>  CheckinPage()),
-        GetPage(name: Constants.homeRoute, page: () => const HomePage()),
         GetPage(name: Constants.listingRoute, page: () => ListingPage()),
       ],
     );

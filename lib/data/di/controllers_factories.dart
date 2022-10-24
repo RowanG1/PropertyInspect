@@ -2,6 +2,7 @@ import 'package:property_inspect/data/di/use_case_factories.dart';
 import 'package:property_inspect/domain/usecase/create_lister_registration.dart';
 import 'package:property_inspect/ui/controllers/check_in_controller.dart';
 import 'package:property_inspect/ui/controllers/lister_registration_controller.dart';
+import 'package:property_inspect/ui/controllers/listings_controller.dart';
 import 'package:property_inspect/ui/controllers/sign_in_route_home_controller.dart';
 import '../../ui/controllers/lister_flow_controller.dart';
 import '../../ui/controllers/view_listing_controller.dart';
@@ -54,5 +55,12 @@ class ViewListingControllerFactory {
   ViewListingController make() {
     return ViewListingController(
         GetListingUseCaseFactory().make());
+  }
+}
+
+class ViewListingsControllerFactory {
+  ListingsController make() {
+    return ListingsController(
+        GetListingsUseCaseFactory().make());
   }
 }

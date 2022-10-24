@@ -29,4 +29,15 @@ class ListingRepoFirebase implements ListingRepo {
           return ListingMapper().fromSnapshot(event);
     });
   }
+
+  @override
+  Stream<List<Listing>> getListings(userId) {
+    return collection
+        .where("userId", isEqualTo: userId)
+        .snapshots().map((event) {
+          return event.docs.map((e) => ListingMapper().fromSnapshot(e)).where
+            ((element) => element != null).map((e) => e!)
+              .toList();
+    });
+  }
 }
