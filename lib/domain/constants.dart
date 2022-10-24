@@ -7,6 +7,7 @@ class Constants {
   static const listingRoute = '/listing/:id';
   static const userRegistrationRoute = '/userRegistration';
   static const createListingRoute = '/createListing';
+  static const listingsRoute = '/listings';
   static const checkinBaseRoute = '/checkin';
   static const checkinRoute = '$checkinBaseRoute/:id';
   static const continueToRouteKey = "continueToRoute";

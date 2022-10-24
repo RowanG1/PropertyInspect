@@ -11,6 +11,7 @@ import 'package:property_inspect/ui/pages/checkin_page.dart';
 import 'package:property_inspect/ui/pages/create_listing_page.dart';
 import 'package:property_inspect/ui/pages/home_page.dart';
 import 'package:property_inspect/ui/pages/listing_page.dart';
+import 'package:property_inspect/ui/pages/listings_page.dart';
 import 'package:property_inspect/ui/pages/signin_route_home.dart';
 import 'package:property_inspect/ui/pages/visitor_registration_page.dart';
 import 'data/repository/logout_firebase_repo.dart';
@@ -59,6 +60,9 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: Constants.createListingRoute,
             page: () => CreateListingPage()),
+        GetPage(
+            name: Constants.listingsRoute,
+            page: () => ListingsPage()),
         GetPage(
             name: Constants.checkinRoute,
             page: () =>  CheckinPage()),

@@ -1,19 +1,34 @@
 import 'package:get/get.dart';
+import '../../data/types/optional.dart';
 import '../../domain/entities/listing.dart';
 import '../../domain/entities/state.dart';
 import '../../domain/usecase/get_listings_use_case.dart';
+import '../../domain/usecase/get_login_id_use_case.dart';
 
 class ListingsController extends GetxController {
-  String? _propertyId;
   GetListingsUseCase _getListingsUseCase;
+  GetLoginIdUseCase _getLoginIdUseCase;
+  final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<State<List<Listing>>> _propertiesState = State<List<Listing>>().obs;
+  ListingsController(this._getListingsUseCase, this._getLoginIdUseCase);
 
-  ListingsController(this._getListingsUseCase);
+  @override
+  void onInit() {
+    super.onInit();
+    final Stream<Optional<String>> loginIdStream = _getLoginIdUseCase.execute();
+    _userId.bindStream(loginIdStream);
+    ever(_userId, (value) {
+      final userId = value.value;
+      if (userId != null) {
+       _getProperties(userId);
+      }
+    });
+  }
 
-  _getProperties() {
+  _getProperties(String userId) {
     try {
       _propertiesState.value = State<List<Listing>>(loading: true);
-      final propertiesStream = _getListingsUseCase.execute(_propertyId!);
+      final propertiesStream = _getListingsUseCase.execute(userId);
       final Stream<State<List<Listing>>> mappedPropertiesStream =
       propertiesStream.map<State<List<Listing>>>((event) {
         return State<List<Listing>>(content: event);
@@ -34,6 +49,9 @@ class ListingsController extends GetxController {
   }
 
   List<Listing> getListings() {
+    final listings = _propertiesState.value.content ?? [];
+    print('Listings:');
+    print(listings);
     return _propertiesState.value.content ?? [];
   }
 
