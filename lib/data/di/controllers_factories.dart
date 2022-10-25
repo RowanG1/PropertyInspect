@@ -1,6 +1,8 @@
 import 'package:property_inspect/data/di/use_case_factories.dart';
 import 'package:property_inspect/domain/usecase/create_lister_registration.dart';
+import 'package:property_inspect/domain/usecase/get_checkins_for_listing_use_case.dart';
 import 'package:property_inspect/ui/controllers/check_in_controller.dart';
+import 'package:property_inspect/ui/controllers/checkins_controller.dart';
 import 'package:property_inspect/ui/controllers/lister_registration_controller.dart';
 import 'package:property_inspect/ui/controllers/listings_controller.dart';
 import 'package:property_inspect/ui/controllers/sign_in_route_home_controller.dart';
@@ -71,5 +73,12 @@ class ViewListingsControllerFactory {
     return ListingsController(
         GetListingsUseCaseFactory().make(), GetLoginIdUseCaseFactory().make()
       , DeleteListingUseCaseFactory().make());
+  }
+}
+
+class GetCheckinsControllerFactory {
+  CheckinsController make() {
+    return CheckinsController(GetLoginIdUseCaseFactory().make(),
+        GetCheckinsUseCaseFactory().make());
   }
 }

@@ -9,6 +9,7 @@ import 'package:property_inspect/domain/usecase/checked_in_use_case.dart';
 import 'package:property_inspect/domain/usecase/create_lister_registration.dart';
 import 'package:property_inspect/domain/usecase/create_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/do_checkin_use_case.dart';
+import 'package:property_inspect/domain/usecase/get_checkins_for_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_is_visitor_registerd_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_listing_available_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_listing_use_case.dart';
@@ -101,5 +102,11 @@ class CreateListingUseCaseFactory {
 class DeleteListingUseCaseFactory {
   DeleteListingUseCase make() {
     return DeleteListingUseCase(ListingRepoFirebase());
+  }
+}
+
+class GetCheckinsUseCaseFactory {
+  GetCheckinsForListingUseCase make() {
+    return GetCheckinsForListingUseCase(CheckinFirebaseRepo());
   }
 }

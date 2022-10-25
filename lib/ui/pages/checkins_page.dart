@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import '../../data/di/controllers_factories.dart';
+import '../../domain/entities/visitor.dart';
 
 class CheckinsPage extends StatelessWidget {
-  final controller = Get.put(ViewListingControllerFactory().make());
+  final controller = Get.put(GetCheckinsControllerFactory().make());
 
   CheckinsPage({Key? key}) : super(key: key) {
     String? id = Get.parameters['id'];
@@ -19,18 +20,60 @@ class CheckinsPage extends StatelessWidget {
         body: Obx(() => Center(
             child: controller.isLoading()
                 ? Text('Please wait........................')
-                : ((controller.getListing() != null)
-                ? Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                      "🏠 Address: ${controller.getListing()?.address}"),
-                  QrImage(
-                    data: controller.getQRCodeUrl(),
-                    version: QrVersions.auto,
-                    size: 200.0,
-                  )
-                ])
-                : Text('Sorry, we can\'t find the listing.')))));
+                : Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Table(
+                  defaultColumnWidth:
+                  const FixedColumnWidth(120.0),
+                  border: TableBorder.all(
+                      color: Colors.black,
+                      style: BorderStyle.solid,
+                      width: 2),
+                  children: getRows()),
+            ))));
+  }
+
+
+  List<TableRow> getRows() {
+    return [
+      getListingsHeader(),
+      ...controller.getCheckins().map<TableRow>((item) {
+        return getTableRow(item);
+      }).toList()
+    ];
+  }
+
+  TableRow getListingsHeader() {
+    return TableRow(children: [
+      TableCell(
+        verticalAlignment: TableCellVerticalAlignment.middle,
+        child: Row(
+          children: const <Widget>[
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text('Checkins',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+            )
+          ],
+        ),
+      )
+    ]);
+  }
+
+  TableRow getTableRow(Visitor item) {
+    return TableRow(children: [
+      TableCell(
+        verticalAlignment: TableCellVerticalAlignment.middle,
+        child: Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(item.name, textAlign: TextAlign.center),
+            )
+          ],
+        ),
+      )
+    ]);
   }
 }

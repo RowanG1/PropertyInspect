@@ -8,6 +8,7 @@ import 'package:property_inspect/domain/usecase/logout_use_case.dart';
 import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/pages/checkin_page.dart';
+import 'package:property_inspect/ui/pages/checkins_page.dart';
 import 'package:property_inspect/ui/pages/create_listing_page.dart';
 import 'package:property_inspect/ui/pages/home_page.dart';
 import 'package:property_inspect/ui/pages/listing_page.dart';
@@ -39,8 +40,7 @@ initLoginController() {
   final AnalyticsUseCase analyticsUseCase =
       AnalyticsUseCase(AnalyticsFirebaseRepo());
 
-  Get.put(LoginController(loginStateUseCase, logoutUseCase,
-      analyticsUseCase));
+  Get.put(LoginController(loginStateUseCase, logoutUseCase, analyticsUseCase));
 }
 
 class MyApp extends StatelessWidget {
@@ -52,20 +52,16 @@ class MyApp extends StatelessWidget {
       initialRoute: Constants.homeRoute,
       getPages: [
         GetPage(name: Constants.homeRoute, page: () => const HomePage()),
-        GetPage(
-            name: Constants.signInRoute, page: () => SignInRouteHome()),
+        GetPage(name: Constants.signInRoute, page: () => SignInRouteHome()),
         GetPage(
             name: Constants.userRegistrationRoute,
             page: () => VisitorRegistrationPage()),
         GetPage(
             name: Constants.createListingRoute,
             page: () => CreateListingPage()),
-        GetPage(
-            name: Constants.listingsRoute,
-            page: () => ListingsPage()),
-        GetPage(
-            name: Constants.checkinRoute,
-            page: () =>  CheckinPage()),
+        GetPage(name: Constants.listingsRoute, page: () => ListingsPage()),
+        GetPage(name: Constants.checkinRoute, page: () => CheckinPage()),
+        GetPage(name: Constants.checkinsRoute, page: () => CheckinsPage()),
         GetPage(name: Constants.listingRoute, page: () => ListingPage()),
       ],
     );
