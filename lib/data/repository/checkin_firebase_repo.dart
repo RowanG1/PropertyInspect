@@ -1,23 +1,39 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:property_inspect/domain/entities/visitor.dart';
 import 'package:property_inspect/domain/repository/checkin_repo.dart';
 import '../dto/checkin_mapper.dart';
+import '../dto/visitor_mapper.dart';
 
 class CheckinFirebaseRepo implements CheckinRepo {
   final CollectionReference collection =
-  FirebaseFirestore.instance.collection('checkins');
+      FirebaseFirestore.instance.collection('checkins');
 
   @override
-  void createCheckin(String visitorId, String propertyId) {
-    print('Creating checkin');
-    collection.add(CheckinMapper().toJson(visitorId, propertyId));
+  void createCheckin(
+      String visitorId, String propertyId, String listerId, Visitor visitor) {
+    collection
+        .doc(listerId)
+        .collection(propertyId)
+        .doc(visitorId).set(VisitorMapper().toJson(visitor));
   }
 
   @override
   Stream<bool> isCheckedIn(String visitorId, String propertyId) {
-    return collection.where("visitorId", isEqualTo: visitorId)
-        .where
-      ("propertyId",
-        isEqualTo: propertyId).snapshots().map((event) => event.docs
-        .isNotEmpty);
+    return collection
+        .where("visitorId", isEqualTo: visitorId)
+        .where("propertyId", isEqualTo: propertyId)
+        .snapshots()
+        .map((event) => event.docs.isNotEmpty);
+  }
+
+  @override
+  Stream<List<Visitor>> getCheckins(String listerId, String propertyId) {
+    return collection
+        .doc(listerId)
+        .collection(propertyId)
+        .snapshots()
+        .map((event) =>
+            event.docs.map((e) => VisitorMapper().fromSnapshot(e)).where
+              ((element) => element != null).map((e) => e!).toList());
   }
 }

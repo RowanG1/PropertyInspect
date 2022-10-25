@@ -6,7 +6,7 @@ class GetVisitorUseCase {
 
   GetVisitorUseCase(this.visitorRepo);
 
-  Stream<Visitor> execute(String id) {
+  Stream<Visitor?> execute(String id) {
     return visitorRepo.getVisitor(id);
   }
 }

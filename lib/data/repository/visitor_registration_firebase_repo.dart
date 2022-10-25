@@ -22,7 +22,7 @@ class VisitorRegistrationFirebaseRepo implements VisitorRegistrationRepo {
   }
 
   @override
-  Stream<Visitor> getVisitor(String id) {
+  Stream<Visitor?> getVisitor(String id) {
     return collection
         .doc(id)
         .snapshots().map((event) {

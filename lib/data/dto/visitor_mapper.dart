@@ -14,8 +14,9 @@ class VisitorMapper {
     };
   }
 
-  Visitor fromSnapshot(DocumentSnapshot snapshot) {
-    final data = snapshot.data() as Map<String, dynamic>;
+  Visitor? fromSnapshot(DocumentSnapshot snapshot) {
+    final data = snapshot.data() as Map<String, dynamic>?;
+    if (data == null) { return null; }
     final id = data['id'] as String;
     final name = data['name'] as String;
     final lastName = data['lastName'] as String;
