@@ -33,9 +33,7 @@ Rx<CheckInsLumpedInputData> _checkInsLumpedInput = CheckInsLumpedInputData().obs
       final userId = value.userId;
       final listingId = value.listingId;
 
-      print('We got user id update.');
       if (userId != null && listingId != null) {
-        print('We have a run.');
         final visitorStream =
             _checkinsForListingUseCase.execute(userId, listingId);
         final mappedVisitorStream = visitorStream
@@ -53,7 +51,6 @@ Rx<CheckInsLumpedInputData> _checkInsLumpedInput = CheckInsLumpedInputData().obs
   }
 
   setPropertyId(String? propertyId) {
-    print('Setting prop id: $propertyId');
     _listingId.value = Optional(propertyId);
   }
 

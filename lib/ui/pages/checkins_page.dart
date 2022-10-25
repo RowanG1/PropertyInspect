@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
 import '../../data/di/controllers_factories.dart';
+import '../../data/widgets/center_horizontal.dart';
 import '../../domain/entities/visitor.dart';
 
 class CheckinsPage extends StatelessWidget {
@@ -17,20 +18,21 @@ class CheckinsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListerFlow(
       // This is where you give you custom widget it's data.
-        body: Obx(() => Center(
-            child: controller.isLoading()
-                ? Text('Please wait........................')
-                : Padding(
-              padding: const EdgeInsets.all(14.0),
-              child: Table(
-                  defaultColumnWidth:
-                  const FixedColumnWidth(120.0),
-                  border: TableBorder.all(
-                      color: Colors.black,
-                      style: BorderStyle.solid,
-                      width: 2),
-                  children: getRows()),
-            ))));
+        body: Obx(() => controller.isLoading()
+            ? Center(child: Text('Please wait........................'))
+            : Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: CenterHorizontal(
+            child: Table(
+                defaultColumnWidth:
+                const FixedColumnWidth(200.0),
+                border: TableBorder.all(
+                    color: Colors.black,
+                    style: BorderStyle.solid,
+                    width: 2),
+                children: getRows()),
+          ),
+        )));
   }
 
 
@@ -65,11 +67,20 @@ class CheckinsPage extends StatelessWidget {
     return TableRow(children: [
       TableCell(
         verticalAlignment: TableCellVerticalAlignment.middle,
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(item.name, textAlign: TextAlign.center),
+              child: Text('Name ${item.name}', textAlign: TextAlign.left),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Email: ${item.email}', textAlign: TextAlign.left),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Phone: ${item.phone}', textAlign: TextAlign.left),
             )
           ],
         ),
