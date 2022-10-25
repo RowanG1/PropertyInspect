@@ -6,6 +6,7 @@ import 'package:property_inspect/ui/controllers/listings_controller.dart';
 import 'package:property_inspect/ui/controllers/sign_in_route_home_controller.dart';
 import '../../ui/controllers/lister_flow_controller.dart';
 import '../../ui/controllers/view_listing_controller.dart';
+import '../../ui/controllers/visitor_flow_controller.dart';
 import '../../ui/controllers/visitor_registration_controller.dart';
 
 class CheckinControllerFactory {
@@ -15,7 +16,6 @@ class CheckinControllerFactory {
         ListingAvailableUseCaseFactory().make(),
         GetLoginIdUseCaseFactory().make(),
         DoCheckInUseCaseFactory().make(),
-        IsVisitorRegisteredUseCaseFactory().make(),
         GetListingUseCaseFactory().make(),
         GetVisitorUseCaseFactory().make());
   }
@@ -31,6 +31,14 @@ class VisitorRegistrationControllerFactory {
   VisitorRegistrationController make() {
     return VisitorRegistrationController(
         CreateVisitorRegistrationUseCaseFactory().make(),
+        GetLoginIdUseCaseFactory().make());
+  }
+}
+
+class VisitorFlowControllerFactory {
+  VisitorFlowController make() {
+    return VisitorFlowController(
+        IsVisitorRegisteredUseCaseFactory().make(),
         GetLoginIdUseCaseFactory().make());
   }
 }

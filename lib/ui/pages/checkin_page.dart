@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/data/di/controllers_factories.dart';
 import 'package:property_inspect/ui/controllers/check_in_controller.dart';
-import 'package:property_inspect/ui/pages/resume_after_authenticated_page.dart';
-import 'package:property_inspect/ui/pages/visitor_registration_form.dart';
+import 'package:property_inspect/ui/pages/visitor_flow.dart';
 import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
 import '../../domain/entities/visitor.dart';
@@ -23,17 +22,13 @@ class CheckinPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final propertyId = checkinController.getPropertyId();
-
-    return ResumeAfterAuthenticatedPage(
+    return VisitorFlow(
         body: Obx(() => Center(
             child: checkinController.getIsLoading()
                 ? Text('Loading content')
-                : checkinController.isRegistered()
-                    ? checkinController.isValidConfig()
-                        ? ValidCheckinContent()
-                        : Text('Sorry, we encountered a problem.')
-                    : VisitorRegistrationForm())));
+                : checkinController.isValidConfig()
+                    ? ValidCheckinContent()
+                    : Text('Sorry, we encountered a problem.'))));
   }
 }
 
@@ -44,14 +39,18 @@ class ValidCheckinContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     return Obx(() => checkinController.getIsLoading()
-        ? const Text('Loading '
-            'content')
-        : CheckinContent(
-            property: checkinController.getListingValue()!,
-            checkedIn: checkinController.getIsCheckedIn(),
-            visitor: checkinController.getVisitor()!,
-          ));
+    return VisitorFlow(
+        // This is where you give you custom widget it's data.
+        body: Obx(() => Center(
+          child: checkinController.getIsLoading()
+              ? const Text('Loading '
+                  'content')
+              : CheckinContent(
+                  property: checkinController.getListingValue()!,
+                  checkedIn: checkinController.getIsCheckedIn(),
+                  visitor: checkinController.getVisitor()!,
+                ),
+        )));
   }
 }
 
@@ -62,7 +61,10 @@ class CheckinContent extends StatelessWidget {
   final CheckinController checkinController = Get.find<CheckinController>();
 
   CheckinContent(
-      {Key? key, required this.property, required this.checkedIn, required this.visitor})
+      {Key? key,
+      required this.property,
+      required this.checkedIn,
+      required this.visitor})
       : super(key: key);
 
   @override

@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:property_inspect/data/types/optional.dart';
 import 'package:property_inspect/domain/entities/visitor.dart';
-import 'package:property_inspect/domain/usecase/get_is_visitor_registerd_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import '../../domain/entities/listing.dart';
@@ -17,7 +16,6 @@ class CheckinController extends GetxController {
   final GetListingAvailableUseCase _listingAvailableUseCase;
   final GetLoginIdUseCase _getLoginIdUseCase;
   final DoCheckinUseCase _doCheckinUseCase;
-  final GetIsVisitorRegisteredUseCase _isVisitorRegisteredUseCase;
   final GetListingUseCase _getListingUseCase;
   final GetVisitorUseCase _getVisitorUseCase;
 
@@ -36,7 +34,6 @@ class CheckinController extends GetxController {
       this._listingAvailableUseCase,
       this._getLoginIdUseCase,
       this._doCheckinUseCase,
-      this._isVisitorRegisteredUseCase,
       this._getListingUseCase,
       this._getVisitorUseCase);
 
@@ -48,7 +45,6 @@ class CheckinController extends GetxController {
     ever(_userId, (value) {
       if (value.value != null) {
         _getVisitor();
-        _checkIsRegistered();
       }
     });
 
@@ -190,21 +186,6 @@ class CheckinController extends GetxController {
     } catch (e) {
       print('Check-in error $e');
       _checkInState.value = State<bool>(error: Exception('$e'));
-    }
-  }
-
-  void _checkIsRegistered() {
-    try {
-      _isRegisteredState.value = State(loading: true);
-      final isRegistered =
-          _isVisitorRegisteredUseCase.execute(_getUserId().value!);
-      final mappedRegistration =
-          isRegistered.map((event) => State(content: event));
-
-      _isRegisteredState.bindStream(mappedRegistration.handleError(
-          (onError) => _isRegisteredState.value = State(error: onError)));
-    } catch (e) {
-      _isRegisteredState.value = State(error: Exception("$e"));
     }
   }
 

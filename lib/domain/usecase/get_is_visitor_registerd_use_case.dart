@@ -6,7 +6,7 @@ class GetIsVisitorRegisteredUseCase {
 
   GetIsVisitorRegisteredUseCase(this.visitorRepo);
 
-  Stream<Optional<bool>> execute(String id) {
+  Stream<bool> execute(String id) {
     return visitorRepo.getIsVisitorRegistered(id);
   }
 }

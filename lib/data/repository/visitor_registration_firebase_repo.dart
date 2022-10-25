@@ -14,10 +14,10 @@ class VisitorRegistrationFirebaseRepo implements VisitorRegistrationRepo {
   }
 
   @override
-  Stream<Optional<bool>> getIsVisitorRegistered(String id) {
+  Stream<bool> getIsVisitorRegistered(String id) {
     return collection.doc(id).snapshots().map(
             (value) {
-         return Optional(value.exists);
+         return value.exists;
         });
   }
 

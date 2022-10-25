@@ -4,12 +4,14 @@ import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../domain/usecase/create_visitor_registration_use_case.dart';
 import '../../domain/utils/field_validation.dart';
+import 'package:property_inspect/domain/entities/state.dart' as s;
 
 class VisitorRegistrationController extends GetxController {
   CreateVisitorRegistrationUseCase visitorRegistration;
   GetLoginIdUseCase _loginIdUseCase;
   FieldValidation validation = FieldValidation();
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
+  final Rx<s.State<bool>> _createState = s.State<bool>().obs;
 
   VisitorRegistrationController(this.visitorRegistration, this._loginIdUseCase);
 
@@ -25,7 +27,7 @@ class VisitorRegistrationController extends GetxController {
   final phoneController = TextEditingController();
   final suburbController = TextEditingController();
 
-  createUser() {
+  createUser() async {
     final userId = _getUserId().value;
     if (userId != null) {
       final name = nameController.value.text;
@@ -34,7 +36,14 @@ class VisitorRegistrationController extends GetxController {
       final phone = phoneController.value.text;
       final suburb = suburbController.value.text;
 
-      visitorRegistration.execute(userId, name, lastName, email, phone, suburb);
+      _createState.value = s.State(loading: true);
+      try {
+        await visitorRegistration.execute(userId, name, lastName, email, phone,
+            suburb);
+        _createState.value = s.State(content: true);
+      } catch(e) {
+        _createState.value = s.State(error: Exception('$e'));
+      }
     }
   }
 
@@ -49,5 +58,9 @@ class VisitorRegistrationController extends GetxController {
 
   Optional<String> _getUserId() {
     return _userId.value;
+  }
+
+  bool isLoading() {
+    return _createState.value.loading;
   }
 }
