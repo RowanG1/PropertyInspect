@@ -19,7 +19,7 @@ class ListingsPage extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: ElevatedButton(
+                  child: TextButton(
                       onPressed: () {
                         Get.toNamed(Constants.homeRoute);
                       },
@@ -81,23 +81,11 @@ class ListingsPage extends StatelessWidget {
           children: const <Widget>[
             Padding(
               padding: EdgeInsets.all(8.0),
-              child: Text('Address',
-                  textAlign: TextAlign.center,
+              child: Text('Listing',
+                  textAlign: TextAlign.start,
                   style: TextStyle(fontWeight: FontWeight.bold)),
             )
           ],
-        ),
-      ),
-      TableCell(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[],
-        ),
-      ),
-      TableCell(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[],
         ),
       )
     ]);
@@ -107,40 +95,38 @@ class ListingsPage extends StatelessWidget {
     return TableRow(children: [
       TableCell(
         verticalAlignment: TableCellVerticalAlignment.middle,
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(item.address, textAlign: TextAlign.center),
-            )
-          ],
-        ),
-      ),
-      TableCell(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
+              child: Text(item.address, textAlign: TextAlign.start),
+            ),
             TextButton(
                 onPressed: () {
                   final route = '${Constants.listingBaseRoute}/${item.id}';
                   Get.toNamed('$route');
                 },
-                child: const Text("View"))
-          ],
-        ),
-      ),
-      TableCell(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
+                child: Align(alignment: Alignment.centerLeft, child: const
+                Text("View",
+                    textAlign: TextAlign
+                    .start))),
             TextButton(
                 onPressed: () {
                   controller.deleteListing(item.id!);
                 },
-                child: const Text("Delete"))
+                child: Align(alignment: Alignment.centerLeft, child: const
+                Text("Delete"))),
+            TextButton(
+                onPressed: () {
+                  final route = '${Constants.checkinsBaseRoute}/${item.id}';
+                  Get.toNamed('$route');
+                },
+                child: Align(alignment: Alignment.centerLeft, child: const
+                Text("Show Checkins")))
           ],
         ),
-      )
+      ),
     ]);
   }
 }

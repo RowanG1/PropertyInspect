@@ -10,7 +10,8 @@ class Constants {
   static const createListingRoute = '/createListing';
   static const listingsRoute = '/listings';
   static const checkinBaseRoute = '/checkin';
-  static const checkinsRoute = '/checkins/:id';
+  static const checkinsBaseRoute = '/checkins';
+  static const checkinsRoute = '$checkinsBaseRoute/:id';
   static const checkinRoute = '$checkinBaseRoute/:id';
   static const continueToRouteKey = "continueToRoute";
 
