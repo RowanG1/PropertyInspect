@@ -41,4 +41,9 @@ class MockListingRepo extends _i1.Mock implements _i2.ListingRepo {
       (super.noSuchMethod(Invocation.method(#getListings, [userId]),
               returnValue: Stream<List<_i4.Listing>>.empty())
           as _i3.Stream<List<_i4.Listing>>);
+  @override
+  _i3.Future<void> deleteListing(String? listingId) =>
+      (super.noSuchMethod(Invocation.method(#deleteListing, [listingId]),
+          returnValue: Future<void>.value(null),
+          returnValueForMissingStub: Future.value()) as _i3.Future<void>);
 }

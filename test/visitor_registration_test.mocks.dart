@@ -5,7 +5,6 @@
 import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:property_inspect/data/types/optional.dart' as _i5;
 import 'package:property_inspect/domain/entities/visitor.dart' as _i3;
 import 'package:property_inspect/domain/repository/visitor_registration_repo.dart'
     as _i2;
@@ -31,12 +30,11 @@ class MockVisitorRegistrationRepo extends _i1.Mock
       Invocation.method(#createVisitorRegistration, [visitor]),
       returnValueForMissingStub: null);
   @override
-  _i4.Stream<_i5.Optional<bool>> getIsVisitorRegistered(String? id) =>
+  _i4.Stream<bool> getIsVisitorRegistered(String? id) =>
       (super.noSuchMethod(Invocation.method(#getIsVisitorRegistered, [id]),
-              returnValue: Stream<_i5.Optional<bool>>.empty())
-          as _i4.Stream<_i5.Optional<bool>>);
+          returnValue: Stream<bool>.empty()) as _i4.Stream<bool>);
   @override
-  _i4.Stream<_i3.Visitor> getVisitor(String? id) =>
-      (super.noSuchMethod(Invocation.method(#getVisitor, [id]),
-          returnValue: Stream<_i3.Visitor>.empty()) as _i4.Stream<_i3.Visitor>);
+  _i4.Stream<_i3.Visitor?> getVisitor(String? id) => (super.noSuchMethod(
+      Invocation.method(#getVisitor, [id]),
+      returnValue: Stream<_i3.Visitor?>.empty()) as _i4.Stream<_i3.Visitor?>);
 }
