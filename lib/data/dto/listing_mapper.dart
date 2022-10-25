@@ -14,7 +14,9 @@ class ListingMapper {
 
   Listing? fromSnapshot(DocumentSnapshot snapshot) {
     final data = snapshot.data() as Map<String, dynamic>?;
-    if (data == null) { return null; }
+    if (data == null) {
+      return null;
+    }
     final userId = data['userId'] as String;
     final address = data['address'] as String;
     final suburb = data['suburb'] as String;

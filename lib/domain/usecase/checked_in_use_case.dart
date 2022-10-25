@@ -4,7 +4,7 @@ class CheckedInUseCase {
 final CheckinRepo checkin;
   CheckedInUseCase(this.checkin);
 
-  Stream<bool> execute(String visitorId, String propertyId) {
-    return checkin.isCheckedIn(visitorId, propertyId);
+  Stream<bool> execute(String listerId, String visitorId, String propertyId) {
+    return checkin.isCheckedIn(listerId, visitorId, propertyId);
   }
 }

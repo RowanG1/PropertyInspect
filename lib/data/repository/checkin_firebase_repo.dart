@@ -14,26 +14,28 @@ class CheckinFirebaseRepo implements CheckinRepo {
     collection
         .doc(listerId)
         .collection(propertyId)
-        .doc(visitorId).set(VisitorMapper().toJson(visitor));
+        .doc(visitorId)
+        .set(VisitorMapper().toJson(visitor));
   }
 
   @override
-  Stream<bool> isCheckedIn(String visitorId, String propertyId) {
+  Stream<bool> isCheckedIn(
+      String listerId, String visitorId, String propertyId) {
     return collection
-        .where("visitorId", isEqualTo: visitorId)
-        .where("propertyId", isEqualTo: propertyId)
+        .doc(listerId)
+        .collection(propertyId)
+        .doc(visitorId)
         .snapshots()
-        .map((event) => event.docs.isNotEmpty);
+        .map((event) => event.exists);
   }
 
   @override
   Stream<List<Visitor>> getCheckins(String listerId, String propertyId) {
-    return collection
-        .doc(listerId)
-        .collection(propertyId)
-        .snapshots()
-        .map((event) =>
-            event.docs.map((e) => VisitorMapper().fromSnapshot(e)).where
-              ((element) => element != null).map((e) => e!).toList());
+    return collection.doc(listerId).collection(propertyId).snapshots().map(
+        (event) => event.docs
+            .map((e) => VisitorMapper().fromSnapshot(e))
+            .where((element) => element != null)
+            .map((e) => e!)
+            .toList());
   }
 }
