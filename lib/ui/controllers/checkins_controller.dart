@@ -45,12 +45,10 @@ Rx<CheckInsLumpedInputData> _checkInsLumpedInput = CheckInsLumpedInputData().obs
         _checkedInVisitors.bindStream(mappedVisitorStream);
       }
     });
+  }
 
-    ever(_checkedInVisitors, (value) {
-      if (value.error != null) {
-        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
-      }
-    });
+  Rx<s.State<List<Visitor>>> getCheckinsRx() {
+    return _checkedInVisitors;
   }
 
   List<Visitor> getCheckins() {

@@ -6,12 +6,30 @@ import '../../data/di/controllers_factories.dart';
 import '../../data/widgets/center_horizontal.dart';
 import '../../domain/entities/visitor.dart';
 
-class CheckinsPage extends StatelessWidget {
+class CheckinsPage extends StatefulWidget {
+  CheckinsPage({Key? key}) : super(key: key);
+
+  @override
+  State<CheckinsPage> createState() => _CheckinsPageState();
+}
+
+class _CheckinsPageState extends State<CheckinsPage> {
   final controller = Get.put(GetCheckinsControllerFactory().make());
 
-  CheckinsPage({Key? key}) : super(key: key) {
+  @override
+  void initState() {
+    super.initState();
     String? id = Get.parameters['id'];
     controller.setPropertyId(id);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ever(controller.getCheckinsRx(), (value) {
+        if (value.error != null) {
+          Get.snackbar("Error", value.error.toString(),
+              backgroundColor: Colors.red);
+        }
+      });
+    });
   }
 
   @override
