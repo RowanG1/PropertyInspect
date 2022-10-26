@@ -15,7 +15,8 @@ class ListingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListerFlow(
         // This is where you give you custom widget it's data.
-        body: Obx(() => Column(crossAxisAlignment: CrossAxisAlignment.start,
+        body: Obx(() => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -51,8 +52,9 @@ class ListingsPage extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.all(14.0),
                                   child: Table(
-                                      defaultColumnWidth:
-                                          const FixedColumnWidth(120.0),
+                                      defaultColumnWidth: FixedColumnWidth(
+                                          MediaQuery.of(context).size.width *
+                                              0.8),
                                       border: TableBorder.all(
                                           color: Colors.black,
                                           style: BorderStyle.solid,
@@ -107,23 +109,24 @@ class ListingsPage extends StatelessWidget {
                   final route = '${Constants.listingBaseRoute}/${item.id}';
                   Get.toNamed('$route');
                 },
-                child: Align(alignment: Alignment.centerLeft, child: const
-                Text("View",
-                    textAlign: TextAlign
-                    .start))),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: const Text("View", textAlign: TextAlign.start))),
             TextButton(
                 onPressed: () {
                   controller.deleteListing(item.id!);
                 },
-                child: Align(alignment: Alignment.centerLeft, child: const
-                Text("Delete"))),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: const Text("Delete"))),
             TextButton(
                 onPressed: () {
                   final route = '${Constants.checkinsBaseRoute}/${item.id}';
                   Get.toNamed('$route');
                 },
-                child: Align(alignment: Alignment.centerLeft, child: const
-                Text("Show Checkins")))
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: const Text("Show Checkins")))
           ],
         ),
       ),

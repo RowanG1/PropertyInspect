@@ -17,24 +17,23 @@ class CheckinsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListerFlow(
-      // This is where you give you custom widget it's data.
+        // This is where you give you custom widget it's data.
         body: Obx(() => controller.isLoading()
             ? Center(child: Text('Please wait........................'))
             : Padding(
-          padding: const EdgeInsets.all(14.0),
-          child: CenterHorizontal(
-            child: Table(
-                defaultColumnWidth:
-                const FixedColumnWidth(200.0),
-                border: TableBorder.all(
-                    color: Colors.black,
-                    style: BorderStyle.solid,
-                    width: 2),
-                children: getRows()),
-          ),
-        )));
+                padding: const EdgeInsets.all(14.0),
+                child: CenterHorizontal(
+                  child: Table(
+                      defaultColumnWidth: FixedColumnWidth(
+                          MediaQuery.of(context).size.width * 0.8),
+                      border: TableBorder.all(
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: 2),
+                      children: getRows()),
+                ),
+              )));
   }
-
 
   List<TableRow> getRows() {
     return [
