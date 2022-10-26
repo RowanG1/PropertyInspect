@@ -25,6 +25,9 @@ class CreateListingController extends GetxController {
       if (value.content == true) {
         Get.toNamed(Constants.listingsRoute);
       }
+      if (value.error != null) {
+        Get.snackbar("Error", value.error.toString());
+      }
     });
   }
 
