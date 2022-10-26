@@ -25,7 +25,7 @@ class CreateListingController extends GetxController {
       if (value.content == true) {
         Get.toNamed(Constants.listingsRoute);
       }
-      });
+    });
   }
 
   final addressController = TextEditingController();
@@ -42,15 +42,18 @@ class CreateListingController extends GetxController {
     final loginId = _userId.value.value;
     if (loginId != null) {
       _state.value = s.State(loading: true);
-      await createListingUseCase.execute(loginId, address, suburb, postCode,
-          phone);
-      _state.value = s.State(content: true);
+      try {
+        await createListingUseCase.execute(
+            loginId, address, suburb, postCode, phone);
+        _state.value = s.State(content: true);
+      } catch (e) {
+        _state.value = s.State(error: Exception('$e'));
+      }
     }
   }
 
   validate(TextEditingController controller) {
-    return validation.getNonEmptyValidation(
-        controller.text);
+    return validation.getNonEmptyValidation(controller.text);
   }
 
   bool getIsLoading() {
