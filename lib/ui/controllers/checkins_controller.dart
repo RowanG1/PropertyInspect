@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_rx/src/rx_workers/rx_workers.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:property_inspect/domain/usecase/get_checkins_for_listing_use_case.dart';
 import '../../data/types/optional.dart';
-import '../../domain/entities/state.dart';
+import '../../domain/entities/state.dart' as s;
 import '../../domain/entities/visitor.dart';
 import '../../domain/usecase/get_login_id_use_case.dart';
 import 'package:rxdart/rxdart.dart' as RxRaw;
@@ -14,7 +15,7 @@ class CheckinsController extends GetxController {
   final Rx<Optional<String>> _listingId = Optional<String>(null).obs;
   GetLoginIdUseCase _getLoginIdUseCase;
   GetCheckinsForListingUseCase _checkinsForListingUseCase;
-  Rx<State<List<Visitor>>> _checkedInVisitors = State<List<Visitor>>().obs;
+  Rx<s.State<List<Visitor>>> _checkedInVisitors = s.State<List<Visitor>>().obs;
 Rx<CheckInsLumpedInputData> _checkInsLumpedInput = CheckInsLumpedInputData().obs;
   CheckinsController(this._getLoginIdUseCase, this._checkinsForListingUseCase);
 
@@ -37,11 +38,17 @@ Rx<CheckInsLumpedInputData> _checkInsLumpedInput = CheckInsLumpedInputData().obs
         final visitorStream =
             _checkinsForListingUseCase.execute(userId, listingId);
         final mappedVisitorStream = visitorStream
-            .map((event) => State(content: event))
+            .map((event) => s.State(content: event))
             .handleError((onError) {
-          _checkedInVisitors.value = State<List<Visitor>>(error: onError);
+          _checkedInVisitors.value = s.State<List<Visitor>>(error: onError);
         });
         _checkedInVisitors.bindStream(mappedVisitorStream);
+      }
+    });
+
+    ever(_checkedInVisitors, (value) {
+      if (value.error != null) {
+        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
       }
     });
   }

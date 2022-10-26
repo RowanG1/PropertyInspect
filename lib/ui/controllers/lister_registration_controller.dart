@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/domain/entities/state.dart' as s;
 import 'package:property_inspect/domain/usecase/create_lister_registration.dart';
@@ -20,6 +21,12 @@ class ListerRegistrationController extends GetxController {
   void onInit() {
     super.onInit();
     _userId.bindStream(_loginIdUseCase.execute());
+
+    ever(_createListerState, (value) {
+      if (value.error != null) {
+        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
+      }
+    });
   }
 
   final nameController = TextEditingController();

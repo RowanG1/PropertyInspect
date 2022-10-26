@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/data/types/optional.dart';
 import 'package:property_inspect/domain/entities/visitor.dart';
 import 'package:property_inspect/domain/usecase/get_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import '../../domain/entities/listing.dart';
-import '../../domain/entities/state.dart';
+import '../../domain/entities/state.dart' as s;
 import '../../domain/usecase/checked_in_use_case.dart';
 import '../../domain/usecase/do_checkin_use_case.dart';
 import '../../domain/usecase/get_listing_available_use_case.dart';
@@ -21,12 +22,12 @@ class CheckinController extends GetxController {
 
   String? _propertyId;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
-  final Rx<State<bool>> _checkInState = State<bool>().obs;
-  final Rx<State<bool>> _propertyAvailableState = State<bool>().obs;
-  final Rx<State<Listing>> _propertyState = State<Listing>().obs;
-  final Rx<State<Optional<bool>>> _isRegisteredState =
-      State<Optional<bool>>().obs;
-  final Rx<State<Visitor>> _getVisitorState = State<Visitor>().obs;
+  final Rx<s.State<bool>> _checkInState = s.State<bool>().obs;
+  final Rx<s.State<bool>> _propertyAvailableState = s.State<bool>().obs;
+  final Rx<s.State<Listing>> _propertyState = s.State<Listing>().obs;
+  final Rx<s.State<Optional<bool>>> _isRegisteredState =
+      s.State<Optional<bool>>().obs;
+  final Rx<s.State<Visitor>> _getVisitorState = s.State<Visitor>().obs;
   Rx<CheckinLumpedInputData> _checkinCombinedInputs = CheckinLumpedInputData().obs;
 
   CheckinController(
@@ -58,6 +59,12 @@ class CheckinController extends GetxController {
       }
     });
 
+    ever(_checkInState, (value) {
+      if (value.error != null) {
+        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
+      }
+    });
+
     final combinedCheckinInputs = RxRaw.Rx.combineLatest3(
         _propertyState.stream, _getVisitorState.stream, _userId.stream,
             (property, visitor, userId) {
@@ -81,16 +88,16 @@ class CheckinController extends GetxController {
       print('Getting checkin state with userid $userId, propertyId '
           '$listingId, lister ID: $listerId');
 
-      _checkInState.value = State<bool>(loading: true);
+      _checkInState.value = s.State<bool>(loading: true);
       final isCheckedIn = _isCheckedInUseCase.execute(
           listerId, _getUserId().value!, _propertyId!);
       final mappedCheckin =
-          isCheckedIn.map((event) => State<bool>(content: event));
+          isCheckedIn.map((event) => s.State<bool>(content: event));
 
       _checkInState.bindStream(mappedCheckin.handleError(
-          (onError) => _checkInState.value = State<bool>(error: onError)));
+          (onError) => _checkInState.value = s.State<bool>(error: onError)));
     } catch (e) {
-      _checkInState.value = State<bool>(error: Exception("$e"));
+      _checkInState.value = s.State<bool>(error: Exception("$e"));
     }
   }
 
@@ -118,19 +125,19 @@ class CheckinController extends GetxController {
 
   _getPropertyIsAvailable() {
     try {
-      _propertyAvailableState.value = State<bool>(loading: true);
+      _propertyAvailableState.value = s.State<bool>(loading: true);
       final isAvailable = _listingAvailableUseCase.execute(_propertyId!);
-      final Stream<State<bool>> mappedPropertyAvailableState =
-          isAvailable.map<State<bool>>((event) {
-        return State<bool>(content: event);
+      final Stream<s.State<bool>> mappedPropertyAvailableState =
+          isAvailable.map<s.State<bool>>((event) {
+        return s.State<bool>(content: event);
       });
 
       _propertyAvailableState.bindStream(
           mappedPropertyAvailableState.handleError((onError) =>
-              _propertyAvailableState.value = State<bool>(error: onError)));
+              _propertyAvailableState.value = s.State<bool>(error: onError)));
     } catch (e) {
       print(e);
-      _propertyAvailableState.value = State<bool>(
+      _propertyAvailableState.value = s.State<bool>(
           error: Exception("Could not "
               "get property available state."));
     }
@@ -138,26 +145,26 @@ class CheckinController extends GetxController {
 
   _getProperty() {
     try {
-      _propertyState.value = State<Listing>(loading: true);
+      _propertyState.value = s.State<Listing>(loading: true);
       final property = _getListingUseCase.execute(_propertyId!);
-      final Stream<State<Listing>> mappedPropertyState = property.map((event) {
-        return State<Listing>(content: event);
+      final Stream<s.State<Listing>> mappedPropertyState = property.map((event) {
+        return s.State<Listing>(content: event);
       }).handleError((onError) {
         print("OnError:");
         print(onError);
-        _propertyState.value = State<Listing>(error: onError);
+        _propertyState.value = s.State<Listing>(error: onError);
       });
 
       _propertyState.bindStream(mappedPropertyState);
     } catch (e) {
       print(e);
-      _propertyState.value = State<Listing>(
+      _propertyState.value = s.State<Listing>(
           error: Exception("Could not "
               "get property available state."));
     }
   }
 
-  Rx<State<Listing?>> getListing() {
+  Rx<s.State<Listing?>> getListing() {
     return _propertyState;
   }
 
@@ -172,12 +179,12 @@ class CheckinController extends GetxController {
         _getVisitorState.value.content != null;
   }
 
-  Rx<State<bool>> propertyIsAvailable() {
+  Rx<s.State<bool>> propertyIsAvailable() {
     return _propertyAvailableState;
   }
 
   void doCheckin() {
-    _checkInState.value = State<bool>(loading: true);
+    _checkInState.value = s.State<bool>(loading: true);
     try {
       final visitor = getVisitor();
       final listerId = _propertyState.value.content?.userId;
@@ -185,7 +192,7 @@ class CheckinController extends GetxController {
       _doCheckinUseCase.execute(userId!, _propertyId!, listerId!, visitor!);
     } catch (e) {
       print('Check-in error $e');
-      _checkInState.value = State<bool>(error: Exception('$e'));
+      _checkInState.value = s.State<bool>(error: Exception('$e'));
     }
   }
 
@@ -195,14 +202,14 @@ class CheckinController extends GetxController {
 
   void _getVisitor() {
     try {
-      _getVisitorState.value = State(loading: true);
+      _getVisitorState.value = s.State(loading: true);
       final visitor = _getVisitorUseCase.execute(_getUserId().value!);
-      final mappedVisitor = visitor.map((event) => State(content: event));
+      final mappedVisitor = visitor.map((event) => s.State(content: event));
 
       _getVisitorState.bindStream(mappedVisitor.handleError(
-          (onError) => _getVisitorState.value = State(error: onError)));
+          (onError) => _getVisitorState.value = s.State(error: onError)));
     } catch (e) {
-      _getVisitorState.value = State(error: Exception("$e"));
+      _getVisitorState.value = s.State(error: Exception("$e"));
     }
   }
 

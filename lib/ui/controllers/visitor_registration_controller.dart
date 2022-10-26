@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import '../../data/types/optional.dart';
@@ -19,6 +20,12 @@ class VisitorRegistrationController extends GetxController {
   void onInit() {
     super.onInit();
     _userId.bindStream(_loginIdUseCase.execute());
+
+    ever(_createState, (value) {
+      if (value.error != null) {
+        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
+      }
+    });
   }
 
   final nameController = TextEditingController();

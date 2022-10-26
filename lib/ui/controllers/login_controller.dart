@@ -15,7 +15,7 @@ class LoginController extends GetxController {
   LoginController(
       this._loginStateUseCase, this._logoutUseCase, this._analyticsUseCase)
        {
-    _loginState.bindStream(_loginStateUseCase.execute().skip(1));
+    _loginState.bindStream(_loginStateUseCase.execute());
   }
 
   RxBool getLoginState() {

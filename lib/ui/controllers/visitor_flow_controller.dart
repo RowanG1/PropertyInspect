@@ -1,14 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_rx/src/rx_workers/rx_workers.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:property_inspect/domain/usecase/get_is_visitor_registerd_use_case.dart';
-import 'package:property_inspect/domain/usecase/is_lister_registered_use_case.dart';
 import '../../data/types/optional.dart';
-import '../../domain/entities/state.dart';
+import '../../domain/entities/state.dart' as s;
 import '../../domain/usecase/get_login_id_use_case.dart';
 
 class VisitorFlowController extends GetxController {
-  final Rx<State<bool>> _visitorIsRegistered = State<bool>().obs;
+  final Rx<s.State<bool>> _visitorIsRegistered = s.State<bool>().obs;
   final GetLoginIdUseCase _loginIdUseCase;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final GetIsVisitorRegisteredUseCase _isVisitorRegisteredUseCase;
@@ -25,21 +26,27 @@ class VisitorFlowController extends GetxController {
         _getIsVisitorRegistered(id.value!);
       }
     });
+
+    ever(_visitorIsRegistered, (value) {
+      if (value.error != null) {
+        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
+      }
+    });
   }
 
   _getIsVisitorRegistered(String id) {
     try {
-      _visitorIsRegistered.value = State<bool>(loading: true);
+      _visitorIsRegistered.value = s.State<bool>(loading: true);
       final isRegistered =
       _isVisitorRegisteredUseCase.execute(id);
 
       final mappedIsRegistered =
-      isRegistered.map((event) => State<bool>(content: event));
+      isRegistered.map((event) => s.State<bool>(content: event));
 
       _visitorIsRegistered.bindStream(mappedIsRegistered.handleError(
-              (onError) => _visitorIsRegistered.value = State<bool>(error: onError)));
+              (onError) => _visitorIsRegistered.value = s.State<bool>(error: onError)));
     } catch (e) {
-      _visitorIsRegistered.value = State<bool>(error: Exception("$e"));
+      _visitorIsRegistered.value = s.State<bool>(error: Exception("$e"));
     }
   }
 

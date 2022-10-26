@@ -1,36 +1,47 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/domain/usecase/get_listing_use_case.dart';
 import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
-import '../../domain/entities/state.dart';
+import '../../domain/entities/state.dart' as s;
 
 class ViewListingController extends GetxController {
   String? _propertyId;
   GetListingUseCase _getListingUseCase;
-  final Rx<State<Listing>> _propertyState = State<Listing>().obs;
+  final Rx<s.State<Listing>> _propertyState = s.State<Listing>().obs;
 
   ViewListingController(this._getListingUseCase);
 
+  @override
+  void onInit() {
+    super.onInit();
+    ever(_propertyState, (value) {
+      if (value.error != null) {
+        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
+      }
+    });
+  }
+
   _getProperty() {
     try {
-      _propertyState.value = State<Listing>(loading: true);
+      _propertyState.value = s.State<Listing>(loading: true);
       final propertyStream = _getListingUseCase.execute(_propertyId!);
-      final Stream<State<Listing>> mappedPropertyStream =
-          propertyStream.map<State<Listing>>((event) {
+      final Stream<s.State<Listing>> mappedPropertyStream =
+          propertyStream.map<s.State<Listing>>((event) {
             print("Mapped value:");
             print(event);
-        return State<Listing>(content: event);
+        return s.State<Listing>(content: event);
       });
 
       _propertyState.bindStream(mappedPropertyStream.handleError(
           (onError) {
             print(onError);
-            _propertyState.value = State<Listing>(error: onError); }
+            _propertyState.value = s.State<Listing>(error: onError); }
       ));
     } catch (e) {
       print("Error on get listing:");
       print(e);
-      _propertyState.value = State<Listing>(
+      _propertyState.value = s.State<Listing>(
           error: Exception("Could not "
               "get property available state."));
     }
