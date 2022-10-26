@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/domain/usecase/create_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
@@ -26,7 +27,7 @@ class CreateListingController extends GetxController {
         Get.toNamed(Constants.listingsRoute);
       }
       if (value.error != null) {
-        Get.snackbar("Error", value.error.toString());
+        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
       }
     });
   }
