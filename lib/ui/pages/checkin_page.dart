@@ -9,15 +9,34 @@ import '../../domain/entities/listing.dart';
 import '../../domain/entities/visitor.dart';
 import '../controllers/visitor_registration_controller.dart';
 
-class CheckinPage extends StatelessWidget {
+class CheckinPage extends StatefulWidget {
+  CheckinPage({Key? key}) : super(key: key);
+
+  @override
+  State<CheckinPage> createState() => _CheckinPageState();
+}
+
+class _CheckinPageState extends State<CheckinPage> {
   final CheckinController checkinController =
       Get.put(CheckinControllerFactory().make());
+
   final VisitorRegistrationController registrationController =
       Get.put(VisitorRegistrationControllerFactory().make());
 
-  CheckinPage({Key? key}) : super(key: key) {
+  @override
+  void initState() {
+    super.initState();
     String? id = Get.parameters['id'];
     checkinController.setPropertyId(id);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ever(checkinController.getCheckinState(), (value) {
+        if (value.error != null) {
+          Get.snackbar("Error", value.error.toString(),
+              backgroundColor: Colors.red);
+        }
+      });
+    });
   }
 
   @override
@@ -42,15 +61,15 @@ class ValidCheckinContent extends StatelessWidget {
     return VisitorFlow(
         // This is where you give you custom widget it's data.
         body: Obx(() => Center(
-          child: checkinController.getIsLoading()
-              ? const Text('Loading '
-                  'content')
-              : CheckinContent(
-                  property: checkinController.getListingValue()!,
-                  checkedIn: checkinController.getIsCheckedIn(),
-                  visitor: checkinController.getVisitor()!,
-                ),
-        )));
+              child: checkinController.getIsLoading()
+                  ? const Text('Loading '
+                      'content')
+                  : CheckinContent(
+                      property: checkinController.getListingValue()!,
+                      checkedIn: checkinController.getIsCheckedIn(),
+                      visitor: checkinController.getVisitor()!,
+                    ),
+            )));
   }
 }
 

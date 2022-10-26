@@ -59,12 +59,6 @@ class CheckinController extends GetxController {
       }
     });
 
-    ever(_checkInState, (value) {
-      if (value.error != null) {
-        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
-      }
-    });
-
     final combinedCheckinInputs = RxRaw.Rx.combineLatest3(
         _propertyState.stream, _getVisitorState.stream, _userId.stream,
             (property, visitor, userId) {
@@ -194,6 +188,10 @@ class CheckinController extends GetxController {
       print('Check-in error $e');
       _checkInState.value = s.State<bool>(error: Exception('$e'));
     }
+  }
+
+  Rx<s.State<bool>> getCheckinState() {
+    return _checkInState;
   }
 
   bool isRegistered() {

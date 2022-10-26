@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/domain/usecase/get_listing_use_case.dart';
 import '../../domain/constants.dart';
@@ -15,11 +14,6 @@ class ViewListingController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    ever(_propertyState, (value) {
-      if (value.error != null) {
-        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
-      }
-    });
   }
 
   _getProperty() {
@@ -35,6 +29,7 @@ class ViewListingController extends GetxController {
 
       _propertyState.bindStream(mappedPropertyStream.handleError(
           (onError) {
+            print('Error is:');
             print(onError);
             _propertyState.value = s.State<Listing>(error: onError); }
       ));
@@ -49,6 +44,10 @@ class ViewListingController extends GetxController {
 
   Listing? getListing() {
     return _propertyState.value.content;
+  }
+
+  Rx<s.State<Listing>> getListingRx() {
+    return _propertyState;
   }
 
   void setPropertyId(String? propertyId) {

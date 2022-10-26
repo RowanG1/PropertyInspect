@@ -1,15 +1,36 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
 import '../../data/di/controllers_factories.dart';
 import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
 
-class ListingsPage extends StatelessWidget {
+class ListingsPage extends StatefulWidget {
+  final controller = Get.put(ViewListingsControllerFactory().make());
+  ListingsPage({Key? key}) : super(key: key);
+
+  @override
+  State<ListingsPage> createState() => _ListingsPageState();
+}
+
+class _ListingsPageState extends State<ListingsPage> {
   final controller = Get.put(ViewListingsControllerFactory().make());
 
-  ListingsPage({Key? key}) : super(key: key);
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      ever(controller.getListingsRx(), (value) {
+        if (value.error != null) {
+          Get.snackbar("Error", value.error.toString(),
+              backgroundColor: Colors.red);
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
