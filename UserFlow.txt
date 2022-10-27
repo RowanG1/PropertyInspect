@@ -5,36 +5,36 @@ Sign in page
   OnSuccess-
     If already have a preference Visitor or Lister
       Visitor flow
-      Visitor scans a qr code, it launches the checkin page.
+      Visitor scans a qr code, it launches the checkin page. ✅
         if already registered,
           registeredVisitor: if original path present, then route to original path, else go to home page.
-           , they checkin, see success page.
+           , they checkin, see success page. ✅
         else
-          go to registration page, then do registeredVisitor flow above
+          go to registration page, then do registeredVisitor flow above ✅
 
       Lister flow
-        Go to menu for listers (create/edit/delete/view)
+        Go to menu for listers (create/edit/delete/view) ✅
     else
       Show menu to select visitor or lister
         if select visitor, do visitor flow above
         if select lister, do lister flow above
 
   Registration page for visitors
-    Name, surname, phone, email, suburb
+    Name, surname, phone, email, suburb ✅
     On submit
 
   Lister menu:
     Create listing button
-    Table of listings, with edit, delete button, view (for qr code show).
+    Table of listings, with edit, delete button, view (for qr code show). ✅
 
   Listing form:
-    Address
-    Agent Phone
+    Address ✅
+    Agent Phone ✅
     Url for listing (like domain)
 
   Checkin form:
       Show property address.
-      Has checkin button -> show success tick when successful
+      Has checkin button -> show success tick when successful ✅
 
 
 Path forward for dev
@@ -42,13 +42,13 @@ Path forward for dev
   Do Select User type menu
   Do checkin page skeleton for visitor ✅
   Do checkin detail UI for visitor
-  Do visitor flow.
+  Do visitor flow. ✅
   Do home page
 
   Do create Listing page = insert new listing for user id ✅
-  Do listing table page, with options to CRUD
-  Use QR code library for show listing.
-  Do listing flow
+  Do listing table page, with options to CRUD ✅
+  Use QR code library for show listing. ✅
+  Do listing flow ✅
 
   Urls:
     checkin/propertyid (authetnicated)

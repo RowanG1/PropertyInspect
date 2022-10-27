@@ -53,13 +53,17 @@ class HomePage extends StatelessWidget {
     return UnauthenticatedPage(
       body: Obx(() => Column( crossAxisAlignment: CrossAxisAlignment.start,
         children: [if (loginController.getLoginState().value) ...
-          [Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: ElevatedButton(
-                onPressed: () {
-                  loginController.logout();
-                },
-                child: const Text("Log out")),
+          [Row(mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: TextButton(
+                    onPressed: () {
+                      loginController.logout();
+                    },
+                    child: const Text("Log out")),
+              ),
+            ],
           )], ... [Center(
             child: Column(children: [
               ...commonWidgets

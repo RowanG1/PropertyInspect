@@ -5,6 +5,7 @@ import 'package:property_inspect/data/di/controllers_factories.dart';
 import 'package:property_inspect/ui/controllers/lister_registration_controller.dart';
 import 'package:property_inspect/ui/pages/lister_registration_form.dart';
 import 'package:property_inspect/ui/pages/signin_container.dart';
+import '../../domain/constants.dart';
 import '../controllers/lister_flow_controller.dart';
 import '../controllers/login_controller.dart';
 
@@ -49,7 +50,11 @@ class _ListerFlowState extends State<ListerFlow> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(appBar: AppBar(title: Text("Property checkin"), leading:
+    IconButton(
+      icon: Icon(Icons.home),
+      color: Colors.white, onPressed: () { Get.toNamed(Constants.homeRoute); },
+    )),
       body: Obx(() => isLoading() ? Text
         ('Loading state') : _loginController.getLoginState().value ? (_listerFlowController
           .getIsListerRegistered() ? widget.body : ListerRegistrationForm()) :

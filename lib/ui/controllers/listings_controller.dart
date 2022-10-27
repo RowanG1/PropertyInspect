@@ -13,6 +13,8 @@ class ListingsController extends GetxController {
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<s.State<List<Listing>>> _propertiesState =
       s.State<List<Listing>>().obs;
+  final Rx<s.State<bool>> _deletePropertiesState =
+      s.State<bool>().obs;
   ListingsController(this._getListingsUseCase, this._getLoginIdUseCase,
       this._deleteListingUseCase);
   bool canLaunchSnackbar = false;
@@ -62,10 +64,14 @@ class ListingsController extends GetxController {
     try {
       await _deleteListingUseCase.execute(listingId);
     } catch (e) {
-      _propertiesState.value = s.State<List<Listing>>(
+      _deletePropertiesState.value = s.State<bool>(
           error: Exception("Could not "
               "delete property. ${e}"));
     }
+  }
+
+  Rx<s.State<bool>> getDeleteState() {
+    return _deletePropertiesState;
   }
 
   bool isLoading() {

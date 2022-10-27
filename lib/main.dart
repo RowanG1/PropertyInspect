@@ -14,7 +14,6 @@ import 'package:property_inspect/ui/pages/home_page.dart';
 import 'package:property_inspect/ui/pages/listing_page.dart';
 import 'package:property_inspect/ui/pages/listings_page.dart';
 import 'package:property_inspect/ui/pages/signin_route_home.dart';
-import 'package:property_inspect/ui/pages/visitor_registration_page.dart';
 import 'data/repository/logout_firebase_repo.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart'; // new

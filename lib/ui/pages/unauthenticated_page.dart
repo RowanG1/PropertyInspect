@@ -7,6 +7,6 @@ class UnauthenticatedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: body);
+    return Scaffold(appBar: AppBar(title: Text("Property checkin")), body: body);
   }
 }
