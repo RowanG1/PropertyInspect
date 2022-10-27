@@ -11,15 +11,7 @@ class SigninRouteHomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
     _isLoggedIn.bindStream(_loginStateUseCase.execute());
-
-    ever(_isLoggedIn, (value) {
-      print("login state has changed in sign home route controller.");
-      if (value == true) {
-       // Get.offAllNamed(Constants.homeRoute);
-      }
-    });
   }
 
   RxBool getIsLoggedIn() {

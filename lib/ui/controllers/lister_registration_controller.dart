@@ -21,12 +21,6 @@ class ListerRegistrationController extends GetxController {
   void onInit() {
     super.onInit();
     _userId.bindStream(_loginIdUseCase.execute());
-
-    ever(_createListerState, (value) {
-      if (value.error != null) {
-        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
-      }
-    });
   }
 
   final nameController = TextEditingController();
@@ -75,5 +69,9 @@ class ListerRegistrationController extends GetxController {
 
   bool isLoading() {
     return _createListerState.value.loading;
+  }
+
+  Rx<s.State<bool>> getCreateListerState() {
+    return _createListerState;
   }
 }

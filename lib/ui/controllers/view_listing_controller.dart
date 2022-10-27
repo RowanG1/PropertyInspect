@@ -11,11 +11,6 @@ class ViewListingController extends GetxController {
 
   ViewListingController(this._getListingUseCase);
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   _getProperty() {
     try {
       _propertyState.value = s.State<Listing>(loading: true);

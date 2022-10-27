@@ -8,23 +8,51 @@ import 'package:property_inspect/ui/pages/signin_container.dart';
 import '../controllers/lister_flow_controller.dart';
 import '../controllers/login_controller.dart';
 
-class ListerFlow extends StatelessWidget {
+class ListerFlow extends StatefulWidget {
   final Widget body;
-  final LoginController _loginController = Get.find();
-  final ListerFlowController _listerFlowController = Get.put
-    (ListerFlowControllerFactory().make());
-  final ListerRegistrationController _listerRegistrationController = Get.put
-    (ListerRegistrationControllerFactory().make());
 
   ListerFlow({required this.body, Key? key})
       : super(key: key);
+
+  @override
+  State<ListerFlow> createState() => _ListerFlowState();
+}
+
+class _ListerFlowState extends State<ListerFlow> {
+  final LoginController _loginController = Get.find();
+
+  final ListerFlowController _listerFlowController = Get.put
+    (ListerFlowControllerFactory().make());
+
+  final ListerRegistrationController _listerRegistrationController = Get.put
+    (ListerRegistrationControllerFactory().make());
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ever(_listerFlowController.getIsListerRegisteredRx(), (value) {
+        if (value.error != null) {
+          Get.snackbar(
+              "Error", value.error.toString(), backgroundColor: Colors.red);
+        }
+      });
+
+      ever(_listerRegistrationController.getCreateListerState(), (value) {
+        if (value.error != null) {
+          Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() => isLoading() ? Text
         ('Loading state') : _loginController.getLoginState().value ? (_listerFlowController
-          .getIsListerRegistered() ? body : ListerRegistrationForm()) :
+          .getIsListerRegistered() ? widget.body : ListerRegistrationForm()) :
       SignInContainer()),
     );
   }

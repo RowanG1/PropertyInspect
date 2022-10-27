@@ -20,12 +20,6 @@ class VisitorRegistrationController extends GetxController {
   void onInit() {
     super.onInit();
     _userId.bindStream(_loginIdUseCase.execute());
-
-    ever(_createState, (value) {
-      if (value.error != null) {
-        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
-      }
-    });
   }
 
   final nameController = TextEditingController();
@@ -69,5 +63,9 @@ class VisitorRegistrationController extends GetxController {
 
   bool isLoading() {
     return _createState.value.loading;
+  }
+
+  Rx<s.State<bool>> getCreateState() {
+    return _createState;
   }
 }

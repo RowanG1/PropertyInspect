@@ -11,29 +11,59 @@ import '../controllers/lister_flow_controller.dart';
 import '../controllers/login_controller.dart';
 import '../controllers/visitor_flow_controller.dart';
 
-class VisitorFlow extends StatelessWidget {
+class VisitorFlow extends StatefulWidget {
   final Widget body;
-  final LoginController _loginController = Get.find();
-  final VisitorFlowController _visitorFlowController = Get.put
-    (VisitorFlowControllerFactory().make());
-  final VisitorRegistrationController _visitorRegistrationController = Get.put
-    (VisitorRegistrationControllerFactory().make());
 
-  VisitorFlow({required this.body, Key? key})
-      : super(key: key);
+  VisitorFlow({required this.body, Key? key}) : super(key: key);
+
+  @override
+  State<VisitorFlow> createState() => _VisitorFlowState();
+}
+
+class _VisitorFlowState extends State<VisitorFlow> {
+  final LoginController _loginController = Get.find();
+
+  final VisitorFlowController _visitorFlowController =
+      Get.put(VisitorFlowControllerFactory().make());
+
+  final VisitorRegistrationController _visitorRegistrationController =
+      Get.put(VisitorRegistrationControllerFactory().make());
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ever(_visitorFlowController.getIsVisitorRegisteredRx(), (value) {
+        if (value.error != null) {
+          Get.snackbar("Error", value.error.toString(),
+              backgroundColor: Colors.red);
+        }
+      });
+
+      ever(_visitorRegistrationController.getCreateState(), (value) {
+        if (value.error != null) {
+          Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(() => isLoading() ? Text
-        ('Loading state') : _loginController.getLoginState().value ? (_visitorFlowController
-          .getIsVisitorRegistered() ? body : VisitorRegistrationForm()) :
-      SignInContainer()),
+      body: Obx(() => isLoading()
+          ? Text('Loading state')
+          : _loginController.getLoginState().value
+              ? (_visitorFlowController.getIsVisitorRegistered()
+                  ? widget.body
+                  : VisitorRegistrationForm())
+              : SignInContainer()),
     );
   }
 
   bool isLoading() {
-    return _visitorRegistrationController.isLoading() || _visitorFlowController
-        .getIsLoading();
+    return _visitorRegistrationController.isLoading() ||
+        _visitorFlowController.getIsLoading();
   }
 }

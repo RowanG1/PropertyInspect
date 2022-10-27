@@ -26,12 +26,6 @@ class VisitorFlowController extends GetxController {
         _getIsVisitorRegistered(id.value!);
       }
     });
-
-    ever(_visitorIsRegistered, (value) {
-      if (value.error != null) {
-        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
-      }
-    });
   }
 
   _getIsVisitorRegistered(String id) {
@@ -56,5 +50,9 @@ class VisitorFlowController extends GetxController {
 
   bool getIsVisitorRegistered() {
     return _visitorIsRegistered.value.content == true;
+  }
+
+  Rx<s.State<bool>> getIsVisitorRegisteredRx() {
+    return _visitorIsRegistered;
   }
 }

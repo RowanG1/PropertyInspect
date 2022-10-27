@@ -54,9 +54,6 @@ class MyApp extends StatelessWidget {
         GetPage(name: Constants.homeRoute, page: () => const HomePage()),
         GetPage(name: Constants.signInRoute, page: () => SignInRouteHome()),
         GetPage(
-            name: Constants.userRegistrationRoute,
-            page: () => VisitorRegistrationPage()),
-        GetPage(
             name: Constants.createListingRoute,
             page: () => CreateListingPage()),
         GetPage(name: Constants.listingsRoute, page: () => ListingsPage()),

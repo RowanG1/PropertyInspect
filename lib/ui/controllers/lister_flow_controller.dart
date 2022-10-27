@@ -26,12 +26,6 @@ class ListerFlowController extends GetxController {
         _getIsListerRegistered(id.value!);
       }
     });
-
-    ever(_listerIsRegistered, (value) {
-      if (value.error != null) {
-        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
-      }
-    });
   }
 
   _getIsListerRegistered(String id) {
@@ -56,5 +50,9 @@ class ListerFlowController extends GetxController {
 
   bool getIsListerRegistered() {
     return _listerIsRegistered.value.content == true;
+  }
+
+  Rx<s.State<bool>> getIsListerRegisteredRx() {
+    return _listerIsRegistered;
   }
 }
