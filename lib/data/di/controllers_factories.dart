@@ -39,16 +39,14 @@ class VisitorRegistrationControllerFactory {
 
 class VisitorFlowControllerFactory {
   VisitorFlowController make() {
-    return VisitorFlowController(
-        IsVisitorRegisteredUseCaseFactory().make(),
+    return VisitorFlowController(IsVisitorRegisteredUseCaseFactory().make(),
         GetLoginIdUseCaseFactory().make());
   }
 }
 
 class ListerFlowControllerFactory {
   ListerFlowController make() {
-    return ListerFlowController(
-        IsListerRegisteredUseCaseFactory().make(),
+    return ListerFlowController(IsListerRegisteredUseCaseFactory().make(),
         GetLoginIdUseCaseFactory().make());
   }
 }
@@ -64,21 +62,24 @@ class ListerRegistrationControllerFactory {
 class ViewListingControllerFactory {
   ViewListingController make() {
     return ViewListingController(
-        GetListingUseCaseFactory().make());
+        GetListingUseCaseFactory().make(),
+        DoCheckinsExistForListingUseCaseFactory().make(),
+        GetLoginIdUseCaseFactory().make());
   }
 }
 
 class ViewListingsControllerFactory {
   ListingsController make() {
     return ListingsController(
-        GetListingsUseCaseFactory().make(), GetLoginIdUseCaseFactory().make()
-      , DeleteListingUseCaseFactory().make());
+        GetListingsUseCaseFactory().make(),
+        GetLoginIdUseCaseFactory().make(),
+        DeleteListingUseCaseFactory().make());
   }
 }
 
 class GetCheckinsControllerFactory {
   CheckinsController make() {
-    return CheckinsController(GetLoginIdUseCaseFactory().make(),
-        GetCheckinsUseCaseFactory().make());
+    return CheckinsController(
+        GetLoginIdUseCaseFactory().make(), GetCheckinsUseCaseFactory().make());
   }
 }

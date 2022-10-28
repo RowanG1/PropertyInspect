@@ -15,16 +15,17 @@ class HomePage extends StatelessWidget {
 
     final commonWidgets = [
       Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Text("Property Inspector", style:
-        TextStyle(fontSize: 18, color: Colors.orange, fontWeight: FontWeight.bold),
+        padding: const EdgeInsets.fromLTRB(0, 50, 10, 0),
+        child: Text("Visitor?", style:
+        TextStyle(fontSize: 18, color: Colors.orange, fontWeight: FontWeight
+            .bold),
             textAlign: TextAlign
             .center),
       ),
       Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Text("Are you a visitor? \nYou can scan your QR code at the "
-            "venue.", style:
+        padding: const EdgeInsets.all(30.0),
+        child: Text("To check in to a property, you can scan the QR code at "
+            "the venue.", style:
         TextStyle(fontSize: 18), textAlign: TextAlign.center),
       ),
       Padding(
@@ -35,6 +36,14 @@ class HomePage extends StatelessWidget {
           endIndent: 20,
           color: Colors.black,
         ),
+      ),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(0, 20, 10, 0),
+        child: Text("Lister?", style:
+        TextStyle(fontSize: 18, color: Colors.orange, fontWeight: FontWeight
+            .bold),
+            textAlign: TextAlign
+                .center),
       ),
       Padding(
         padding: const EdgeInsets.all(40.0),

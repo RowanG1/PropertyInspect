@@ -28,6 +28,13 @@ class _ListerFlowState extends State<ListingPage> {
         }
       });
 
+      ever(widget.controller.getCheckinState(), (value) {
+        if (value.error != null) {
+          Get.snackbar("Error", value.error.toString(),
+              backgroundColor: Colors.red);
+        }
+      });
+
       String? id = Get.parameters['id'];
       widget.controller.setPropertyId(id);
     });
@@ -77,11 +84,12 @@ class _ListerFlowState extends State<ListingPage> {
                             Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: ElevatedButton(
-                                  onPressed: () {
+                                  onPressed: widget.controller
+                                      .doCheckinsExist() ? () {
                                     final route =
                                         '${Constants.checkinsBaseRoute}/${widget.controller.getPropertyId()}';
                                     Get.toNamed('$route');
-                                  },
+                                  } : null,
                                   child: Align(
                                       widthFactor: 1,
                                       alignment: Alignment.center,

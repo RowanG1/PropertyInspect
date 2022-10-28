@@ -169,7 +169,7 @@ class _ListingsPageState extends State<ListingsPage> {
             ),
             TextButton(
               onPressed: () => onOkDeleteDialog(listingId),
-              child: const Text('OK'),
+              child: const Text('OK', style: TextStyle(color: Colors.red),),
             ),
           ],
         ),

@@ -19,6 +19,7 @@ import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 
 import '../../domain/usecase/create_visitor_registration_use_case.dart';
 import '../../domain/usecase/delete_listing_use_case.dart';
+import '../../domain/usecase/do_checkins_exist_use_case.dart';
 import '../../domain/usecase/get_listings_use_case.dart';
 import '../../domain/usecase/get_visitor_use_case.dart';
 
@@ -108,5 +109,11 @@ class DeleteListingUseCaseFactory {
 class GetCheckinsUseCaseFactory {
   GetCheckinsForListingUseCase make() {
     return GetCheckinsForListingUseCase(CheckinFirebaseRepo());
+  }
+}
+
+class DoCheckinsExistForListingUseCaseFactory {
+  DoCheckinsExistForListingUseCase make() {
+    return DoCheckinsExistForListingUseCase(CheckinFirebaseRepo());
   }
 }
