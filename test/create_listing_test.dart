@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:property_inspect/data/di/controllers_factories.dart';
 import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/domain/repository/listing_repo.dart';
 import 'package:property_inspect/domain/repository/login_repo.dart';
@@ -24,8 +25,7 @@ void main() {
       createListingRepo = MockListingRepo();
       createListingUseCase = CreateListingUseCase(createListingRepo);
       loginIdUseCase = GetLoginIdUseCase(loginRepo);
-      controller =
-      CreateListingController(createListingUseCase, loginIdUseCase);
+      controller = CreateListingControllerFactory().make();
     });
 
     test('validate address', () {

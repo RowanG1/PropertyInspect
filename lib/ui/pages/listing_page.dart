@@ -9,7 +9,7 @@ import '../../domain/constants.dart';
 class ListingPage extends StatefulWidget {
   final controller = Get.put(ViewListingControllerFactory().make());
 
-  ListingPage({super.key});
+  ListingPage({Key? key}) : super(key: key);
 
   @override
   State<ListingPage> createState() => _ListerFlowState();

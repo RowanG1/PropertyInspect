@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/data/types/optional.dart';
 import 'package:property_inspect/domain/entities/visitor.dart';
+import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import '../../domain/entities/listing.dart';
@@ -19,6 +19,7 @@ class CheckinController extends GetxController {
   final DoCheckinUseCase _doCheckinUseCase;
   final GetListingUseCase _getListingUseCase;
   final GetVisitorUseCase _getVisitorUseCase;
+  final AnalyticsUseCase _analyticsUseCase;
 
   String? _propertyId;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
@@ -36,7 +37,8 @@ class CheckinController extends GetxController {
       this._getLoginIdUseCase,
       this._doCheckinUseCase,
       this._getListingUseCase,
-      this._getVisitorUseCase);
+      this._getVisitorUseCase,
+      this._analyticsUseCase);
 
   @override
   void onInit() {
@@ -184,6 +186,7 @@ class CheckinController extends GetxController {
       final listerId = _propertyState.value.content?.userId;
       final userId = _getUserId().value;
       _doCheckinUseCase.execute(userId!, _propertyId!, listerId!, visitor!);
+      _analyticsUseCase.execute('checkin', { "listingId": _propertyId });
     } catch (e) {
       print('Check-in error $e');
       _checkInState.value = s.State<bool>(error: Exception('$e'));

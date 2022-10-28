@@ -6,6 +6,7 @@ import 'package:property_inspect/ui/controllers/checkins_controller.dart';
 import 'package:property_inspect/ui/controllers/lister_registration_controller.dart';
 import 'package:property_inspect/ui/controllers/listings_controller.dart';
 import 'package:property_inspect/ui/controllers/sign_in_route_home_controller.dart';
+import '../../ui/controllers/create_listing_controller.dart';
 import '../../ui/controllers/lister_flow_controller.dart';
 import '../../ui/controllers/view_listing_controller.dart';
 import '../../ui/controllers/visitor_flow_controller.dart';
@@ -19,7 +20,8 @@ class CheckinControllerFactory {
         GetLoginIdUseCaseFactory().make(),
         DoCheckInUseCaseFactory().make(),
         GetListingUseCaseFactory().make(),
-        GetVisitorUseCaseFactory().make());
+        GetVisitorUseCaseFactory().make(),
+        AnalyticsUseCaseFactory().make());
   }
 }
 
@@ -33,7 +35,8 @@ class VisitorRegistrationControllerFactory {
   VisitorRegistrationController make() {
     return VisitorRegistrationController(
         CreateVisitorRegistrationUseCaseFactory().make(),
-        GetLoginIdUseCaseFactory().make());
+        GetLoginIdUseCaseFactory().make(),
+        AnalyticsUseCaseFactory().make());
   }
 }
 
@@ -55,7 +58,8 @@ class ListerRegistrationControllerFactory {
   ListerRegistrationController make() {
     return ListerRegistrationController(
         CreateListerRegistrationUseCaseFactory().make(),
-        GetLoginIdUseCaseFactory().make());
+        GetLoginIdUseCaseFactory().make(),
+        AnalyticsUseCaseFactory().make());
   }
 }
 
@@ -81,5 +85,12 @@ class GetCheckinsControllerFactory {
   CheckinsController make() {
     return CheckinsController(
         GetLoginIdUseCaseFactory().make(), GetCheckinsUseCaseFactory().make());
+  }
+}
+
+class CreateListingControllerFactory {
+  CreateListingController make() {
+    return CreateListingController(CreateListingUseCaseFactory().make(),
+        GetLoginIdUseCaseFactory().make(), AnalyticsUseCaseFactory().make());
   }
 }

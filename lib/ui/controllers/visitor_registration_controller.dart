@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../domain/usecase/create_visitor_registration_use_case.dart';
@@ -10,11 +11,13 @@ import 'package:property_inspect/domain/entities/state.dart' as s;
 class VisitorRegistrationController extends GetxController {
   CreateVisitorRegistrationUseCase visitorRegistration;
   GetLoginIdUseCase _loginIdUseCase;
+  AnalyticsUseCase _analyticsUseCase;
   FieldValidation validation = FieldValidation();
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<s.State<bool>> _createState = s.State<bool>().obs;
 
-  VisitorRegistrationController(this.visitorRegistration, this._loginIdUseCase);
+  VisitorRegistrationController(this.visitorRegistration, this
+      ._loginIdUseCase, this._analyticsUseCase);
 
   @override
   void onInit() {
@@ -42,6 +45,8 @@ class VisitorRegistrationController extends GetxController {
         await visitorRegistration.execute(userId, name, lastName, email, phone,
             suburb);
         _createState.value = s.State(content: true);
+        _analyticsUseCase.execute('register_visitor', {});
+
       } catch(e) {
         _createState.value = s.State(error: Exception('$e'));
       }

@@ -5,17 +5,20 @@ import 'package:property_inspect/domain/usecase/create_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../domain/constants.dart';
+import '../../domain/usecase/analytics_use_case.dart';
 import '../../domain/utils/field_validation.dart';
 import '../../domain/entities/state.dart' as s;
 
 class CreateListingController extends GetxController {
   final Rx<s.State<bool>> _state = s.State<bool>().obs;
   CreateListingUseCase createListingUseCase;
+  AnalyticsUseCase _analyticsUseCase;
   GetLoginIdUseCase _getLoginIdUseCase;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   FieldValidation validation = FieldValidation();
 
-  CreateListingController(this.createListingUseCase, this._getLoginIdUseCase);
+  CreateListingController(this.createListingUseCase, this._getLoginIdUseCase,
+      this._analyticsUseCase);
 
   @override
   void onInit() {
@@ -50,6 +53,7 @@ class CreateListingController extends GetxController {
         await createListingUseCase.execute(
             loginId, address, suburb, postCode, phone);
         _state.value = s.State(content: true);
+        _analyticsUseCase.execute('create_listing', {});
       } catch (e) {
         _state.value = s.State(error: Exception('$e'));
       }

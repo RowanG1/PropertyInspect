@@ -1,16 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/data/di/use_case_factories.dart';
-import 'package:property_inspect/ui/controllers/create_listing_controller.dart';
+import 'package:property_inspect/data/di/controllers_factories.dart';
 import 'package:property_inspect/ui/pages/create_listing_form.dart';
 import 'lister_flow.dart';
 
 class CreateListingPage extends StatelessWidget {
   CreateListingPage({Key? key}) : super(key: key);
 
-  final controller = Get.put(CreateListingController(
-      CreateListingUseCaseFactory().make(), GetLoginIdUseCaseFactory().make()));
+  final controller = Get.put(CreateListingControllerFactory().make());
 
   @override
   Widget build(BuildContext context) {
