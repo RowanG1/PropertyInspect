@@ -27,7 +27,8 @@ void main() {
       Get.put(controller);
       expect(controller.getLoginState().value, false);
       loginRepo.setLoginState(true);
-      expectLater(controller.getLoginState().stream, emitsInOrder([true]));
+      expectLater(controller.getLoginState().stream, emitsInOrder([false,
+        true]));
     });
   });
 }
