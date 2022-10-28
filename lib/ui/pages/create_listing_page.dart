@@ -16,12 +16,14 @@ class CreateListingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListerFlow(
       // This is where you give you custom widget it's data.
-      body: Obx(() => controller.getIsLoading()
-          ? CircularProgressIndicator(
-              value: null,
-              semanticsLabel: 'Circular progress indicator',
-            )
-          : Center(child: CreateListingForm())),
+      body: Center(
+        child: Obx(() => controller.getIsLoading()
+            ? CircularProgressIndicator(
+                value: null,
+                semanticsLabel: 'Circular progress indicator',
+              )
+            : CreateListingForm()),
+      ),
     );
   }
 }
