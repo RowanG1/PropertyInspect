@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/data/di/use_case_factories.dart';
 import 'package:property_inspect/ui/controllers/create_listing_controller.dart';
@@ -16,7 +17,10 @@ class CreateListingPage extends StatelessWidget {
     return ListerFlow(
       // This is where you give you custom widget it's data.
       body: Obx(() => controller.getIsLoading()
-          ? Text('Please wait')
+          ? CircularProgressIndicator(
+              value: null,
+              semanticsLabel: 'Circular progress indicator',
+            )
           : Center(child: CreateListingForm())),
     );
   }

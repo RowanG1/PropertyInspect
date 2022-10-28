@@ -7,6 +7,7 @@ import 'package:property_inspect/ui/controllers/visitor_registration_controller.
 import 'package:property_inspect/ui/pages/lister_registration_form.dart';
 import 'package:property_inspect/ui/pages/signin_container.dart';
 import 'package:property_inspect/ui/pages/visitor_registration_form.dart';
+import '../../domain/constants.dart';
 import '../controllers/lister_flow_controller.dart';
 import '../controllers/login_controller.dart';
 import '../controllers/visitor_flow_controller.dart';
@@ -43,7 +44,8 @@ class _VisitorFlowState extends State<VisitorFlow> {
 
       ever(_visitorRegistrationController.getCreateState(), (value) {
         if (value.error != null) {
-          Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
+          Get.snackbar("Error", value.error.toString(),
+              backgroundColor: Colors.red);
         }
       });
     });
@@ -53,8 +55,20 @@ class _VisitorFlowState extends State<VisitorFlow> {
   Widget build(BuildContext context) {
     return SelectionArea(
       child: Scaffold(
+        appBar: AppBar(
+            title: Text("Property checkin"),
+            leading: IconButton(
+              icon: Icon(Icons.home),
+              color: Colors.white,
+              onPressed: () {
+                Get.toNamed(Constants.homeRoute);
+              },
+            )),
         body: Obx(() => isLoading()
-            ? Text('Loading state')
+            ? CircularProgressIndicator(
+                value: null,
+                semanticsLabel: 'Circular progress indicator',
+              )
             : _loginController.getLoginState().value
                 ? (_visitorFlowController.getIsVisitorRegistered()
                     ? widget.body

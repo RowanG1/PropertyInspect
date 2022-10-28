@@ -12,8 +12,7 @@ import '../controllers/login_controller.dart';
 class ListerFlow extends StatefulWidget {
   final Widget body;
 
-  ListerFlow({required this.body, Key? key})
-      : super(key: key);
+  ListerFlow({required this.body, Key? key}) : super(key: key);
 
   @override
   State<ListerFlow> createState() => _ListerFlowState();
@@ -22,11 +21,11 @@ class ListerFlow extends StatefulWidget {
 class _ListerFlowState extends State<ListerFlow> {
   final LoginController _loginController = Get.find();
 
-  final ListerFlowController _listerFlowController = Get.put
-    (ListerFlowControllerFactory().make());
+  final ListerFlowController _listerFlowController =
+      Get.put(ListerFlowControllerFactory().make());
 
-  final ListerRegistrationController _listerRegistrationController = Get.put
-    (ListerRegistrationControllerFactory().make());
+  final ListerRegistrationController _listerRegistrationController =
+      Get.put(ListerRegistrationControllerFactory().make());
 
   @override
   void initState() {
@@ -35,14 +34,15 @@ class _ListerFlowState extends State<ListerFlow> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ever(_listerFlowController.getIsListerRegisteredRx(), (value) {
         if (value.error != null) {
-          Get.snackbar(
-              "Error", value.error.toString(), backgroundColor: Colors.red);
+          Get.snackbar("Error", value.error.toString(),
+              backgroundColor: Colors.red);
         }
       });
 
       ever(_listerRegistrationController.getCreateListerState(), (value) {
         if (value.error != null) {
-          Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
+          Get.snackbar("Error", value.error.toString(),
+              backgroundColor: Colors.red);
         }
       });
     });
@@ -51,21 +51,34 @@ class _ListerFlowState extends State<ListerFlow> {
   @override
   Widget build(BuildContext context) {
     return SelectionArea(
-      child: Scaffold(appBar: AppBar(title: Text("Property checkin"), leading:
-      IconButton(
-        icon: Icon(Icons.home),
-        color: Colors.white, onPressed: () { Get.toNamed(Constants.homeRoute); },
-      )),
-        body: Obx(() => isLoading() ? Text
-          ('Loading state') : _loginController.getLoginState().value ? (_listerFlowController
-            .getIsListerRegistered() ? widget.body : ListerRegistrationForm()) :
-        SignInContainer()),
+      child: Scaffold(
+        appBar: AppBar(
+            title: Text("Property checkin"),
+            leading: IconButton(
+              icon: Icon(Icons.home),
+              color: Colors.white,
+              onPressed: () {
+                Get.toNamed(Constants.homeRoute);
+              },
+            )),
+        body: Obx(() => isLoading()
+            ? Center(
+              child: CircularProgressIndicator(
+                  value: null,
+                  semanticsLabel: 'Circular progress indicator',
+                ),
+            )
+            : _loginController.getLoginState().value
+                ? (_listerFlowController.getIsListerRegistered()
+                    ? widget.body
+                    : ListerRegistrationForm())
+                : SignInContainer()),
       ),
     );
   }
 
   bool isLoading() {
-    return _listerRegistrationController.isLoading() || _listerFlowController
-        .getIsLoading();
+    return _listerRegistrationController.isLoading() ||
+        _listerFlowController.getIsLoading();
   }
 }

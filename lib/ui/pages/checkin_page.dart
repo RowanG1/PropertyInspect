@@ -26,8 +26,6 @@ class _CheckinPageState extends State<CheckinPage> {
   @override
   void initState() {
     super.initState();
-    String? id = Get.parameters['id'];
-    checkinController.setPropertyId(id);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ever(checkinController.getCheckinState(), (value) {
@@ -37,6 +35,9 @@ class _CheckinPageState extends State<CheckinPage> {
         }
       });
     });
+
+    String? id = Get.parameters['id'];
+    checkinController.setPropertyId(id);
   }
 
   @override
@@ -44,7 +45,10 @@ class _CheckinPageState extends State<CheckinPage> {
     return VisitorFlow(
         body: Obx(() => Center(
             child: checkinController.getIsLoading()
-                ? Text('Loading content')
+                ? CircularProgressIndicator(
+                    value: null,
+                    semanticsLabel: 'Circular progress indicator',
+                  )
                 : checkinController.isValidConfig()
                     ? ValidCheckinContent()
                     : Text('Sorry, we encountered a problem.'))));
@@ -58,18 +62,13 @@ class ValidCheckinContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VisitorFlow(
-        // This is where you give you custom widget it's data.
-        body: Obx(() => Center(
-              child: checkinController.getIsLoading()
-                  ? const Text('Loading '
-                      'content')
-                  : CheckinContent(
-                      property: checkinController.getListingValue()!,
-                      checkedIn: checkinController.getIsCheckedIn(),
-                      visitor: checkinController.getVisitor()!,
-                    ),
-            )));
+    return Obx(() => Center(
+          child: CheckinContent(
+            property: checkinController.getListingValue()!,
+            checkedIn: checkinController.getIsCheckedIn(),
+            visitor: checkinController.getVisitor()!,
+          ),
+        ));
   }
 }
 
@@ -89,6 +88,8 @@ class CheckinContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final address = property.address;
+    final suburb = property.suburb;
+    final postCode = property.postCode;
     final name = visitor.name;
 
     return Column(children: [
@@ -97,18 +98,33 @@ class CheckinContent extends StatelessWidget {
           child: Text('Welcome $name',
               style: TextStyle(fontSize: Constants.headingSize))),
       Padding(
-          padding: EdgeInsets.all(Constants.largePadding),
-          child: Text('🏠 Address: $address')),
-      !checkedIn
-          ? ElevatedButton(
-              onPressed: () {
-                // Validate returns true if the form is valid, or false otherwise.
-                checkinController.doCheckin();
-              },
-              child: Text('Check in'),
-            )
-          : Text('You have successfully checked in ✅',
-              style: TextStyle(fontWeight: FontWeight.bold))
+          padding: EdgeInsets.fromLTRB(0, 20, 0, 0), child: Text('$address')),
+      Padding(
+          padding: EdgeInsets.fromLTRB(0, 20, 0, 0), child: Text('$suburb')),
+      Padding(
+          padding: EdgeInsets.fromLTRB(0, 20, 0, 0), child: Text('$postCode')),
+      if (!checkedIn)
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: ElevatedButton(
+            onPressed: () {
+              // Validate returns true if the form is valid, or false otherwise.
+              checkinController.doCheckin();
+            },
+            child: Text('Check in'),
+          ),
+        )
+      else ...[
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 55.0, 0, 0),
+          child: Text('You have successfully checked in',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: const Icon(Icons.check, color: Colors.green, size: 40),
+        )
+      ]
     ]);
   }
 }

@@ -46,7 +46,10 @@ class _ListerFlowState extends State<ListingPage> {
         // This is where you give you custom widget it's data.
         body: Obx(() => Center(
             child: widget.controller.isLoading()
-                ? Text('Please wait........................')
+                ? CircularProgressIndicator(
+                    value: null,
+                    semanticsLabel: 'Circular progress indicator',
+                  )
                 : ((widget.controller.getListing() != null)
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -84,12 +87,13 @@ class _ListerFlowState extends State<ListingPage> {
                             Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: ElevatedButton(
-                                  onPressed: widget.controller
-                                      .doCheckinsExist() ? () {
-                                    final route =
-                                        '${Constants.checkinsBaseRoute}/${widget.controller.getPropertyId()}';
-                                    Get.toNamed('$route');
-                                  } : null,
+                                  onPressed: widget.controller.doCheckinsExist()
+                                      ? () {
+                                          final route =
+                                              '${Constants.checkinsBaseRoute}/${widget.controller.getPropertyId()}';
+                                          Get.toNamed('$route');
+                                        }
+                                      : null,
                                   child: Align(
                                       widthFactor: 1,
                                       alignment: Alignment.center,

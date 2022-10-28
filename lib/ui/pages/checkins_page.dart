@@ -37,9 +37,13 @@ class _CheckinsPageState extends State<CheckinsPage> {
     return ListerFlow(
         // This is where you give you custom widget it's data.
         body: Obx(() => controller.isLoading()
-            ? Center(child: Text('Please wait........................'))
+            ? Center(
+                child: CircularProgressIndicator(
+                value: null,
+                semanticsLabel: 'Circular progress indicator',
+              ))
             : Padding(
-                padding: const EdgeInsets.all(14.0),
+                padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                 child: CenterHorizontal(
                   child: Table(
                       defaultColumnWidth: FixedColumnWidth(
