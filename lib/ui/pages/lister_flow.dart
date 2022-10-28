@@ -50,15 +50,17 @@ class _ListerFlowState extends State<ListerFlow> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text("Property checkin"), leading:
-    IconButton(
-      icon: Icon(Icons.home),
-      color: Colors.white, onPressed: () { Get.toNamed(Constants.homeRoute); },
-    )),
-      body: Obx(() => isLoading() ? Text
-        ('Loading state') : _loginController.getLoginState().value ? (_listerFlowController
-          .getIsListerRegistered() ? widget.body : ListerRegistrationForm()) :
-      SignInContainer()),
+    return SelectionArea(
+      child: Scaffold(appBar: AppBar(title: Text("Property checkin"), leading:
+      IconButton(
+        icon: Icon(Icons.home),
+        color: Colors.white, onPressed: () { Get.toNamed(Constants.homeRoute); },
+      )),
+        body: Obx(() => isLoading() ? Text
+          ('Loading state') : _loginController.getLoginState().value ? (_listerFlowController
+            .getIsListerRegistered() ? widget.body : ListerRegistrationForm()) :
+        SignInContainer()),
+      ),
     );
   }
 

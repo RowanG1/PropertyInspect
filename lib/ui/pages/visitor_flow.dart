@@ -51,14 +51,16 @@ class _VisitorFlowState extends State<VisitorFlow> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Obx(() => isLoading()
-          ? Text('Loading state')
-          : _loginController.getLoginState().value
-              ? (_visitorFlowController.getIsVisitorRegistered()
-                  ? widget.body
-                  : VisitorRegistrationForm())
-              : SignInContainer()),
+    return SelectionArea(
+      child: Scaffold(
+        body: Obx(() => isLoading()
+            ? Text('Loading state')
+            : _loginController.getLoginState().value
+                ? (_visitorFlowController.getIsVisitorRegistered()
+                    ? widget.body
+                    : VisitorRegistrationForm())
+                : SignInContainer()),
+      ),
     );
   }
 
