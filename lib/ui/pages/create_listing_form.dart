@@ -27,6 +27,20 @@ class CreateListingFormState extends State<CreateListingForm> {
   final FieldValidation validation = FieldValidation();
 
   @override
+  void initState() {
+    super.initState();
+
+    ever(controller.getCreateState(), (value) {
+      if (value.content == true) {
+        Get.toNamed(Constants.listingsRoute);
+      }
+      if (value.error != null) {
+        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
 

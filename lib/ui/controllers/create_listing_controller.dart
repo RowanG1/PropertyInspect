@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:property_inspect/domain/usecase/create_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import '../../data/types/optional.dart';
-import '../../domain/constants.dart';
 import '../../domain/usecase/analytics_use_case.dart';
 import '../../domain/utils/field_validation.dart';
 import '../../domain/entities/state.dart' as s;
@@ -24,15 +23,6 @@ class CreateListingController extends GetxController {
   void onInit() {
     super.onInit();
     _userId.bindStream(_getLoginIdUseCase.execute());
-
-    ever(_state, (value) {
-      if (value.content == true) {
-        Get.toNamed(Constants.listingsRoute);
-      }
-      if (value.error != null) {
-        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
-      }
-    });
   }
 
   final addressController = TextEditingController();
@@ -66,5 +56,9 @@ class CreateListingController extends GetxController {
 
   bool getIsLoading() {
     return _state.value.loading;
+  }
+
+  Rx<s.State<bool>> getCreateState() {
+    return _state;
   }
 }
