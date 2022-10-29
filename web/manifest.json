@@ -1,11 +1,11 @@
 {
-  "name": "property_inspect",
-  "short_name": "property_inspect",
+  "name": "Property Check-in",
+  "short_name": "Prop Checkin",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#FFFFFFFF",
   "theme_color": "#0000FF",
-  "description": "A new Flutter project.",
+  "description": "Check in to a property for inspection.",
   "orientation": "portrait-primary",
   "prefer_related_applications": false,
   "icons": [
