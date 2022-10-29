@@ -14,6 +14,8 @@ jobs:
       - uses: subosito/flutter-action@v2
       - name: 'Get flutter packages'
         run: flutter pub get
+      - name: 'Make flutter icons'
+        run: flutter pub run flutter_launcher_icons:main
       - name: 'Build Web App'
         run: flutter build web
       - uses: FirebaseExtended/action-hosting-deploy@v0
