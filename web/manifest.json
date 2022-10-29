@@ -3,7 +3,7 @@
   "short_name": "property_inspect",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#00FFFFFF",
+  "background_color": "#FFFFFFFF",
   "theme_color": "#0000FF",
   "description": "A new Flutter project.",
   "orientation": "portrait-primary",
