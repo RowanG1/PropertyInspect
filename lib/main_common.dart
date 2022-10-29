@@ -15,21 +15,15 @@ import 'package:property_inspect/ui/pages/listing_page.dart';
 import 'package:property_inspect/ui/pages/listings_page.dart';
 import 'package:property_inspect/ui/pages/signin_route_home.dart';
 import 'data/repository/logout_firebase_repo.dart';
-import 'firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart'; // new
 import 'dart:async'; // new
 
 Future<void> main() async {
-  await initFirebase();
-  initLoginController();
-  runApp(const MyApp());
+  mainSetup();
 }
 
-initFirebase() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+mainSetup() async {
+  initLoginController();
+  runApp(const MyApp());
 }
 
 initLoginController() {
