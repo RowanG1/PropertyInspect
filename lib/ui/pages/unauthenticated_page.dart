@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../data/types/env.dart';
 import '../../domain/constants.dart';
 
 class UnauthenticatedPage extends StatelessWidget {
@@ -12,8 +13,7 @@ class UnauthenticatedPage extends StatelessWidget {
     return SelectionArea(
         child: Scaffold(
             appBar: AppBar(
-                title: Text("Property"
-                    " checkin"),
+                title: Text(Get.find<Env>().appTitle),
                 leading: IconButton(
                   icon: Icon(Icons.home),
                   color: Colors.white,

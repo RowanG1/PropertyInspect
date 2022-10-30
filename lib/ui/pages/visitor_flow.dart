@@ -7,6 +7,7 @@ import 'package:property_inspect/ui/controllers/visitor_registration_controller.
 import 'package:property_inspect/ui/pages/lister_registration_form.dart';
 import 'package:property_inspect/ui/pages/signin_container.dart';
 import 'package:property_inspect/ui/pages/visitor_registration_form.dart';
+import '../../data/types/env.dart';
 import '../../domain/constants.dart';
 import '../controllers/lister_flow_controller.dart';
 import '../controllers/login_controller.dart';
@@ -56,7 +57,7 @@ class _VisitorFlowState extends State<VisitorFlow> {
     return SelectionArea(
       child: Scaffold(
         appBar: AppBar(
-            title: Text("Property checkin"),
+            title: Text(Get.find<Env>().appTitle),
             leading: IconButton(
               icon: Icon(Icons.home),
               color: Colors.white,
