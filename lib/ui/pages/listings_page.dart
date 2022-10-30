@@ -41,7 +41,6 @@ class _ListingsPageState extends State<ListingsPage> {
 
   @override
   Widget build(BuildContext context) {
-
     final platform = defaultTargetPlatform;
     print(platform);
 
@@ -65,7 +64,7 @@ class _ListingsPageState extends State<ListingsPage> {
                     ),
                   ],
                 ),
-                ... getRows()
+                ...getRows()
               ],
             )),
     );
@@ -73,65 +72,99 @@ class _ListingsPageState extends State<ListingsPage> {
 
   List<Widget> getRows() {
     return controller.getListings().map<Widget>((item) {
-        return getTableRow(item);
-      }).toList();
+      return getTableRow(item);
+    }).toList();
   }
 
   Widget getTableRow(Listing item) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-      child: Container(decoration: new BoxDecoration(
+      child: Container(
+        decoration: new BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
-        border: new Border.all(color: Colors.black45),
-        color: Colors.white,
-      ),
-        child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 8, 8, 8),
-                  child: Text('${item.address}', textAlign: TextAlign.start),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 8, 8, 8),
-                  child: Text('${item.suburb}', textAlign: TextAlign.start),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            final route =
-                                '${Constants.listingBaseRoute}/${item.id}';
-                            Get.toNamed('$route');
-                          },
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child:
-                                  const Text("View", textAlign: TextAlign.start))),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(80.0, 0, 0, 0),
-                        child: TextButton(
-                            onPressed: () {
-                              showDeleteDialog(item.id);
-                            },
-                            child: const Align(
-                              alignment: Alignment.centerLeft,
-                              child: Icon(
-                                Icons.delete,
-                                color: Colors.grey,
-                                size: 24.0,
-                                semanticLabel:
-                                    'Text to announce in accessibility modes',
-                              ),
-                            )),
-                      ),
-                    ],
+          border: new Border.all(color: Colors.black45),
+          color: Colors.white,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                children: [
+                  Container(
+                    width: 70,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 0, 0, 8),
+                      child: Text('Address:', textAlign: TextAlign.start),
+                    ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 8),
+                    child: Text(
+                      '${item.address}',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    width: 70,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 0, 0, 8),
+                      child: Text('Suburb:', textAlign: TextAlign.start),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 8),
+                    child: Text(
+                      '${item.suburb}',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                child: Row(
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          final route =
+                              '${Constants.listingBaseRoute}/${item.id}';
+                          Get.toNamed('$route');
+                        },
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: const Text("View",
+                                textAlign: TextAlign.start))),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(80.0, 0, 0, 0),
+                      child: TextButton(
+                          onPressed: () {
+                            showDeleteDialog(item.id);
+                          },
+                          child: const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.grey,
+                              size: 24.0,
+                              semanticLabel:
+                                  'Text to announce in accessibility modes',
+                            ),
+                          )),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
