@@ -58,13 +58,13 @@ class _VisitorFlowState extends State<VisitorFlow> {
       child: Scaffold(
         appBar: AppBar(
             title: Text(Get.find<Env>().appTitle),
-            leading: IconButton(
+            actions: [IconButton(
               icon: Icon(Icons.home),
               color: Colors.white,
               onPressed: () {
                 Get.toNamed(Constants.homeRoute);
               },
-            )),
+            )]),
         body: Obx(() => isLoading()
             ? CircularProgressIndicator(
                 value: null,

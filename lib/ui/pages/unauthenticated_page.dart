@@ -14,13 +14,7 @@ class UnauthenticatedPage extends StatelessWidget {
         child: Scaffold(
             appBar: AppBar(
                 title: Text(Get.find<Env>().appTitle),
-                leading: IconButton(
-                  icon: Icon(Icons.home),
-                  color: Colors.white,
-                  onPressed: () {
-                    Get.toNamed(Constants.homeRoute);
-                  },
-                )),
+                ),
             body: body));
   }
 }

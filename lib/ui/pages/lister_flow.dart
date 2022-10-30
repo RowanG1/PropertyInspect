@@ -54,14 +54,14 @@ class _ListerFlowState extends State<ListerFlow> {
     return SelectionArea(
       child: Scaffold(
         appBar: AppBar(
-            title: Text(Get.find<Env>().appTitle),
-            leading: IconButton(
-              icon: Icon(Icons.home),
-              color: Colors.white,
-              onPressed: () {
-                Get.toNamed(Constants.homeRoute);
-              },
-            )),
+            title: Text(Get.find<Env>().appTitle), actions: [IconButton(
+          icon: Icon(Icons.home),
+          color: Colors.white,
+          onPressed: () {
+            Get.toNamed(Constants.homeRoute);
+          },
+        )],
+            ),
         body: Obx(() => isLoading()
             ? Center(
               child: CircularProgressIndicator(
