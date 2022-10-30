@@ -15,7 +15,7 @@ jobs:
       - name: 'Get flutter packages'
         run: flutter pub get
       - name: 'Make flutter icons'
-        run: flutter pub run flutter_launcher_icons:main
+        run: flutter pub run flutter_launcher_icons:main -f flutter_launcher_icons_staging.yaml
       - name: 'Build Web App'
         run: flutter build web -t lib/main_staging.dart
       - uses: actions/upload-artifact@v2
