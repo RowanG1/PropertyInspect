@@ -4,7 +4,7 @@
   "start_url": ".",
   "display": "standalone",
   "background_color": "#FFFFFFFF",
-  "theme_color": "#0000FF",
+  "theme_color": "#00FFFF",
   "description": "Check in to a property for inspection.",
   "orientation": "portrait-primary",
   "prefer_related_applications": false,

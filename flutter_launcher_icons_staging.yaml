@@ -1,5 +1,5 @@
 flutter_icons:
-  image_path: "assets/icon/propcheckin.png"
+  image_path: "assets/icon/propcheckin_staging.png"
   web:
     generate: true
-    background_color: "#00FFFF"
+    background_color: "#FFFFFFFF"
