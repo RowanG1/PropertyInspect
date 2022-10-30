@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
@@ -40,119 +41,99 @@ class _ListingsPageState extends State<ListingsPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final platform = defaultTargetPlatform;
+    print(platform);
+
     return ListerFlow(
-        // This is where you give you custom widget it's data.
-        body: Obx(() => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      // This is where you give you custom widget it's data.
+      body: Obx(() => controller.isLoading()
+          ? Text('Please wait........................')
+          : ListView(
               children: [
-                Center(
-                    child: controller.isLoading()
-                        ? Text('Please wait........................')
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(0, 30,
-                                    0, 0),
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                        const route =
-                                            '${Constants.createListingRoute}';
-                                        Get.toNamed('$route');
-                                      },
-                                      child: const Text("Create Listing")),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(0, 30,
-                                    0, 0),
-                                  child: Table(
-                                      defaultColumnWidth: FixedColumnWidth(
-                                          MediaQuery.of(context).size.width *
-                                              0.8),
-                                      border: TableBorder.all(
-                                          color: Colors.black,
-                                          style: BorderStyle.solid,
-                                          width: 1),
-                                      children: getRows()),
-                                )
-                              ])),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 30, 0, 20),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            const route = '${Constants.createListingRoute}';
+                            Get.toNamed('$route');
+                          },
+                          child: const Text("Create Listing")),
+                    ),
+                  ],
+                ),
+                ... getRows()
               ],
-            )));
+            )),
+    );
   }
 
-  List<TableRow> getRows() {
-    return [
-      getListingsHeader(),
-      ...controller.getListings().map<TableRow>((item) {
+  List<Widget> getRows() {
+    return controller.getListings().map<Widget>((item) {
         return getTableRow(item);
-      }).toList()
-    ];
+      }).toList();
   }
 
-  TableRow getListingsHeader() {
-    return TableRow(children: [
-      TableCell(
-        verticalAlignment: TableCellVerticalAlignment.middle,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('Listings',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-            )
-          ],
-        ),
-      )
-    ]);
-  }
-
-  TableRow getTableRow(Listing item) {
-    return TableRow(children: [
-      TableCell(
-        verticalAlignment: TableCellVerticalAlignment.middle,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12.0, 8, 8, 8),
-              child: Text(item.address, textAlign: TextAlign.start),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  TextButton(
-                      onPressed: () {
-                        final route = '${Constants.listingBaseRoute}/${item.id}';
-                        Get.toNamed('$route');
-                      },
-                      child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: const Text("View", textAlign: TextAlign.start))),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(80.0, 0, 0, 0),
-                    child: TextButton(
-                        onPressed: () {
-                          showDeleteDialog(item.id);
-                        },
-                        child: const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Icon(
-                              Icons.delete,
-                              color: Colors.grey,
-                              size: 24.0,
-                              semanticLabel: 'Text to announce in accessibility modes',
-                            ),)),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+  Widget getTableRow(Listing item) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+      child: Container(decoration: new BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        border: new Border.all(color: Colors.black45),
+        color: Colors.white,
       ),
-    ]);
+        child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0, 8, 8, 8),
+                  child: Text('${item.address}', textAlign: TextAlign.start),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0, 8, 8, 8),
+                  child: Text('${item.suburb}', textAlign: TextAlign.start),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            final route =
+                                '${Constants.listingBaseRoute}/${item.id}';
+                            Get.toNamed('$route');
+                          },
+                          child: Align(
+                              alignment: Alignment.centerLeft,
+                              child:
+                                  const Text("View", textAlign: TextAlign.start))),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(80.0, 0, 0, 0),
+                        child: TextButton(
+                            onPressed: () {
+                              showDeleteDialog(item.id);
+                            },
+                            child: const Align(
+                              alignment: Alignment.centerLeft,
+                              child: Icon(
+                                Icons.delete,
+                                color: Colors.grey,
+                                size: 24.0,
+                                semanticLabel:
+                                    'Text to announce in accessibility modes',
+                              ),
+                            )),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+      ),
+    );
   }
 
   showDeleteDialog(String? listingId) {
@@ -169,7 +150,10 @@ class _ListingsPageState extends State<ListingsPage> {
             ),
             TextButton(
               onPressed: () => onOkDeleteDialog(listingId),
-              child: const Text('OK', style: TextStyle(color: Colors.red),),
+              child: const Text(
+                'OK',
+                style: TextStyle(color: Colors.red),
+              ),
             ),
           ],
         ),
