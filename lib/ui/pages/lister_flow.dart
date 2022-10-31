@@ -56,7 +56,7 @@ class _ListerFlowState extends State<ListerFlow> {
           icon: Icon(Icons.home),
           color: Colors.white,
           onPressed: () {
-            Get.toNamed(Constants.homeRoute);
+            Get.offAllNamed(Constants.homeRoute);
           },
         )],
             ),

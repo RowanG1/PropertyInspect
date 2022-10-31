@@ -63,7 +63,7 @@ class _VisitorFlowState extends State<VisitorFlow> {
               icon: Icon(Icons.home),
               color: Colors.white,
               onPressed: () {
-                Get.toNamed(Constants.homeRoute);
+                Get.offAllNamed(Constants.homeRoute);
               },
             )]),
         body: Obx(() => isLoading()
