@@ -35,77 +35,123 @@ class _CheckinsPageState extends State<CheckinsPage> {
   @override
   Widget build(BuildContext context) {
     return ListerFlow(
-        // This is where you give you custom widget it's data.
-        body: Obx(() => controller.isLoading()
+      // This is where you give you custom widget it's data.
+      body: Obx(
+        () => controller.isLoading()
             ? Center(
                 child: CircularProgressIndicator(
                 value: null,
                 semanticsLabel: 'Circular progress indicator',
               ))
-            : Padding(
-                padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-                child: CenterHorizontal(
-                  child: Table(
-                      defaultColumnWidth: FixedColumnWidth(
-                          MediaQuery.of(context).size.width * 0.8),
-                      border: TableBorder.all(
-                          color: Colors.black,
-                          style: BorderStyle.solid,
-                          width: 2),
-                      children: getRows()),
-                ),
-              )));
+            : ListView(
+                children: getRows(),
+              ),
+      ),
+    );
   }
 
-  List<TableRow> getRows() {
-    return [
-      getListingsHeader(),
-      ...controller.getCheckins().map<TableRow>((item) {
+  List<Widget> getRows() {
+    return [Container(height: 20,),
+      ...controller.getCheckins().map<Widget>((item) {
         return getTableRow(item);
       }).toList()
     ];
   }
 
-  TableRow getListingsHeader() {
-    return TableRow(children: [
-      TableCell(
-        verticalAlignment: TableCellVerticalAlignment.middle,
-        child: Row(
-          children: const <Widget>[
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('Checkins',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-            )
-          ],
+  Widget getTableRow(Visitor item) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+      child: Container(
+        decoration: new BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          border: new Border.all(color: Colors.black45),
+          color: Colors.white,
         ),
-      )
-    ]);
-  }
-
-  TableRow getTableRow(Visitor item) {
-    return TableRow(children: [
-      TableCell(
-        verticalAlignment: TableCellVerticalAlignment.middle,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Name ${item.name}', textAlign: TextAlign.left),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Email: ${item.email}', textAlign: TextAlign.left),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Phone: ${item.phone}', textAlign: TextAlign.left),
-            )
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                children: [
+                  Container(
+                    width: 70,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 0, 0, 8),
+                      child: Text('Name:', textAlign: TextAlign.start),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 8),
+                    child: Text(
+                      '${item.name}',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    width: 70,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 0, 0, 8),
+                      child: Text('Surname:', textAlign: TextAlign.start),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 8),
+                    child: Text(
+                      '${item.lastName}',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    width: 70,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 0, 0, 8),
+                      child: Text('Email:', textAlign: TextAlign.start),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 8),
+                    child: Text(
+                      '${item.email}',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    width: 70,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 0, 0, 8),
+                      child: Text('Phone:', textAlign: TextAlign.start),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 8),
+                    child: Text(
+                      '${item.phone}',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
-      )
-    ]);
+      ),
+    );
   }
 }
