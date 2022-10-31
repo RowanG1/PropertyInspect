@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
+import 'package:property_inspect/ui/controllers/lister_flow_controller.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
 import '../../data/di/controllers_factories.dart';
-import '../../data/widgets/center_horizontal.dart';
 import '../../domain/entities/visitor.dart';
 
 class CheckinsPage extends StatefulWidget {
@@ -15,6 +16,7 @@ class CheckinsPage extends StatefulWidget {
 
 class _CheckinsPageState extends State<CheckinsPage> {
   final controller = Get.put(GetCheckinsControllerFactory().make());
+  final ListerFlowController listerFlowController = Get.find();
 
   @override
   void initState() {
@@ -34,18 +36,22 @@ class _CheckinsPageState extends State<CheckinsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListerFlow(
-      // This is where you give you custom widget it's data.
-      body: Obx(
-        () => controller.isLoading()
-            ? Center(
-                child: CircularProgressIndicator(
-                value: null,
-                semanticsLabel: 'Circular progress indicator',
-              ))
-            : ListView(
-                children: getRows(),
-              ),
+    return FocusDetector(onFocusGained: () {
+      listerFlowController.currentPage.value = "Check-in list";
+    },
+      child: ListerFlow(
+        // This is where you give you custom widget it's data.
+        body: Obx(
+          () => controller.isLoading()
+              ? Center(
+                  child: CircularProgressIndicator(
+                  value: null,
+                  semanticsLabel: 'Circular progress indicator',
+                ))
+              : ListView(
+                  children: getRows(),
+                ),
+        ),
       ),
     );
   }

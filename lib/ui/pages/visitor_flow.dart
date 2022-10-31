@@ -57,7 +57,7 @@ class _VisitorFlowState extends State<VisitorFlow> {
     return SelectionArea(
       child: Scaffold(
         appBar: AppBar(
-            title: Text(Get.find<Env>().appTitle),
+            title: Obx(() => Text(_visitorFlowController.currentPage.value ?? "")),
             actions: [IconButton(
               icon: Icon(Icons.home),
               color: Colors.white,

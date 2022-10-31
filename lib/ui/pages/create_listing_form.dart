@@ -32,7 +32,7 @@ class CreateListingFormState extends State<CreateListingForm> {
 
     ever(controller.getCreateState(), (value) {
       if (value.content == true) {
-        Get.toNamed(Constants.listingsRoute);
+        Get.back();
       }
       if (value.error != null) {
         Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);

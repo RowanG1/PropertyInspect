@@ -21,10 +21,7 @@ class ListerFlow extends StatefulWidget {
 
 class _ListerFlowState extends State<ListerFlow> {
   final LoginController _loginController = Get.find();
-
-  final ListerFlowController _listerFlowController =
-      Get.put(ListerFlowControllerFactory().make());
-
+  final ListerFlowController _listerFlowController = Get.find();
   final ListerRegistrationController _listerRegistrationController =
       Get.put(ListerRegistrationControllerFactory().make());
 
@@ -54,7 +51,7 @@ class _ListerFlowState extends State<ListerFlow> {
     return SelectionArea(
       child: Scaffold(
         appBar: AppBar(
-            title: Text(Get.find<Env>().appTitle), actions: [IconButton(
+            title: Obx(() => Text(_listerFlowController.currentPage.value ?? "")), actions: [IconButton(
           icon: Icon(Icons.home),
           color: Colors.white,
           onPressed: () {

@@ -14,6 +14,7 @@ import 'package:property_inspect/ui/pages/home_page.dart';
 import 'package:property_inspect/ui/pages/listing_page.dart';
 import 'package:property_inspect/ui/pages/listings_page.dart';
 import 'package:property_inspect/ui/pages/signin_route_home.dart';
+import 'data/di/controllers_factories.dart';
 import 'data/repository/logout_firebase_repo.dart';
 import 'dart:async'; // new
 
@@ -23,7 +24,13 @@ Future<void> main() async {
 
 mainSetup() async {
   initLoginController();
+  initFlowControllers();
   runApp(const MyApp());
+}
+
+initFlowControllers() {
+  Get.put(ListerFlowControllerFactory().make());
+  Get.put(VisitorFlowControllerFactory().make());
 }
 
 initLoginController() {

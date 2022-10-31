@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../domain/constants.dart';
+import '../controllers/lister_flow_controller.dart';
 import '../controllers/lister_registration_controller.dart';
 
 class ListerRegistrationForm extends StatefulWidget {
@@ -22,6 +23,13 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
   final ListerRegistrationController controller = Get.find();
+  final ListerFlowController listerFlowController = Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+    listerFlowController.currentPage.value = "Lister registration";
+  }
 
   @override
   Widget build(BuildContext context) {

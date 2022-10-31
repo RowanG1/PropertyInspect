@@ -7,6 +7,7 @@ import 'package:property_inspect/ui/pages/lister_flow.dart';
 import '../../data/di/controllers_factories.dart';
 import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
+import '../controllers/lister_flow_controller.dart';
 
 class ListingsPage extends StatefulWidget {
   ListingsPage({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class ListingsPage extends StatefulWidget {
 
 class _ListingsPageState extends State<ListingsPage> {
   final controller = Get.put(ViewListingsControllerFactory().make());
+  final ListerFlowController listerFlowController = Get.find();
 
   @override
   void initState() {
@@ -44,29 +46,33 @@ class _ListingsPageState extends State<ListingsPage> {
     final platform = defaultTargetPlatform;
     print(platform);
 
-    return ListerFlow(
-      // This is where you give you custom widget it's data.
-      body: Obx(() => controller.isLoading()
-          ? Text('Please wait........................')
-          : ListView(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 30, 0, 20),
-                      child: ElevatedButton(
-                          onPressed: () {
-                            const route = '${Constants.createListingRoute}';
-                            Get.toNamed('$route');
-                          },
-                          child: const Text("Create Listing")),
-                    ),
-                  ],
-                ),
-                ...getRows()
-              ],
-            )),
+    return FocusDetector(onFocusGained: () {
+      listerFlowController.currentPage.value = "Listings";
+    },
+      child: ListerFlow(
+        // This is where you give you custom widget it's data.
+        body: Obx(() => controller.isLoading()
+            ? Text('Please wait........................')
+            : ListView(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 30, 0, 20),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              const route = '${Constants.createListingRoute}';
+                              Get.toNamed('$route');
+                            },
+                            child: const Text("Create Listing")),
+                      ),
+                    ],
+                  ),
+                  ...getRows()
+                ],
+              )),
+      ),
     );
   }
 
@@ -131,6 +137,7 @@ class _ListingsPageState extends State<ListingsPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     TextButton(
                         onPressed: () {
@@ -142,23 +149,20 @@ class _ListingsPageState extends State<ListingsPage> {
                             alignment: Alignment.centerLeft,
                             child: const Text("View",
                                 textAlign: TextAlign.start))),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(80.0, 0, 0, 0),
-                      child: TextButton(
-                          onPressed: () {
-                            showDeleteDialog(item.id);
-                          },
-                          child: const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Icon(
-                              Icons.delete,
-                              color: Colors.grey,
-                              size: 24.0,
-                              semanticLabel:
-                                  'Text to announce in accessibility modes',
-                            ),
-                          )),
-                    ),
+                    TextButton(
+                        onPressed: () {
+                          showDeleteDialog(item.id);
+                        },
+                        child: const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.grey,
+                            size: 24.0,
+                            semanticLabel:
+                                'Text to announce in accessibility modes',
+                          ),
+                        )),
                   ],
                 ),
               ),

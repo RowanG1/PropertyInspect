@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/data/di/controllers_factories.dart';
 import 'package:property_inspect/ui/controllers/check_in_controller.dart';
+import 'package:property_inspect/ui/controllers/visitor_flow_controller.dart';
 import 'package:property_inspect/ui/pages/visitor_flow.dart';
 import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
@@ -20,8 +22,7 @@ class _CheckinPageState extends State<CheckinPage> {
   final CheckinController checkinController =
       Get.put(CheckinControllerFactory().make());
 
-  final VisitorRegistrationController registrationController =
-      Get.put(VisitorRegistrationControllerFactory().make());
+  final VisitorFlowController visitorFlowController = Get.find();
 
   @override
   void initState() {
@@ -42,16 +43,20 @@ class _CheckinPageState extends State<CheckinPage> {
 
   @override
   Widget build(BuildContext context) {
-    return VisitorFlow(
-        body: Obx(() => Center(
-            child: checkinController.getIsLoading()
-                ? CircularProgressIndicator(
-                    value: null,
-                    semanticsLabel: 'Circular progress indicator',
-                  )
-                : checkinController.isValidConfig()
-                    ? ValidCheckinContent()
-                    : Text('Sorry, we encountered a problem.'))));
+    return FocusDetector(onFocusGained: () {
+      visitorFlowController.currentPage.value = "Check in";
+    },
+      child: VisitorFlow(
+          body: Obx(() => Center(
+              child: checkinController.getIsLoading()
+                  ? CircularProgressIndicator(
+                      value: null,
+                      semanticsLabel: 'Circular progress indicator',
+                    )
+                  : checkinController.isValidConfig()
+                      ? ValidCheckinContent()
+                      : Text('Sorry, we encountered a problem.')))),
+    );
   }
 }
 
