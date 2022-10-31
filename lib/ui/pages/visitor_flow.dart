@@ -15,8 +15,9 @@ import '../controllers/visitor_flow_controller.dart';
 
 class VisitorFlow extends StatefulWidget {
   final Widget body;
+  final String? pageTitle;
 
-  VisitorFlow({required this.body, Key? key}) : super(key: key);
+  VisitorFlow({required this.body, this.pageTitle, Key? key}) : super(key: key);
 
   @override
   State<VisitorFlow> createState() => _VisitorFlowState();
@@ -57,7 +58,7 @@ class _VisitorFlowState extends State<VisitorFlow> {
     return SelectionArea(
       child: Scaffold(
         appBar: AppBar(
-            title: Obx(() => Text(_visitorFlowController.currentPage.value ?? "")),
+            title: Text(widget.pageTitle ?? ""),
             actions: [IconButton(
               icon: Icon(Icons.home),
               color: Colors.white,

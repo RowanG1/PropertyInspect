@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:footer/footer.dart';
 import 'package:footer/footer_view.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/data/widgets/center_horizontal.dart';
 import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/ui/pages/unauthenticated_page.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../data/utils/open_email_link.dart';
 import '../controllers/login_controller.dart';
 

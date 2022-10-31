@@ -12,8 +12,9 @@ import '../controllers/login_controller.dart';
 
 class ListerFlow extends StatefulWidget {
   final Widget body;
+  final String? pageTitle;
 
-  ListerFlow({required this.body, Key? key}) : super(key: key);
+  const ListerFlow({required this.body, this.pageTitle, Key? key}) : super(key: key);
 
   @override
   State<ListerFlow> createState() => _ListerFlowState();
@@ -51,7 +52,7 @@ class _ListerFlowState extends State<ListerFlow> {
     return SelectionArea(
       child: Scaffold(
         appBar: AppBar(
-            title: Obx(() => Text(_listerFlowController.currentPage.value ?? "")), actions: [IconButton(
+            title: Text(widget.pageTitle ?? ""), actions: [IconButton(
           icon: Icon(Icons.home),
           color: Colors.white,
           onPressed: () {

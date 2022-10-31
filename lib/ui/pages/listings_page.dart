@@ -7,7 +7,6 @@ import 'package:property_inspect/ui/pages/lister_flow.dart';
 import '../../data/di/controllers_factories.dart';
 import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
-import '../controllers/lister_flow_controller.dart';
 
 class ListingsPage extends StatefulWidget {
   ListingsPage({Key? key}) : super(key: key);
@@ -18,7 +17,6 @@ class ListingsPage extends StatefulWidget {
 
 class _ListingsPageState extends State<ListingsPage> {
   final controller = Get.put(ViewListingsControllerFactory().make());
-  final ListerFlowController listerFlowController = Get.find();
 
   @override
   void initState() {
@@ -46,33 +44,29 @@ class _ListingsPageState extends State<ListingsPage> {
     final platform = defaultTargetPlatform;
     print(platform);
 
-    return FocusDetector(onFocusGained: () {
-      listerFlowController.currentPage.value = "Listings";
-    },
-      child: ListerFlow(
-        // This is where you give you custom widget it's data.
-        body: Obx(() => controller.isLoading()
-            ? Text('Please wait........................')
-            : ListView(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 30, 0, 20),
-                        child: ElevatedButton(
-                            onPressed: () {
-                              const route = '${Constants.createListingRoute}';
-                              Get.toNamed('$route');
-                            },
-                            child: const Text("Create Listing")),
-                      ),
-                    ],
-                  ),
-                  ...getRows()
-                ],
-              )),
-      ),
+    return ListerFlow(pageTitle: "Listings",
+      // This is where you give you custom widget it's data.
+      body: Obx(() => controller.isLoading()
+          ? Text('Please wait........................')
+          : ListView(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 30, 0, 20),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            const route = '${Constants.createListingRoute}';
+                            Get.toNamed('$route');
+                          },
+                          child: const Text("Create Listing")),
+                    ),
+                  ],
+                ),
+                ...getRows()
+              ],
+            )),
     );
   }
 

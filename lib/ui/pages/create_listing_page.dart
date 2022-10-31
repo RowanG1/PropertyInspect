@@ -23,7 +23,7 @@ class _CreateListingPageState extends State<CreateListingPage> {
     return FocusDetector(onFocusGained: () {
       listerFlowController.currentPage.value = "Create listing";
     },
-      child: ListerFlow(
+      child: ListerFlow(pageTitle: "Create listing",
         // This is where you give you custom widget it's data.
         body: Center(
           child: Obx(() => controller.getIsLoading()

@@ -16,7 +16,6 @@ class CheckinsPage extends StatefulWidget {
 
 class _CheckinsPageState extends State<CheckinsPage> {
   final controller = Get.put(GetCheckinsControllerFactory().make());
-  final ListerFlowController listerFlowController = Get.find();
 
   @override
   void initState() {
@@ -36,22 +35,18 @@ class _CheckinsPageState extends State<CheckinsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FocusDetector(onFocusGained: () {
-      listerFlowController.currentPage.value = "Check-in list";
-    },
-      child: ListerFlow(
-        // This is where you give you custom widget it's data.
-        body: Obx(
-          () => controller.isLoading()
-              ? Center(
-                  child: CircularProgressIndicator(
-                  value: null,
-                  semanticsLabel: 'Circular progress indicator',
-                ))
-              : ListView(
-                  children: getRows(),
-                ),
-        ),
+    return ListerFlow(pageTitle: "Check-ins",
+      // This is where you give you custom widget it's data.
+      body: Obx(
+        () => controller.isLoading()
+            ? Center(
+                child: CircularProgressIndicator(
+                value: null,
+                semanticsLabel: 'Circular progress indicator',
+              ))
+            : ListView(
+                children: getRows(),
+              ),
       ),
     );
   }

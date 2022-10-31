@@ -18,7 +18,6 @@ class ListingPage extends StatefulWidget {
 }
 
 class _ListerFlowState extends State<ListingPage> {
-  final ListerFlowController listerFlowController = Get.find();
 
   @override
   void initState() {
@@ -46,61 +45,57 @@ class _ListerFlowState extends State<ListingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FocusDetector(onFocusGained: () {
-      listerFlowController.currentPage.value = "Listing";
-    },
-      child: ListerFlow(
-          // This is where you give you custom widget it's data.
-          body: Obx(() => Center(
-              child: widget.controller.isLoading()
-                  ? CircularProgressIndicator(
-                      value: null,
-                      semanticsLabel: 'Circular progress indicator',
-                    )
-                  : ((widget.controller.getListing() != null)
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 18, 0, 5),
-                                child: Text(
-                                    "${widget.controller.getListing()?.address}"),
+    return ListerFlow(pageTitle: "Listing",
+        // This is where you give you custom widget it's data.
+        body: Obx(() => Center(
+            child: widget.controller.isLoading()
+                ? CircularProgressIndicator(
+                    value: null,
+                    semanticsLabel: 'Circular progress indicator',
+                  )
+                : ((widget.controller.getListing() != null)
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 18, 0, 5),
+                              child: Text(
+                                  "${widget.controller.getListing()?.address}"),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                  "${widget.controller.getListing()?.suburb}"),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                  "${widget.controller.getListing()?.postCode}"),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: QrImage(
+                                data: widget.controller.getQRCodeUrl(),
+                                version: QrVersions.auto,
+                                size: 200.0,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                    "${widget.controller.getListing()?.suburb}"),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                    "${widget.controller.getListing()?.postCode}"),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: QrImage(
-                                  data: widget.controller.getQRCodeUrl(),
-                                  version: QrVersions.auto,
-                                  size: 200.0,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: ElevatedButton(
-                                    onPressed: widget.controller.doCheckinsExist()
-                                        ? () {
-                                            final route =
-                                                '${Constants.checkinsBaseRoute}/${widget.controller.getPropertyId()}';
-                                            Get.toNamed('$route');
-                                          }
-                                        : null,
-                                    child: Align(
-                                        widthFactor: 1,
-                                        alignment: Alignment.center,
-                                        child: const Text("Checkins"))),
-                              ),
-                            ])
-                      : Text('Sorry, we can\'t find the listing.'))))),
-    );
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: ElevatedButton(
+                                  onPressed: widget.controller.doCheckinsExist()
+                                      ? () {
+                                          final route =
+                                              '${Constants.checkinsBaseRoute}/${widget.controller.getPropertyId()}';
+                                          Get.toNamed('$route');
+                                        }
+                                      : null,
+                                  child: Align(
+                                      widthFactor: 1,
+                                      alignment: Alignment.center,
+                                      child: const Text("Checkins"))),
+                            ),
+                          ])
+                    : Text('Sorry, we can\'t find the listing.')))));
   }
 }
