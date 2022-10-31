@@ -58,7 +58,7 @@ class _ListerFlowState extends State<ListingPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 18, 0, 5),
+                              padding: const EdgeInsets.fromLTRB(0, 50, 0, 5),
                               child: Text(
                                   "${widget.controller.getListing()?.address}"),
                             ),

@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
 
     return UnauthenticatedPage(
       body: FooterView(
-        footer: Footer(
+        footer: Footer(backgroundColor: Colors.white,
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
