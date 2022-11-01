@@ -26,22 +26,24 @@ class _ListerFlowState extends State<ListerFlow> {
   final ListerFlowController _listerFlowController = Get.find();
   final ListerRegistrationController _listerRegistrationController =
       Get.put(ListerRegistrationControllerFactory().make());
+  late final Worker listerRegisterdSubscription;
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ever(_listerFlowController.getIsListerRegisteredRx(), (value) {
+      listerRegisterdSubscription = ever(_listerFlowController
+          .getIsListerRegisteredRx(), (value) {
         if (value.error != null) {
-          Get.snackbar("Error", value.error.toString(),
+          Get.snackbar("Lister registered error", value.error.toString(),
               backgroundColor: Colors.red);
         }
       });
 
       ever(_listerRegistrationController.getCreateListerState(), (value) {
         if (value.error != null) {
-          Get.snackbar("Error", value.error.toString(),
+          Get.snackbar("Create Lister state Error", value.error.toString(),
               backgroundColor: Colors.red);
         }
       });
@@ -82,5 +84,11 @@ class _ListerFlowState extends State<ListerFlow> {
   bool isLoading() {
     return _listerRegistrationController.isLoading() ||
         _listerFlowController.getIsLoading();
+  }
+
+  @override
+  void dispose() {
+    listerRegisterdSubscription.dispose();
+    super.dispose();
   }
 }

@@ -18,13 +18,13 @@ class ListingPage extends StatefulWidget {
 }
 
 class _ListerFlowState extends State<ListingPage> {
-
+late final Worker listingSubScription;
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ever(widget.controller.getListingRx(), (value) {
+      listingSubScription = ever(widget.controller.getListingRx(), (value) {
         if (value.error != null) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
@@ -97,5 +97,11 @@ class _ListerFlowState extends State<ListingPage> {
                             ),
                           ])
                     : Text('Sorry, we can\'t find the listing.')))));
+  }
+
+  @override
+  void dispose() {
+    listingSubScription.dispose();
+    super.dispose();
   }
 }

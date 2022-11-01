@@ -17,15 +17,16 @@ class ListingsPage extends StatefulWidget {
 
 class _ListingsPageState extends State<ListingsPage> {
   final controller = Get.put(ViewListingsControllerFactory().make());
+  late final Worker getListingsSubscription;
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ever(controller.getListingsRx(), (value) {
+      getListingsSubscription = ever(controller.getListingsRx(), (value) {
         if (value.error != null) {
-          Get.snackbar("Error", value.error.toString(),
+          Get.snackbar("Get Listings Error", value.error.toString(),
               backgroundColor: Colors.red);
         }
       });
@@ -199,5 +200,11 @@ class _ListingsPageState extends State<ListingsPage> {
   onOkDeleteDialog(String listingId) {
     controller.deleteListing(listingId);
     Navigator.pop(context, 'OK');
+  }
+
+  @override
+  void dispose() {
+    getListingsSubscription.dispose();
+    super.dispose();
   }
 }

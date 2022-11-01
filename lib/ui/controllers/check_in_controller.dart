@@ -44,7 +44,9 @@ class CheckinController extends GetxController {
   void onInit() {
     super.onInit();
     final Stream<Optional<String>> loginIdStream = _getLoginIdUseCase.execute();
-    _userId.bindStream(loginIdStream);
+    _userId.bindStream(loginIdStream.handleError((onError) {
+      print("Error on login Id checkin controller $onError");
+    }));
     ever(_userId, (value) {
       if (value.value != null) {
         _getVisitor();
@@ -146,7 +148,7 @@ class CheckinController extends GetxController {
       final Stream<s.State<Listing>> mappedPropertyState = property.map((event) {
         return s.State<Listing>(content: event);
       }).handleError((onError) {
-        print("OnError:");
+        print("get Property OnError:");
         print(onError);
         _propertyState.value = s.State<Listing>(error: onError);
       });
@@ -216,6 +218,12 @@ class CheckinController extends GetxController {
 
   Visitor? getVisitor() {
     return _getVisitorState.value.content;
+  }
+
+  @override
+  void dispose() {
+
+    super.dispose();
   }
 }
 
