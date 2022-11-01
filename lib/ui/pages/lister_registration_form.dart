@@ -35,77 +35,79 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
 
-    return Form(
-      key: _formKey,
-      child: Padding(
-        padding: EdgeInsets.all(Constants.largePadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
-              child: Text(Constants.listerRegistrationHeading,
-                  style: TextStyle(fontSize: Constants.headingSize)),
-            ),
-            TextFormField(
-              controller: controller.nameController,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: Constants.nameLabel,
+    return SingleChildScrollView(
+      child: Form(
+        key: _formKey,
+        child: Padding(
+          padding: EdgeInsets.all(Constants.largePadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
+                child: Text(Constants.listerRegistrationHeading,
+                    style: TextStyle(fontSize: Constants.headingSize)),
               ),
-              // The validator receives the text that the user has entered.
-              validator: (value) {
-                return controller.validate(controller.nameController);
-              },
-            ),
-            TextFormField(
-              controller: controller.lastNameController,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: Constants.lastNameLabel,
-              ),
-              // The validator receives the text that the user has entered.
-              validator: (value) {
-                return controller.validate(controller.lastNameController);
-              },
-            ),
-            TextFormField(
-              controller: controller.phoneController,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: Constants.phoneLabel,
-              ),
-              // The validator receives the text that the user has entered.
-              validator: (value) {
-                return controller.validate(controller.phoneController);
-              },
-            ),
-            TextFormField(
-              controller: controller.emailController,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: Constants.emailLabel,
-              ),
-              // The validator receives the text that the user has entered.
-              validator: (value) {
-                controller.validate(controller.emailController);
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
-              child: ElevatedButton(
-                onPressed: () {
-                  // Validate returns true if the form is valid, or false otherwise.
-                  if (_formKey.currentState!.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
-                    controller.createRegistration();
-                  }
+              TextFormField(
+                controller: controller.nameController,
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: Constants.nameLabel,
+                ),
+                // The validator receives the text that the user has entered.
+                validator: (value) {
+                  return controller.validate(controller.nameController);
                 },
-                child: const Text(Constants.submitLabel),
               ),
-            ),
-          ],
+              TextFormField(
+                controller: controller.lastNameController,
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: Constants.lastNameLabel,
+                ),
+                // The validator receives the text that the user has entered.
+                validator: (value) {
+                  return controller.validate(controller.lastNameController);
+                },
+              ),
+              TextFormField(
+                controller: controller.phoneController,
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: Constants.phoneLabel,
+                ),
+                // The validator receives the text that the user has entered.
+                validator: (value) {
+                  return controller.validate(controller.phoneController);
+                },
+              ),
+              TextFormField(
+                controller: controller.emailController,
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: Constants.emailLabel,
+                ),
+                // The validator receives the text that the user has entered.
+                validator: (value) {
+                  controller.validate(controller.emailController);
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Validate returns true if the form is valid, or false otherwise.
+                    if (_formKey.currentState!.validate()) {
+                      // If the form is valid, display a snackbar. In the real world,
+                      // you'd often call a server or save the information in a database.
+                      controller.createRegistration();
+                    }
+                  },
+                  child: const Text(Constants.submitLabel),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
