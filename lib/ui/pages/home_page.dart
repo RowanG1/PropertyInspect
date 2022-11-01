@@ -67,59 +67,31 @@ class HomePage extends StatelessWidget {
     ];
 
     return UnauthenticatedPage(
-      body: FooterView(
-        footer: Footer(backgroundColor: Colors.white,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                child: const Text(
-                  "ABN: 67863792318",
-                  style: TextStyle(fontSize: 11),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                child: TextButton(
-                    onPressed: () {
-                      EmailLink().openEmailLink(Constants.contactEmail);
-                    },
-                    child: Text(
-                      "Contact us",
-                      style: TextStyle(fontSize: 14),
-                    )),
-              )
-            ])),
-        children: [
-          Obx(() => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (loginController.getLoginState().value) ...[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: TextButton(
-                              onPressed: () {
-                                loginController.logout();
-                              },
-                              child: const Text("Log out")),
-                        ),
-                      ],
-                    )
+      body: Obx(() => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (loginController.getLoginState().value) ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: TextButton(
+                          onPressed: () {
+                            loginController.logout();
+                          },
+                          child: const Text("Log out")),
+                    ),
                   ],
-                  ...[
-                    Center(
-                      child: Column(children: [...commonWidgets]),
-                    )
-                  ],
-                ],
-              ))
-        ],
-      ),
+                )
+              ],
+              ...[
+                Center(
+                  child: Column(children: [...commonWidgets]),
+                )
+              ],
+            ],
+          )),
     );
   }
 }

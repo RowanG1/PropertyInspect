@@ -5,6 +5,7 @@ import 'package:property_inspect/data/di/controllers_factories.dart';
 import 'package:property_inspect/ui/controllers/lister_registration_controller.dart';
 import 'package:property_inspect/ui/pages/lister_registration_form.dart';
 import 'package:property_inspect/ui/pages/signin_container.dart';
+import 'package:property_inspect/ui/widgets/page_with_footer.dart';
 import '../../data/types/env.dart';
 import '../../domain/constants.dart';
 import '../controllers/lister_flow_controller.dart';
@@ -60,18 +61,20 @@ class _ListerFlowState extends State<ListerFlow> {
           },
         )],
             ),
-        body: Obx(() => isLoading()
-            ? Center(
-              child: CircularProgressIndicator(
-                  value: null,
-                  semanticsLabel: 'Circular progress indicator',
-                ),
-            )
-            : _loginController.getLoginState().value
-                ? (_listerFlowController.getIsListerRegistered()
-                    ? widget.body
-                    : ListerRegistrationForm())
-                : SignInContainer()),
+        body: PageWithFooter(
+          body: Obx(() => isLoading()
+              ? Center(
+                child: CircularProgressIndicator(
+                    value: null,
+                    semanticsLabel: 'Circular progress indicator',
+                  ),
+              )
+              : _loginController.getLoginState().value
+                  ? (_listerFlowController.getIsListerRegistered()
+                      ? widget.body
+                      : ListerRegistrationForm())
+                  : SignInContainer()),
+        ),
       ),
     );
   }

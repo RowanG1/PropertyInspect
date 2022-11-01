@@ -7,6 +7,7 @@ import 'package:property_inspect/ui/controllers/visitor_registration_controller.
 import 'package:property_inspect/ui/pages/lister_registration_form.dart';
 import 'package:property_inspect/ui/pages/signin_container.dart';
 import 'package:property_inspect/ui/pages/visitor_registration_form.dart';
+import 'package:property_inspect/ui/widgets/page_with_footer.dart';
 import '../../data/types/env.dart';
 import '../../domain/constants.dart';
 import '../controllers/lister_flow_controller.dart';
@@ -27,7 +28,7 @@ class _VisitorFlowState extends State<VisitorFlow> {
   final LoginController _loginController = Get.find();
 
   final VisitorFlowController _visitorFlowController =
-      Get.put(VisitorFlowControllerFactory().make());
+      Get.find();
 
   final VisitorRegistrationController _visitorRegistrationController =
       Get.put(VisitorRegistrationControllerFactory().make());
@@ -66,16 +67,21 @@ class _VisitorFlowState extends State<VisitorFlow> {
                 Get.offAllNamed(Constants.homeRoute);
               },
             )]),
-        body: Obx(() => isLoading()
-            ? CircularProgressIndicator(
-                value: null,
-                semanticsLabel: 'Circular progress indicator',
-              )
-            : _loginController.getLoginState().value
-                ? (_visitorFlowController.getIsVisitorRegistered()
-                    ? widget.body
-                    : VisitorRegistrationForm())
-                : SignInContainer()),
+        body: PageWithFooter(
+          body: Obx(() => isLoading()
+                ? Center(
+                  child: CircularProgressIndicator(
+                      value: null,
+                      semanticsLabel: 'Circular progress indicator',
+                    ),
+                )
+                : _loginController.getLoginState().value
+                    ? (_visitorFlowController.getIsVisitorRegistered()
+                        ? widget.body
+                        : VisitorRegistrationForm())
+                    : SignInContainer(),
+          ),
+        ),
       ),
     );
   }

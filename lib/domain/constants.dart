@@ -36,6 +36,10 @@ class Constants {
   static const defaultValidationLabel = 'Please enter some text';
   static const emailValidationLabel = 'Please enter a valid email';
 
+  //Footer
+  static const abnLabel = "ABN: 67863792318";
+  static const contactUsLabel = "Contact us";
+
   // Text sizes
 static final headingSize = 25.toDouble();
 }

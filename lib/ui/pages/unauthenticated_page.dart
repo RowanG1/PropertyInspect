@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:property_inspect/ui/widgets/page_with_footer.dart';
 import '../../data/types/env.dart';
 
 class UnauthenticatedPage extends StatelessWidget {
@@ -14,6 +15,6 @@ class UnauthenticatedPage extends StatelessWidget {
             appBar: AppBar(
                 title: Text(Get.find<Env>().appTitle),
                 ),
-            body: body));
+            body: PageWithFooter(body: body)));
   }
 }
