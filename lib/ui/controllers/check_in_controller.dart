@@ -20,14 +20,14 @@ class CheckinController extends GetxController {
   final GetVisitorUseCase _getVisitorUseCase;
   final AnalyticsUseCase _analyticsUseCase;
 
-  Rx<String?> _propertyId = (null as String?).obs;
+  final Rx<String?> _propertyId = (null as String?).obs;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<s.State<bool>> _checkInState = s.State<bool>().obs;
   final Rx<s.State<Listing>> _propertyState = s.State<Listing>().obs;
   final Rx<s.State<Optional<bool>>> _isRegisteredState =
       s.State<Optional<bool>>().obs;
   final Rx<s.State<Visitor>> _getVisitorState = s.State<Visitor>().obs;
-  Rx<CheckinLumpedInputData> _checkinCombinedInputs =
+  final Rx<CheckinLumpedInputData> _checkinCombinedInputs =
       CheckinLumpedInputData().obs;
 
   CheckinController(

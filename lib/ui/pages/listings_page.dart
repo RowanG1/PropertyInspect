@@ -42,13 +42,14 @@ class _ListingsPageState extends State<ListingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final platform = defaultTargetPlatform;
-    print(platform);
-
-    return ListerFlow(pageTitle: "Listings",
+    return ListerFlow(
+      pageTitle: "Listings",
       // This is where you give you custom widget it's data.
       body: Obx(() => controller.isLoading()
-          ? Text('Please wait........................')
+          ? const CircularProgressIndicator(
+              value: null,
+              semanticsLabel: 'Circular progress indicator',
+            )
           : ListView(
               children: [
                 Row(
