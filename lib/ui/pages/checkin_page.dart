@@ -20,14 +20,26 @@ class _CheckinPageState extends State<CheckinPage> {
   final CheckinController checkinController =
       Get.put(CheckinControllerFactory().make());
 
+  late final Worker getCheckinStateSubscription;
+  late final Worker getPropertyAvailableSubscription;
+
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ever(checkinController.getCheckinState(), (value) {
+      getCheckinStateSubscription = ever(checkinController.getCheckinState(),
+      (value) {
         if (value.error != null) {
-          Get.snackbar("Error", value.error.toString(),
+          Get.snackbar("Check-in state Error", value.error.toString(),
+              backgroundColor: Colors.red);
+        }
+      });
+
+      getPropertyAvailableSubscription = ever(checkinController
+          .getListing(), (value) {
+        if (value.error != null) {
+          Get.snackbar("Get Property Error", value.error.toString(),
               backgroundColor: Colors.red);
         }
       });
@@ -49,6 +61,13 @@ class _CheckinPageState extends State<CheckinPage> {
                 : checkinController.isValidConfig()
                     ? ValidCheckinContent()
                     : Text('Sorry, we encountered a problem.'))));
+  }
+
+  @override
+  void dispose() {
+    getCheckinStateSubscription.dispose();
+    getPropertyAvailableSubscription.dispose();
+    super.dispose();
   }
 }
 

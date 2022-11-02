@@ -33,21 +33,26 @@ class _VisitorFlowState extends State<VisitorFlow> {
   final VisitorRegistrationController _visitorRegistrationController =
       Get.put(VisitorRegistrationControllerFactory().make());
 
+  late final Worker isVisitorRegisteredSubscription;
+  late final Worker isVisitorRegisterationCreatedSubscription;
+
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ever(_visitorFlowController.getIsVisitorRegisteredRx(), (value) {
+      isVisitorRegisteredSubscription = ever(_visitorFlowController
+          .getIsVisitorRegisteredRx(), (value) {
         if (value.error != null) {
-          Get.snackbar("Error", value.error.toString(),
+          Get.snackbar("Visitor Is Registered Error", value.error.toString(),
               backgroundColor: Colors.red);
         }
       });
 
-      ever(_visitorRegistrationController.getCreateState(), (value) {
+      isVisitorRegisterationCreatedSubscription = ever
+      (_visitorRegistrationController.getCreateState(), (value) {
         if (value.error != null) {
-          Get.snackbar("Error", value.error.toString(),
+          Get.snackbar("Is Visitor Created Error", value.error.toString(),
               backgroundColor: Colors.red);
         }
       });
@@ -89,5 +94,12 @@ class _VisitorFlowState extends State<VisitorFlow> {
   bool isLoading() {
     return _visitorRegistrationController.isLoading() ||
         _visitorFlowController.getIsLoading();
+  }
+
+  @override
+  void dispose() {
+    isVisitorRegisteredSubscription.dispose();
+    isVisitorRegisterationCreatedSubscription.dispose();
+    super.dispose();
   }
 }

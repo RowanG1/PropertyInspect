@@ -16,7 +16,6 @@ class CheckinControllerFactory {
   CheckinController make() {
     return CheckinController(
         CheckedInUseCaseFactory().make(),
-        ListingAvailableUseCaseFactory().make(),
         GetLoginIdUseCaseFactory().make(),
         DoCheckInUseCaseFactory().make(),
         GetListingUseCaseFactory().make(),

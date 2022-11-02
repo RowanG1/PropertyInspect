@@ -14,26 +14,24 @@ import 'package:rxdart/rxdart.dart' as RxRaw;
 
 class CheckinController extends GetxController {
   final CheckedInUseCase _isCheckedInUseCase;
-  final GetListingAvailableUseCase _listingAvailableUseCase;
   final GetLoginIdUseCase _getLoginIdUseCase;
   final DoCheckinUseCase _doCheckinUseCase;
   final GetListingUseCase _getListingUseCase;
   final GetVisitorUseCase _getVisitorUseCase;
   final AnalyticsUseCase _analyticsUseCase;
 
-  String? _propertyId;
+  Rx<String?> _propertyId = (null as String?).obs;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<s.State<bool>> _checkInState = s.State<bool>().obs;
-  final Rx<s.State<bool>> _propertyAvailableState = s.State<bool>().obs;
   final Rx<s.State<Listing>> _propertyState = s.State<Listing>().obs;
   final Rx<s.State<Optional<bool>>> _isRegisteredState =
       s.State<Optional<bool>>().obs;
   final Rx<s.State<Visitor>> _getVisitorState = s.State<Visitor>().obs;
-  Rx<CheckinLumpedInputData> _checkinCombinedInputs = CheckinLumpedInputData().obs;
+  Rx<CheckinLumpedInputData> _checkinCombinedInputs =
+      CheckinLumpedInputData().obs;
 
   CheckinController(
       this._isCheckedInUseCase,
-      this._listingAvailableUseCase,
       this._getLoginIdUseCase,
       this._doCheckinUseCase,
       this._getListingUseCase,
@@ -53,24 +51,35 @@ class CheckinController extends GetxController {
       }
     });
 
+    final propertyIdStream = _propertyId.stream;
+    final lumpedPropertyInputStream = RxRaw.Rx.combineLatest2(
+        propertyIdStream, loginIdStream, (propertyId, loginId) {
+      return GetPropertyLumpedInputData(
+          propertyId: propertyId, userId: loginId.value);
+    });
+
+    lumpedPropertyInputStream.listen((data) {
+      if (data.userId != null && data.propertyId != null) {
+        _getProperty();
+      }
+    });
+
     ever(_checkinCombinedInputs, (value) {
-      final userId = value.userId;
       final visitor = value.visitor;
       final listing = value.listing;
-      if (visitor != null && listing != null && userId !=
-          null) {
-        _getIsCheckedIn(userId, listing, visitor);
+      if (visitor != null && listing != null) {
+        _getIsCheckedIn(listing, visitor);
       }
     });
 
     final combinedCheckinInputs = RxRaw.Rx.combineLatest3(
         _propertyState.stream, _getVisitorState.stream, _userId.stream,
-            (property, visitor, userId) {
-          return CheckinLumpedInputData(
-              listing: property.content,
-              visitor: visitor.content,
-              userId: userId.value);
-        });
+        (property, visitor, userId) {
+      return CheckinLumpedInputData(
+        listing: property.content,
+        visitor: visitor.content,
+      );
+    });
 
     _checkinCombinedInputs.bindStream(combinedCheckinInputs);
   }
@@ -79,21 +88,25 @@ class CheckinController extends GetxController {
     return _userId.value;
   }
 
-  _getIsCheckedIn(String userId, Listing listing, Visitor visitor) {
+  _getIsCheckedIn(Listing listing, Visitor visitor) {
     try {
-      final listingId = listing.id!;
-      final listerId = listing.userId;
-      print('Getting checkin state with userid $userId, propertyId '
-          '$listingId, lister ID: $listerId');
+      final listingId = listing.id;
+      if (listingId != null) {
+        final listingId = listing.id!;
+        final listerId = listing.userId;
+        final visitorId = visitor.id;
+        print('Getting checkin state with userid $visitorId, propertyId '
+            '$listingId, lister ID: $listerId');
 
-      _checkInState.value = s.State<bool>(loading: true);
-      final isCheckedIn = _isCheckedInUseCase.execute(
-          listerId, _getUserId().value!, _propertyId!);
-      final mappedCheckin =
-          isCheckedIn.map((event) => s.State<bool>(content: event));
+        _checkInState.value = s.State<bool>(loading: true);
+        final isCheckedIn =
+            _isCheckedInUseCase.execute(listerId, visitorId, listingId);
+        final mappedCheckin =
+            isCheckedIn.map((event) => s.State<bool>(content: event));
 
-      _checkInState.bindStream(mappedCheckin.handleError(
-          (onError) => _checkInState.value = s.State<bool>(error: onError)));
+        _checkInState.bindStream(mappedCheckin.handleError(
+            (onError) => _checkInState.value = s.State<bool>(error: onError)));
+      }
     } catch (e) {
       _checkInState.value = s.State<bool>(error: Exception("$e"));
     }
@@ -104,48 +117,25 @@ class CheckinController extends GetxController {
   }
 
   getIsLoading() {
-    return _propertyAvailableState.value.loading == true ||
+    return _propertyState.value.loading == true ||
         _checkInState.value.loading == true ||
         _isRegisteredState.value.loading == true;
   }
 
   void setPropertyId(String? propertyId) {
-    _propertyId = propertyId;
-    if (propertyId != null) {
-      _getPropertyIsAvailable();
-      _getProperty();
-    }
+    _propertyId.value = propertyId;
   }
 
   String? getPropertyId() {
-    return _propertyId;
-  }
-
-  _getPropertyIsAvailable() {
-    try {
-      _propertyAvailableState.value = s.State<bool>(loading: true);
-      final isAvailable = _listingAvailableUseCase.execute(_propertyId!);
-      final Stream<s.State<bool>> mappedPropertyAvailableState =
-          isAvailable.map<s.State<bool>>((event) {
-        return s.State<bool>(content: event);
-      });
-
-      _propertyAvailableState.bindStream(
-          mappedPropertyAvailableState.handleError((onError) =>
-              _propertyAvailableState.value = s.State<bool>(error: onError)));
-    } catch (e) {
-      print(e);
-      _propertyAvailableState.value = s.State<bool>(
-          error: Exception("Could not "
-              "get property available state."));
-    }
+    return _propertyId.value;
   }
 
   _getProperty() {
     try {
       _propertyState.value = s.State<Listing>(loading: true);
-      final property = _getListingUseCase.execute(_propertyId!);
-      final Stream<s.State<Listing>> mappedPropertyState = property.map((event) {
+      final property = _getListingUseCase.execute(_propertyId.value!);
+      final Stream<s.State<Listing>> mappedPropertyState =
+          property.map((event) {
         return s.State<Listing>(content: event);
       }).handleError((onError) {
         print("get Property OnError:");
@@ -155,6 +145,7 @@ class CheckinController extends GetxController {
 
       _propertyState.bindStream(mappedPropertyState);
     } catch (e) {
+      print("Get property error");
       print(e);
       _propertyState.value = s.State<Listing>(
           error: Exception("Could not "
@@ -172,13 +163,8 @@ class CheckinController extends GetxController {
 
   bool isValidConfig() {
     return _propertyId != null &&
-        _propertyAvailableState.value.content == true &&
         _propertyState.value.content != null &&
         _getVisitorState.value.content != null;
-  }
-
-  Rx<s.State<bool>> propertyIsAvailable() {
-    return _propertyAvailableState;
   }
 
   void doCheckin() {
@@ -186,9 +172,10 @@ class CheckinController extends GetxController {
     try {
       final visitor = getVisitor();
       final listerId = _propertyState.value.content?.userId;
-      final userId = _getUserId().value;
-      _doCheckinUseCase.execute(userId!, _propertyId!, listerId!, visitor!);
-      _analyticsUseCase.execute('checkin', { "listingId": _propertyId });
+      final userId = visitor?.id;
+      _doCheckinUseCase.execute(
+          userId!, _propertyId.value!, listerId!, visitor!);
+      _analyticsUseCase.execute('checkin', {"listingId": _propertyId});
     } catch (e) {
       print('Check-in error $e');
       _checkInState.value = s.State<bool>(error: Exception('$e'));
@@ -222,7 +209,6 @@ class CheckinController extends GetxController {
 
   @override
   void dispose() {
-
     super.dispose();
   }
 }
@@ -230,7 +216,13 @@ class CheckinController extends GetxController {
 class CheckinLumpedInputData {
   Listing? listing;
   Visitor? visitor;
-  String? userId;
 
-  CheckinLumpedInputData({this.listing, this.visitor, this.userId});
+  CheckinLumpedInputData({this.listing, this.visitor});
+}
+
+class GetPropertyLumpedInputData {
+  String? userId;
+  String? propertyId;
+
+  GetPropertyLumpedInputData({this.userId, this.propertyId});
 }

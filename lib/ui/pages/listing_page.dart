@@ -19,6 +19,8 @@ class ListingPage extends StatefulWidget {
 
 class _ListerFlowState extends State<ListingPage> {
 late final Worker listingSubScription;
+late final Worker checkinStateSubScription;
+
   @override
   void initState() {
     super.initState();
@@ -31,7 +33,8 @@ late final Worker listingSubScription;
         }
       });
 
-      ever(widget.controller.getCheckinState(), (value) {
+      checkinStateSubScription = ever(widget.controller.getCheckinState(),
+      (value) {
         if (value.error != null) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
@@ -102,6 +105,7 @@ late final Worker listingSubScription;
   @override
   void dispose() {
     listingSubScription.dispose();
+    checkinStateSubScription.dispose();
     super.dispose();
   }
 }
