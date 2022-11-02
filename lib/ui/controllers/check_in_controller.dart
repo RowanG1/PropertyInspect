@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:property_inspect/data/types/optional.dart';
 import 'package:property_inspect/domain/entities/visitor.dart';
@@ -30,6 +32,8 @@ class CheckinController extends GetxController {
   final Rx<CheckinLumpedInputData> _checkinCombinedInputs =
       CheckinLumpedInputData().obs;
 
+  StreamSubscription? getPropertySub;
+
   CheckinController(
       this._isCheckedInUseCase,
       this._getLoginIdUseCase,
@@ -58,7 +62,7 @@ class CheckinController extends GetxController {
           propertyId: propertyId, userId: loginId.value);
     });
 
-    lumpedPropertyInputStream.listen((data) {
+    getPropertySub = lumpedPropertyInputStream.listen((data) {
       if (data.userId != null && data.propertyId != null) {
         _getProperty();
       }
@@ -209,6 +213,7 @@ class CheckinController extends GetxController {
 
   @override
   void dispose() {
+    getPropertySub?.cancel();
     super.dispose();
   }
 }
