@@ -5,17 +5,18 @@ import 'package:property_inspect/data/di/controllers_factories.dart';
 import 'package:property_inspect/ui/controllers/lister_registration_controller.dart';
 import 'package:property_inspect/ui/pages/lister_registration_form.dart';
 import 'package:property_inspect/ui/pages/signin_container.dart';
-import 'package:property_inspect/ui/widgets/page_with_footer.dart';
 import '../../data/types/env.dart';
 import '../../domain/constants.dart';
 import '../controllers/lister_flow_controller.dart';
 import '../controllers/login_controller.dart';
+import '../widgets/drawer.dart';
 
 class ListerFlow extends StatefulWidget {
   final Widget body;
   final String? pageTitle;
 
-  const ListerFlow({required this.body, this.pageTitle, Key? key}) : super(key: key);
+  const ListerFlow({required this.body, this.pageTitle, Key? key})
+      : super(key: key);
 
   @override
   State<ListerFlow> createState() => _ListerFlowState();
@@ -33,8 +34,8 @@ class _ListerFlowState extends State<ListerFlow> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      listerRegisterdSubscription = ever(_listerFlowController
-          .getIsListerRegisteredRx(), (value) {
+      listerRegisterdSubscription =
+          ever(_listerFlowController.getIsListerRegisteredRx(), (value) {
         if (value.error != null) {
           Get.snackbar("Lister registered error", value.error.toString(),
               backgroundColor: Colors.red);
@@ -54,29 +55,22 @@ class _ListerFlowState extends State<ListerFlow> {
   Widget build(BuildContext context) {
     return SelectionArea(
       child: Scaffold(
+        endDrawer: SideDrawer(),
         appBar: AppBar(
-            title: Text(widget.pageTitle ?? ""), actions: [IconButton(
-          icon: Icon(Icons.home),
-          color: Colors.white,
-          onPressed: () {
-            Get.offAllNamed(Constants.homeRoute);
-          },
-        )],
-            ),
-        body: PageWithFooter(
-          body: Obx(() => isLoading()
-              ? Center(
-                child: CircularProgressIndicator(
-                    value: null,
-                    semanticsLabel: 'Circular progress indicator',
-                  ),
-              )
-              : _loginController.getLoginState().value
-                  ? (_listerFlowController.getIsListerRegistered()
-                      ? widget.body
-                      : ListerRegistrationForm())
-                  : SignInContainer()),
+          title: Text(widget.pageTitle ?? ""),
         ),
+        body: Obx(() => isLoading()
+            ? Center(
+                child: CircularProgressIndicator(
+                  value: null,
+                  semanticsLabel: 'Circular progress indicator',
+                ),
+              )
+            : _loginController.getLoginState().value
+                ? (_listerFlowController.getIsListerRegistered()
+                    ? widget.body
+                    : ListerRegistrationForm())
+                : SignInContainer()),
       ),
     );
   }

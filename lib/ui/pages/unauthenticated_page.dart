@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/ui/widgets/page_with_footer.dart';
+import 'package:property_inspect/ui/widgets/drawer.dart';
 import '../../data/types/env.dart';
 
 class UnauthenticatedPage extends StatelessWidget {
@@ -12,9 +12,10 @@ class UnauthenticatedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SelectionArea(
         child: Scaffold(
+            endDrawer: SideDrawer(), // Populate the Drawer in the next step.
             appBar: AppBar(
-                title: Text(Get.find<Env>().appTitle),
-                ),
-            body: PageWithFooter(body: body)));
+              title: Text(Get.find<Env>().appTitle),
+            ),
+            body: body));
   }
 }

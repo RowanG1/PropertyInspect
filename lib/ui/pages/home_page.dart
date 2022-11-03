@@ -13,8 +13,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loginController = Get.find<LoginController>();
-
     final commonWidgets = [
       Padding(
         padding: const EdgeInsets.fromLTRB(0, 50, 10, 0),
@@ -67,31 +65,16 @@ class HomePage extends StatelessWidget {
     ];
 
     return UnauthenticatedPage(
-      body: Obx(() => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (loginController.getLoginState().value) ...[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: TextButton(
-                          onPressed: () {
-                            loginController.logout();
-                          },
-                          child: const Text("Log out")),
-                    ),
-                  ],
-                )
-              ],
-              ...[
-                Center(
-                  child: Column(children: [...commonWidgets]),
-                )
-              ],
-            ],
-          )),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ...[
+            Center(
+              child: Column(children: [...commonWidgets]),
+            )
+          ],
+        ],
+      ),
     );
   }
 }
