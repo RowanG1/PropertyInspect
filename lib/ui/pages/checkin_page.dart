@@ -8,6 +8,7 @@ import 'package:property_inspect/ui/pages/visitor_flow.dart';
 import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
 import '../../domain/entities/visitor.dart';
+import '../controllers/login_controller.dart';
 
 class CheckinPage extends StatefulWidget {
   CheckinPage({Key? key}) : super(key: key);
@@ -22,6 +23,7 @@ class _CheckinPageState extends State<CheckinPage> {
 
   late final Worker getCheckinStateSubscription;
   late final Worker getPropertyAvailableSubscription;
+  final loginController = Get.find<LoginController>();
 
   @override
   void initState() {
@@ -30,7 +32,8 @@ class _CheckinPageState extends State<CheckinPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getCheckinStateSubscription = ever(checkinController.getCheckinState(),
       (value) {
-        if (value.error != null) {
+        if (value.error != null && loginController.getLoginState().value ==
+        true) {
           Get.snackbar("Check-in state Error", value.error.toString(),
               backgroundColor: Colors.red);
         }
@@ -38,7 +41,8 @@ class _CheckinPageState extends State<CheckinPage> {
 
       getPropertyAvailableSubscription = ever(checkinController
           .getListing(), (value) {
-        if (value.error != null) {
+        if (value.error != null && loginController.getLoginState().value ==
+            true) {
           Get.snackbar("Get Property Error", value.error.toString(),
               backgroundColor: Colors.red);
         }

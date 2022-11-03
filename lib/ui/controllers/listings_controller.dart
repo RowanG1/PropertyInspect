@@ -17,7 +17,6 @@ class ListingsController extends GetxController {
       s.State<bool>().obs;
   ListingsController(this._getListingsUseCase, this._getLoginIdUseCase,
       this._deleteListingUseCase);
-  bool canLaunchSnackbar = false;
 
   @override
   void onInit() {

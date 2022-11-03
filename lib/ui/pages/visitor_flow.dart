@@ -29,6 +29,7 @@ class _VisitorFlowState extends State<VisitorFlow> {
 
   late final Worker isVisitorRegisteredSubscription;
   late final Worker isVisitorRegisterationCreatedSubscription;
+  final loginController = Get.find<LoginController>();
 
   @override
   void initState() {
@@ -37,7 +38,8 @@ class _VisitorFlowState extends State<VisitorFlow> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       isVisitorRegisteredSubscription =
           ever(_visitorFlowController.getIsVisitorRegisteredRx(), (value) {
-        if (value.error != null) {
+        if (value.error != null && loginController.getLoginState().value ==
+            true) {
           Get.snackbar("Visitor Is Registered Error", value.error.toString(),
               backgroundColor: Colors.red);
         }

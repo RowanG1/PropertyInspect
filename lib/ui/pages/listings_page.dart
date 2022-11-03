@@ -69,6 +69,13 @@ class _ListingsPageState extends State<ListingsPage> {
                     ),
                   ],
                 ),
+                if (controller.getListings().isEmpty) Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text('No listings '
+                        'currently.'),
+                  ),
+                ),
                 ...getRows()
               ],
             )),

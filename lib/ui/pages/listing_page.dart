@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
+import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../data/di/controllers_factories.dart';
@@ -20,6 +21,7 @@ class ListingPage extends StatefulWidget {
 class _ListerFlowState extends State<ListingPage> {
 late final Worker listingSubScription;
 late final Worker checkinStateSubScription;
+final loginController = Get.find<LoginController>();
 
   @override
   void initState() {
@@ -27,7 +29,8 @@ late final Worker checkinStateSubScription;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       listingSubScription = ever(widget.controller.getListingRx(), (value) {
-        if (value.error != null) {
+        if (value.error != null && loginController.getLoginState().value ==
+            true) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
         }
@@ -35,7 +38,8 @@ late final Worker checkinStateSubScription;
 
       checkinStateSubScription = ever(widget.controller.getCheckinState(),
       (value) {
-        if (value.error != null) {
+        if (value.error != null && loginController.getLoginState().value ==
+            true) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
         }

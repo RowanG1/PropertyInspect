@@ -6,6 +6,7 @@ import 'package:property_inspect/ui/controllers/lister_flow_controller.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
 import '../../data/di/controllers_factories.dart';
 import '../../domain/entities/visitor.dart';
+import '../controllers/login_controller.dart';
 
 class CheckinsPage extends StatefulWidget {
   CheckinsPage({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class CheckinsPage extends StatefulWidget {
 
 class _CheckinsPageState extends State<CheckinsPage> {
   final controller = Get.put(GetCheckinsControllerFactory().make());
+  final loginController = Get.find<LoginController>();
 
   @override
   void initState() {
@@ -25,7 +27,8 @@ class _CheckinsPageState extends State<CheckinsPage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ever(controller.getCheckinsRx(), (value) {
-        if (value.error != null) {
+        if (value.error != null && loginController.getLoginState().value ==
+            true) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
         }

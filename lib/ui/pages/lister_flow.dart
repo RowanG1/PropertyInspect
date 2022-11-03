@@ -44,7 +44,8 @@ class _ListerFlowState extends State<ListerFlow> {
       });
 
       ever(_listerRegistrationController.getCreateListerState(), (value) {
-        if (value.error != null) {
+        if (value.error != null && _loginController.getLoginState().value ==
+            true) {
           Get.snackbar("Create Lister state Error", value.error.toString(),
               backgroundColor: Colors.red);
         }
