@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:property_inspect/ui/widgets/drawer_button.dart';
 import '../../data/utils/open_email_link.dart';
 import '../../domain/constants.dart';
 import '../controllers/login_controller.dart';
@@ -22,15 +23,19 @@ class SideDrawer extends StatelessWidget {
                 ),
                 if (!currentRouteIsHome())
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: ElevatedButton.icon(
-                      icon: Icon(Icons.home),
-                      onPressed: () {
-                        Get.offAllNamed(Constants.homeRoute);
-                      },
-                      label: Text('Go home'),
-                    ),
+                    padding: const EdgeInsets.all(15.0),
+                    child: DrawerButton(iconData: Icons.home, label: "Go "
+                        "home", onPressed: () {
+                      Get.offAllNamed(Constants.homeRoute);
+                    },),
                   ),
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: DrawerButton(iconData: Icons.contact_mail,
+                        label: Constants.contactUsLabel, onPressed: () {
+                        EmailLink().openEmailLink(Constants.contactEmail);
+                      },),
+                    ),
                 if (loginController.getLoginState().value)
                   TextButton(
                       onPressed: () {
@@ -48,23 +53,12 @@ class SideDrawer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: const Text(
                         Constants.abnLabel,
                         style: TextStyle(fontSize: 11),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: TextButton(
-                          onPressed: () {
-                            EmailLink().openEmailLink(Constants.contactEmail);
-                          },
-                          child: Text(
-                            Constants.contactUsLabel,
-                            style: TextStyle(fontSize: 14),
-                          )),
-                    )
                   ]),
             ),
           )
