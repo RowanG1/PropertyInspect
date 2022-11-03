@@ -19,11 +19,12 @@ class SideDrawer extends StatelessWidget {
                   child: Column(children: [
                 Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Text('Property Checkin'),
+                  child: Text('Property Checkin', style: TextStyle(fontSize:
+                  18),),
                 ),
                 if (!currentRouteIsHome())
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.fromLTRB(0, 30, 0, 15),
                     child: DrawerButton(iconData: Icons.home, label: "Go "
                         "home", onPressed: () {
                       Get.offAllNamed(Constants.homeRoute);
