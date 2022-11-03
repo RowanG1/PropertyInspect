@@ -37,12 +37,14 @@ class SideDrawer extends StatelessWidget {
                       },),
                     ),
                 if (loginController.getLoginState().value)
-                  TextButton(
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: DrawerButton(iconData: Icons.home, label: "Log out",
                       onPressed: () {
-                        Get.offAllNamed(Constants.homeRoute);
-                        loginController.logout();
-                      },
-                      child: const Text("Log out"))
+                      loginController.logout();
+                      goHomeAsync();
+                    },),
+                  )
               ]))),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
@@ -65,6 +67,11 @@ class SideDrawer extends StatelessWidget {
         ],
       ), // Populate the Drawer in the next step.
     );
+  }
+
+  // To avoid timing bug where snackbar is false triggered, do this async.
+  void goHomeAsync() async {
+    Get.offAllNamed(Constants.homeRoute);
   }
 
   bool currentRouteIsHome() {
