@@ -36,7 +36,8 @@ class _ListerFlowState extends State<ListerFlow> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       listerRegisterdSubscription =
           ever(_listerFlowController.getIsListerRegisteredRx(), (value) {
-        if (value.error != null) {
+        if (value.error != null && _loginController.getLoginState().value ==
+            true) {
           Get.snackbar("Lister registered error", value.error.toString(),
               backgroundColor: Colors.red);
         }

@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.all(18.0),
         child: const Divider(
-          thickness: 1.5,
+          thickness: 0.9,
           indent: 20,
           endIndent: 20,
           color: Colors.black,

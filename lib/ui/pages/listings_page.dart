@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
+import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
 import '../../data/di/controllers_factories.dart';
 import '../../domain/constants.dart';
@@ -17,6 +18,7 @@ class ListingsPage extends StatefulWidget {
 
 class _ListingsPageState extends State<ListingsPage> {
   final controller = Get.put(ViewListingsControllerFactory().make());
+  final loginController = Get.find<LoginController>();
   late final Worker getListingsSubscription;
 
   @override
@@ -25,7 +27,8 @@ class _ListingsPageState extends State<ListingsPage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getListingsSubscription = ever(controller.getListingsRx(), (value) {
-        if (value.error != null) {
+        if (value.error != null && loginController.getLoginState().value ==
+            true) {
           Get.snackbar("Get Listings Error", value.error.toString(),
               backgroundColor: Colors.red);
         }
