@@ -5,7 +5,8 @@ class Listing {
   String suburb;
   String postCode;
   String phone;
+  DateTime? createdAt;
 
   Listing({this.id, required this.userId, required this.address, required this.suburb, required this
-      .postCode, required this.phone});
+      .postCode, required this.phone, this.createdAt});
 }

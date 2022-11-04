@@ -9,6 +9,7 @@ class ListingMapper {
       'suburb': listing.suburb,
       'postCode': listing.postCode,
       'phone': listing.phone,
+      'createdAt': listing.createdAt
     };
   }
 

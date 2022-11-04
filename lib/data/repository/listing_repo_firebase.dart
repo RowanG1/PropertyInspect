@@ -6,27 +6,24 @@ import '../dto/listing_mapper.dart';
 
 class ListingRepoFirebase implements ListingRepo {
   final CollectionReference collection =
-  FirebaseFirestore.instance.collection('listings');
+      FirebaseFirestore.instance.collection('listings');
 
   @override
   Future<void> createListing(Listing listing) {
+    final timestamp = DateTime.now();
+    listing.createdAt = timestamp;
     return collection.add(ListingMapper().toJson(listing));
   }
 
   @override
   Stream<bool> isListingAvailable(String propertyId) {
-    return collection
-        .doc(propertyId)
-        .snapshots()
-        .map((value) => value.exists);
+    return collection.doc(propertyId).snapshots().map((value) => value.exists);
   }
 
   @override
   Stream<Listing?> getListing(listingId) {
-    return collection
-        .doc(listingId)
-        .snapshots().map((event) {
-          return ListingMapper().fromSnapshot(event);
+    return collection.doc(listingId).snapshots().map((event) {
+      return ListingMapper().fromSnapshot(event);
     });
   }
 
@@ -34,10 +31,14 @@ class ListingRepoFirebase implements ListingRepo {
   Stream<List<Listing>> getListings(userId) {
     return collection
         .where("userId", isEqualTo: userId)
-        .snapshots().map((event) {
-          return event.docs.map((e) => ListingMapper().fromSnapshot(e)).where
-            ((element) => element != null).map((e) => e!)
-              .toList();
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((event) {
+      return event.docs
+          .map((e) => ListingMapper().fromSnapshot(e))
+          .where((element) => element != null)
+          .map((e) => e!)
+          .toList();
     });
   }
 
