@@ -19,7 +19,7 @@ class Constants {
   static final largePadding = 32.toDouble();
 
 // Text strings
-  static const contactEmail= "rgontier@gmail.com";
+  static const contactEmail= "info@property-checkin.com.au";
   static const visitorRegistrationHeading = 'Please complete your registration.';
   static const listerRegistrationHeading = 'Please complete your registration'
       '.';
