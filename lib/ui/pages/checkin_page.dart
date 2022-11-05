@@ -142,7 +142,7 @@ class CheckinContent extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(30.0),
-          child: const Icon(Icons.check, color: Colors.green, size: 60),
+          child: const Icon(Icons.check_circle_outline_sharp, color: Colors.green, size: 60),
         )
       ]
     ]);

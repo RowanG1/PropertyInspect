@@ -68,7 +68,7 @@ class _ListerFlowState extends State<ListerFlow> {
                   semanticsLabel: 'Circular progress indicator',
                 ),
               )
-            : _loginController.getLoginState().value
+            : _loginController.getLoginState().value == true
                 ? (_listerFlowController.getIsListerRegistered()
                     ? widget.body
                     : ListerRegistrationForm())
@@ -79,7 +79,8 @@ class _ListerFlowState extends State<ListerFlow> {
 
   bool isLoading() {
     return _listerRegistrationController.isLoading() ||
-        _listerFlowController.getIsLoading();
+        _listerFlowController.getIsLoading() || _loginController
+        .getLoginState().value == null;
   }
 
   @override

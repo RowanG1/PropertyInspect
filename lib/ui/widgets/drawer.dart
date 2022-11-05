@@ -37,7 +37,7 @@ class SideDrawer extends StatelessWidget {
                         EmailLink().openEmailLink(Constants.contactEmail);
                       },),
                     ),
-                if (loginController.getLoginState().value)
+                if (loginController.getLoginState().value == true)
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: DrawerButton(iconData: Icons.home, label: "Log out",

@@ -6,7 +6,7 @@ class SigninRouteHomeController extends GetxController {
 
   SigninRouteHomeController(this._loginStateUseCase);
 
-  final RxBool _isLoggedIn = false.obs;
+  final Rx<bool?> _isLoggedIn = false.obs;
 
   @override
   void onInit() {
@@ -14,7 +14,7 @@ class SigninRouteHomeController extends GetxController {
     _isLoggedIn.bindStream(_loginStateUseCase.execute());
   }
 
-  RxBool getIsLoggedIn() {
+  Rx<bool?> getIsLoggedIn() {
     return _isLoggedIn;
   }
 }

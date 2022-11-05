@@ -49,10 +49,12 @@ class _ListingsPageState extends State<ListingsPage> {
       pageTitle: "Listings",
       // This is where you give you custom widget it's data.
       body: Obx(() => controller.isLoading()
-          ? const CircularProgressIndicator(
-              value: null,
-              semanticsLabel: 'Circular progress indicator',
-            )
+          ? Center(
+            child: const CircularProgressIndicator(
+                value: null,
+                semanticsLabel: 'Circular progress indicator',
+              ),
+          )
           : ListView(
               children: [
                 Row(

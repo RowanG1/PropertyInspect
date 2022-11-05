@@ -14,13 +14,13 @@ class SignInRouteHome extends StatelessWidget {
 
   SignInRouteHome({Key? key}) : super(key: key);
 
-  late StreamSubscription<bool> loggedInListener;
+  late StreamSubscription<bool?> loggedInListener;
 
   @override
   Widget build(BuildContext context) {
     return FocusDetector(onVisibilityGained: () {
       loggedInListener = controller.getIsLoggedIn().listen((p0) {
-        if (p0) {
+        if (p0 == true) {
           Get.offAllNamed(Constants.homeRoute);
         }
       });

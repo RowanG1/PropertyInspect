@@ -4,7 +4,7 @@ import 'package:property_inspect/domain/repository/login_repo.dart';
 import 'package:rxdart/rxdart.dart';
 
 class LoginFirebaseRepo implements LoginRepo {
-  final BehaviorSubject<bool> _isLoggedIn = BehaviorSubject.seeded(false);
+  final BehaviorSubject<bool?> _isLoggedIn = BehaviorSubject.seeded(null);
   final BehaviorSubject<Optional<String>> _userId = BehaviorSubject.seeded
     (Optional<String>(null));
 
@@ -25,7 +25,7 @@ class LoginFirebaseRepo implements LoginRepo {
   }
 
   @override
-  Stream<bool> getLoginState() {
+  Stream<bool?> getLoginState() {
     return _isLoggedIn.stream;
   }
 

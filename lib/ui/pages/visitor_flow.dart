@@ -69,7 +69,7 @@ class _VisitorFlowState extends State<VisitorFlow> {
                     semanticsLabel: 'Circular progress indicator',
                   ),
                 )
-              : _loginController.getLoginState().value
+              : _loginController.getLoginState().value == true
                   ? (_visitorFlowController.getIsVisitorRegistered()
                       ? widget.body
                       : VisitorRegistrationForm())
@@ -81,7 +81,8 @@ class _VisitorFlowState extends State<VisitorFlow> {
 
   bool isLoading() {
     return _visitorRegistrationController.isLoading() ||
-        _visitorFlowController.getIsLoading();
+        _visitorFlowController.getIsLoading() || _loginController
+        .getLoginState().value == null;
   }
 
   @override

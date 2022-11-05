@@ -10,7 +10,7 @@ class LoginController extends GetxController {
   final AnalyticsUseCase _analyticsUseCase;
 
   String? loginCompletionGoToRoute;
-  final RxBool _loginState = false.obs;
+  final Rx<bool?> _loginState = (null as bool?).obs;
 
   LoginController(
       this._loginStateUseCase, this._logoutUseCase, this._analyticsUseCase)
@@ -18,7 +18,7 @@ class LoginController extends GetxController {
     _loginState.bindStream(_loginStateUseCase.execute());
   }
 
-  RxBool getLoginState() {
+  Rx<bool?> getLoginState() {
     return _loginState;
   }
 
