@@ -12,8 +12,6 @@ class PackageController extends GetxController {
 
   _getPackageInfo() async {
     final packageInfo = await PackageInfo.fromPlatform();
-    print('Package info is:');
-    print(packageInfo);
     _packageInfo.value = packageInfo;
   }
 

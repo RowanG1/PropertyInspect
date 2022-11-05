@@ -42,9 +42,10 @@ dependencies:
   # GetX State management
   
   get:
-  flutterfire_ui: ^0.4.3+13
+  firebase_ui_auth: ^1.0.0-dev.0
   firebase_analytics: ^9.3.8
   rxdart: ^0.27.5
+  package_info_plus: ^3.0.1
   focus_detector: ^2.0.1
   qr_flutter: ^4.0.0
   footer: ^0.0.4
