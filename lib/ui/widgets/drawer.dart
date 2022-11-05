@@ -54,10 +54,10 @@ class SideDrawer extends StatelessWidget {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+                  children: const [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                      child: const Text(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      child: Text(
                         Constants.abnLabel,
                         style: TextStyle(fontSize: 11),
                       ),

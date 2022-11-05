@@ -25,7 +25,7 @@ void main() {
           LoginController(loginUseCase, logoutUseCase, analyticsUseCase);
 
       Get.put(controller);
-      expect(controller.getLoginState().value, false);
+      expect(controller.getLoginState().value, null);
       loginRepo.setLoginState(true);
       expectLater(controller.getLoginState().stream, emitsInOrder([false,
         true]));
