@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:property_inspect/ui/controllers/PackageController.dart';
 import 'package:property_inspect/ui/widgets/drawer_button.dart';
 import '../../data/utils/open_email_link.dart';
 import '../../domain/constants.dart';
@@ -9,9 +11,11 @@ import '../controllers/login_controller.dart';
 class SideDrawer extends StatelessWidget {
   SideDrawer({Key? key}) : super(key: key);
   final loginController = Get.find<LoginController>();
+  final packageController = Get.find<PackageController>();
 
   @override
   Widget build(BuildContext context) {
+
     return Drawer(
       child: Column(
         children: [
@@ -47,6 +51,7 @@ class SideDrawer extends StatelessWidget {
                     },),
                   )
               ]))),
+    Obx(() => Text(getPackageText(packageController.getPackageInfo()))),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
             child: Container(
@@ -68,6 +73,11 @@ class SideDrawer extends StatelessWidget {
         ],
       ), // Populate the Drawer in the next step.
     );
+  }
+
+  String getPackageText(PackageInfo? packageInfo) {
+    return 'Version number: ' + (packageInfo?.packageName ?? '') +  ', Build '
+        'number: ' + (packageInfo?.buildNumber ?? '');
   }
 
   // To avoid timing bug where snackbar is false triggered, do this async.
