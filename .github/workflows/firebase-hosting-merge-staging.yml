@@ -35,4 +35,4 @@ jobs:
           github_repo: ${{ github.repository }}
           git_commit_sha: ${{ github.sha }}
           version: "${{github.run_number}}"
-          git_tag_prefix: "b"
+          git_tag_prefix: "stagingBuild"

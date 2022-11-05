@@ -17,7 +17,7 @@ jobs:
       - name: 'Make flutter icons'
         run: flutter pub run flutter_launcher_icons:main -f flutter_launcher_icons_prod.yaml
       - name: 'Build Web App'
-        run: flutter build web -t lib/main_prod.dart
+        run: flutter build web -t lib/main_prod.dart --build-number=${{github.run_number}}
       - uses: actions/upload-artifact@v2
         with:
           name: assets-for-download
@@ -28,3 +28,11 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROPERTY_CHECKIN_PROD }}'
           channelId: live
           projectId: property-checkin-prod
+      - name: package-version-to-git-tag
+        uses: pkgdeps/git-tag-action@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_repo: ${{ github.repository }}
+          git_commit_sha: ${{ github.sha }}
+          version: "${{github.run_number}}"
+          git_tag_prefix: "prodBuild"
