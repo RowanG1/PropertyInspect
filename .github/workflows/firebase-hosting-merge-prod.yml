@@ -18,10 +18,6 @@ jobs:
         run: flutter pub run flutter_launcher_icons:main -f flutter_launcher_icons_prod.yaml
       - name: 'Build Web App'
         run: flutter build web -t lib/main_prod.dart --build-number=${{github.run_number}}
-      - uses: actions/upload-artifact@v2
-        with:
-          name: assets-for-download
-          path: build/web
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

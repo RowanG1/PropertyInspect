@@ -5,9 +5,11 @@ import 'package:get/get.dart';
 import 'package:property_inspect/data/di/controllers_factories.dart';
 import 'package:property_inspect/ui/controllers/check_in_controller.dart';
 import 'package:property_inspect/ui/pages/visitor_flow.dart';
+import '../../data/di/use_case_factories.dart';
 import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
 import '../../domain/entities/visitor.dart';
+import '../../domain/usecase/analytics_use_case.dart';
 import '../controllers/login_controller.dart';
 
 class CheckinPage extends StatefulWidget {
@@ -24,27 +26,32 @@ class _CheckinPageState extends State<CheckinPage> {
   late final Worker getCheckinStateSubscription;
   late final Worker getPropertyAvailableSubscription;
   final loginController = Get.find<LoginController>();
+  final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      getCheckinStateSubscription = ever(checkinController.getCheckinState(),
-      (value) {
-        if (value.error != null && loginController.getLoginState().value ==
-        true) {
+      getCheckinStateSubscription =
+          ever(checkinController.getCheckinState(), (value) {
+        if (value.error != null &&
+            loginController.getLoginState().value == true) {
           Get.snackbar("Check-in state Error", value.error.toString(),
               backgroundColor: Colors.red);
+          _analyticsUseCase
+              .execute("checked_in_state_error", {'error': value.error});
         }
       });
 
-      getPropertyAvailableSubscription = ever(checkinController
-          .getListing(), (value) {
-        if (value.error != null && loginController.getLoginState().value ==
-            true) {
+      getPropertyAvailableSubscription =
+          ever(checkinController.getListing(), (value) {
+        if (value.error != null &&
+            loginController.getLoginState().value == true) {
           Get.snackbar("Get Property Error", value.error.toString(),
               backgroundColor: Colors.red);
+          _analyticsUseCase.execute(
+              "get_property_error", {'error': value.error, 'page': 'checkin'});
         }
       });
     });
@@ -55,7 +62,8 @@ class _CheckinPageState extends State<CheckinPage> {
 
   @override
   Widget build(BuildContext context) {
-    return VisitorFlow(pageTitle: "Check in",
+    return VisitorFlow(
+        pageTitle: "Check in",
         body: Obx(() => Center(
             child: checkinController.getIsLoading()
                 ? CircularProgressIndicator(
@@ -142,7 +150,8 @@ class CheckinContent extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(30.0),
-          child: const Icon(Icons.check_circle_outline_sharp, color: Colors.green, size: 60),
+          child: const Icon(Icons.check_circle_outline_sharp,
+              color: Colors.green, size: 60),
         )
       ]
     ]);

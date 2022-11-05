@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:property_inspect/ui/controllers/lister_flow_controller.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
 import '../../data/di/controllers_factories.dart';
+import '../../data/di/use_case_factories.dart';
 import '../../domain/entities/visitor.dart';
+import '../../domain/usecase/analytics_use_case.dart';
 import '../controllers/login_controller.dart';
 
 class CheckinsPage extends StatefulWidget {
@@ -18,6 +20,7 @@ class CheckinsPage extends StatefulWidget {
 class _CheckinsPageState extends State<CheckinsPage> {
   final controller = Get.put(GetCheckinsControllerFactory().make());
   final loginController = Get.find<LoginController>();
+  final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
 
   @override
   void initState() {
@@ -27,10 +30,12 @@ class _CheckinsPageState extends State<CheckinsPage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ever(controller.getCheckinsRx(), (value) {
-        if (value.error != null && loginController.getLoginState().value ==
-            true) {
+        if (value.error != null &&
+            loginController.getLoginState().value == true) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
+          _analyticsUseCase.execute("get_login_state_error",
+              {'error': value.error, 'page': 'checkin'});
         }
       });
     });
@@ -38,7 +43,8 @@ class _CheckinsPageState extends State<CheckinsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListerFlow(pageTitle: "Check-ins",
+    return ListerFlow(
+      pageTitle: "Check-ins",
       // This is where you give you custom widget it's data.
       body: Obx(
         () => controller.isLoading()
@@ -55,7 +61,10 @@ class _CheckinsPageState extends State<CheckinsPage> {
   }
 
   List<Widget> getRows() {
-    return [Container(height: 20,),
+    return [
+      Container(
+        height: 20,
+      ),
       ...controller.getCheckins().map<Widget>((item) {
         return getTableRow(item);
       }).toList()

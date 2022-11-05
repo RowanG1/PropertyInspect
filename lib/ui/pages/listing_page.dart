@@ -6,7 +6,9 @@ import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../data/di/controllers_factories.dart';
+import '../../data/di/use_case_factories.dart';
 import '../../domain/constants.dart';
+import '../../domain/usecase/analytics_use_case.dart';
 import '../controllers/lister_flow_controller.dart';
 
 class ListingPage extends StatefulWidget {
@@ -22,6 +24,7 @@ class _ListerFlowState extends State<ListingPage> {
 late final Worker listingSubScription;
 late final Worker checkinStateSubScription;
 final loginController = Get.find<LoginController>();
+final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
 
   @override
   void initState() {
@@ -33,6 +36,8 @@ final loginController = Get.find<LoginController>();
             true) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
+          _analyticsUseCase.execute("get_listing_error", { 'error' : value
+              .error});
         }
       });
 
@@ -42,6 +47,8 @@ final loginController = Get.find<LoginController>();
             true) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
+          _analyticsUseCase.execute("get_checkin_state_error", { 'error' : value
+              .error, 'page': 'listing'});
         }
       });
 

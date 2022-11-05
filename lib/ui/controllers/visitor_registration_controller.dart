@@ -46,9 +46,9 @@ class VisitorRegistrationController extends GetxController {
             suburb);
         _createState.value = s.State(content: true);
         _analyticsUseCase.execute('register_visitor', {});
-
-      } catch(e) {
+      } catch (e) {
         _createState.value = s.State(error: Exception('$e'));
+        _analyticsUseCase.execute("create_visitor_error", {'error': e});
       }
     }
   }

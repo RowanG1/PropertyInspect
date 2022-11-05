@@ -6,8 +6,10 @@ import 'package:get/get.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
 import '../../data/di/controllers_factories.dart';
+import '../../data/di/use_case_factories.dart';
 import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
+import '../../domain/usecase/analytics_use_case.dart';
 
 class ListingsPage extends StatefulWidget {
   ListingsPage({Key? key}) : super(key: key);
@@ -20,6 +22,7 @@ class _ListingsPageState extends State<ListingsPage> {
   final controller = Get.put(ViewListingsControllerFactory().make());
   final loginController = Get.find<LoginController>();
   late final Worker getListingsSubscription;
+  final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
 
   @override
   void initState() {
@@ -31,6 +34,8 @@ class _ListingsPageState extends State<ListingsPage> {
             true) {
           Get.snackbar("Get Listings Error", value.error.toString(),
               backgroundColor: Colors.red);
+          _analyticsUseCase.execute("get_listings_error", { 'error' : value
+              .error, 'page': 'listings'});
         }
       });
 
@@ -38,6 +43,8 @@ class _ListingsPageState extends State<ListingsPage> {
         if (value.error != null) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
+          _analyticsUseCase.execute("delete_listing_state_error", { 'error' : value
+              .error, 'page': 'listings'});
         }
       });
     });

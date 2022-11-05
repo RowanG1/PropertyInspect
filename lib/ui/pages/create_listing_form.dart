@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:property_inspect/data/di/use_case_factories.dart';
+import 'package:property_inspect/domain/repository/analytics_repo.dart';
 import 'package:property_inspect/domain/utils/field_validation.dart';
 import 'package:property_inspect/ui/controllers/create_listing_controller.dart';
 import '../../domain/constants.dart';
+import '../../domain/usecase/analytics_use_case.dart';
 
 class CreateListingForm extends StatefulWidget {
   const CreateListingForm({Key? key}) : super(key: key);
@@ -25,6 +28,7 @@ class CreateListingFormState extends State<CreateListingForm> {
   final _formKey = GlobalKey<FormState>();
   final CreateListingController controller = Get.find();
   final FieldValidation validation = FieldValidation();
+  final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
 
   @override
   void initState() {
@@ -36,6 +40,8 @@ class CreateListingFormState extends State<CreateListingForm> {
       }
       if (value.error != null) {
         Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
+        _analyticsUseCase.execute("create_listing_error", { 'error' : value
+            .error});
       }
     });
   }
