@@ -29,10 +29,10 @@ jobs:
           channelId: live
           projectId: propertyinspect-d7b4d
       - name: package-version-to-git-tag
-          uses: pkgdeps/git-tag-action@v2
-          with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            github_repo: ${{ github.repository }}
-            git_commit_sha: ${{ github.sha }}
-            version: "${{github.run_number}}"
-            git_tag_prefix: "b"
+        uses: pkgdeps/git-tag-action@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_repo: ${{ github.repository }}
+          git_commit_sha: ${{ github.sha }}
+          version: "${{github.run_number}}"
+          git_tag_prefix: "b"
