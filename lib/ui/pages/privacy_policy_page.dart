@@ -21,7 +21,7 @@ By nature, lister information is publicly available, although in practice this i
 You may contact property check-in to modify your personal information, or to lodge a complaint.
 
 Contact detail:
-info@property-checkin.com.au.
+info@property-checkin.com.au
 
 All your personal information will reside in Australia using a secure cloud provider.""";
 
