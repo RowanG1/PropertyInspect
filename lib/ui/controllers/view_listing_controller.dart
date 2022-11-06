@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:property_inspect/domain/usecase/do_checkins_exist_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_listing_use_case.dart';
-import 'package:property_inspect/ui/controllers/check_in_controller.dart';
-import 'package:property_inspect/ui/controllers/checkins_controller.dart';
 import '../../data/types/optional.dart';
 import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
@@ -132,6 +130,13 @@ class ViewListingController extends GetxController {
 
   bool doCheckinsExist() {
     return _checkinExistState.value.content == true;
+  }
+
+  @override
+  void dispose() {
+    _checkinExistState.close();
+    _propertyState.close();
+    super.dispose();
   }
 }
 

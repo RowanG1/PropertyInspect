@@ -76,4 +76,10 @@ class ListingsController extends GetxController {
   bool isLoading() {
     return _propertiesState.value.loading;
   }
+
+  @override
+  void dispose() {
+    _propertiesState.close();
+    super.dispose();
+  }
 }

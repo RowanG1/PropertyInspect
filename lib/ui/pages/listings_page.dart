@@ -22,6 +22,7 @@ class _ListingsPageState extends State<ListingsPage> {
   final controller = Get.put(ViewListingsControllerFactory().make());
   final loginController = Get.find<LoginController>();
   late final Worker getListingsSubscription;
+  late final Worker deleteListingSubscription;
   final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
 
   @override
@@ -39,7 +40,7 @@ class _ListingsPageState extends State<ListingsPage> {
         }
       });
 
-      ever(controller.getDeleteState(), (value) {
+      deleteListingSubscription = ever(controller.getDeleteState(), (value) {
         if (value.error != null) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
@@ -225,6 +226,7 @@ class _ListingsPageState extends State<ListingsPage> {
   @override
   void dispose() {
     getListingsSubscription.dispose();
+    deleteListingSubscription.dispose();
     super.dispose();
   }
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:property_inspect/ui/widgets/drawer.dart';
-import '../../data/types/env.dart';
 
 class UnauthenticatedPage extends StatelessWidget {
   final Widget body;

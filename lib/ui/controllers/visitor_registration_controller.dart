@@ -73,4 +73,10 @@ class VisitorRegistrationController extends GetxController {
   Rx<s.State<bool>> getCreateState() {
     return _createState;
   }
+
+  @override
+  void dispose() {
+    _createState.close();
+    super.dispose();
+  }
 }

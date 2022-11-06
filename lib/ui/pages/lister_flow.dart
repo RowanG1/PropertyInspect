@@ -25,30 +25,32 @@ class ListerFlow extends StatefulWidget {
 
 class _ListerFlowState extends State<ListerFlow> {
   final LoginController _loginController = Get.find();
-  final ListerFlowController _listerFlowController = Get.find();
+  final ListerFlowController _listerFlowController = Get.put(ListerFlowControllerFactory().make());
   final ListerRegistrationController _listerRegistrationController = Get.put(ListerRegistrationControllerFactory().make());
-  late final Worker listerRegisterdSubscription;
   AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
+  late final Worker isListerRegisteredSubscription;
+  late final Worker createListerSubscription;
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      listerRegisterdSubscription = ever(_listerFlowController.getIsListerRegisteredRx(), (value) {
+      isListerRegisteredSubscription = ever(_listerFlowController.getIsListerRegisteredRx(), (value) {
         if (value.error != null && _loginController.getLoginState().value == true) {
           Get.snackbar("Lister registered error", value.error.toString(), backgroundColor: Colors.red);
           _analyticsUseCase.execute("is_lister_registered_error", {'error': value.error, 'page': 'lister_flow'});
         }
       });
 
-      ever(_listerRegistrationController.getCreateListerState(), (value) {
+      createListerSubscription = ever(_listerRegistrationController.getCreateListerState(), (value) {
         if (value.error != null && _loginController.getLoginState().value == true) {
           Get.snackbar("Create Lister state Error", value.error.toString(), backgroundColor: Colors.red);
           _analyticsUseCase.execute("create_lister_state_error", {
             'error': value.error, 'page': 'lister_flow'});
         }
       });
+
     });
   }
 
@@ -82,7 +84,8 @@ class _ListerFlowState extends State<ListerFlow> {
 
   @override
   void dispose() {
-    listerRegisterdSubscription.dispose();
+    isListerRegisteredSubscription.dispose();
+    createListerSubscription.dispose();
     super.dispose();
   }
 }

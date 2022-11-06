@@ -21,6 +21,7 @@ class _CheckinsPageState extends State<CheckinsPage> {
   final controller = Get.put(GetCheckinsControllerFactory().make());
   final loginController = Get.find<LoginController>();
   final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
+  late final Worker getCheckinsSubscription;
 
   @override
   void initState() {
@@ -29,9 +30,8 @@ class _CheckinsPageState extends State<CheckinsPage> {
     controller.setPropertyId(id);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ever(controller.getCheckinsRx(), (value) {
-        if (value.error != null &&
-            loginController.getLoginState().value == true) {
+      getCheckinsSubscription = ever(controller.getCheckinsRx(), (value) {
+        if (value.error != null) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
           _analyticsUseCase.execute("get_login_state_error",
@@ -166,5 +166,11 @@ class _CheckinsPageState extends State<CheckinsPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    getCheckinsSubscription.dispose();
+    super.dispose();
   }
 }

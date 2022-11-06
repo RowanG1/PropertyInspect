@@ -15,7 +15,7 @@ class ListerRegistrationController extends GetxController {
   AnalyticsUseCase _analyticsUseCase;
   FieldValidation validation = FieldValidation();
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
-  final Rx<s.State<bool>> _createListerState = s.State<bool>().obs;
+  late Rx<s.State<bool>> _createListerState;
 
   ListerRegistrationController(this._listerRegistration, this
       ._loginIdUseCase, this._analyticsUseCase);
@@ -23,6 +23,7 @@ class ListerRegistrationController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _createListerState =  s.State<bool>().obs;
     _userId.bindStream(_loginIdUseCase.execute());
   }
 
@@ -77,5 +78,11 @@ class ListerRegistrationController extends GetxController {
 
   Rx<s.State<bool>> getCreateListerState() {
     return _createListerState;
+  }
+
+  @override
+  void dispose() {
+    _createListerState.close();
+    super.dispose();
   }
 }

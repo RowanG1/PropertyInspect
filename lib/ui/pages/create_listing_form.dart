@@ -29,12 +29,13 @@ class CreateListingFormState extends State<CreateListingForm> {
   final CreateListingController controller = Get.find();
   final FieldValidation validation = FieldValidation();
   final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
+  late final Worker getCreateListingStateSubscription;
 
   @override
   void initState() {
     super.initState();
 
-    ever(controller.getCreateState(), (value) {
+    getCreateListingStateSubscription = ever(controller.getCreateState(), (value) {
       if (value.content == true) {
         Get.back();
       }
@@ -126,5 +127,11 @@ class CreateListingFormState extends State<CreateListingForm> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    getCreateListingStateSubscription.dispose();
+    super.dispose();
   }
 }

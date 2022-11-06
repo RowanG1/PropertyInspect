@@ -29,7 +29,6 @@ mainSetup() async {
   WidgetsFlutterBinding.ensureInitialized();
   commonFirebaseUISetup();
   initLoginController();
-  initFlowControllers();
   Get.put(PackageController());
   runApp(const MyApp());
 }
@@ -38,11 +37,6 @@ commonFirebaseUISetup() {
   FirebaseUIAuth.configureProviders([
     EmailAuthProvider(),
   ]);
-}
-
-initFlowControllers() {
-  Get.put(ListerFlowControllerFactory().make());
-  Get.put(VisitorFlowControllerFactory().make());
 }
 
 initLoginController() {

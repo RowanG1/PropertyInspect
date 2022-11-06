@@ -10,7 +10,6 @@ import '../../domain/entities/listing.dart';
 import '../../domain/entities/state.dart' as s;
 import '../../domain/usecase/checked_in_use_case.dart';
 import '../../domain/usecase/do_checkin_use_case.dart';
-import '../../domain/usecase/get_listing_available_use_case.dart';
 import '../../domain/usecase/get_visitor_use_case.dart';
 import 'package:rxdart/rxdart.dart' as RxRaw;
 
@@ -214,6 +213,9 @@ class CheckinController extends GetxController {
   @override
   void dispose() {
     getPropertySub?.cancel();
+    _checkInState.close();
+    _propertyState.close();
+    _isRegisteredState.close();
     super.dispose();
   }
 }

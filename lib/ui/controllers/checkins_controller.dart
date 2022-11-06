@@ -62,6 +62,12 @@ Rx<CheckInsLumpedInputData> _checkInsLumpedInput = CheckInsLumpedInputData().obs
   isLoading() {
     return _checkedInVisitors.value.loading;
   }
+
+  @override
+  void dispose() {
+    _checkedInVisitors.close();
+    super.dispose();
+  }
 }
 
 class CheckInsLumpedInputData {

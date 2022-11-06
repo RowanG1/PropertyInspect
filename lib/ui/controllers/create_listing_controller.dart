@@ -61,4 +61,10 @@ class CreateListingController extends GetxController {
   Rx<s.State<bool>> getCreateState() {
     return _state;
   }
+
+  @override
+  void dispose() {
+    _state.close();
+    super.dispose();
+  }
 }

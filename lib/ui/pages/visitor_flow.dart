@@ -24,7 +24,7 @@ class VisitorFlow extends StatefulWidget {
 class _VisitorFlowState extends State<VisitorFlow> {
   final LoginController _loginController = Get.find();
 
-  final VisitorFlowController _visitorFlowController = Get.find();
+  final VisitorFlowController _visitorFlowController =  Get.put(VisitorFlowControllerFactory().make());
 
   final VisitorRegistrationController _visitorRegistrationController = Get.put(VisitorRegistrationControllerFactory().make());
 
@@ -39,7 +39,7 @@ class _VisitorFlowState extends State<VisitorFlow> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       isVisitorRegisteredSubscription = ever(_visitorFlowController.getIsVisitorRegisteredRx(), (value) {
-        if (value.error != null && loginController.getLoginState().value == true) {
+        if (value.error != null) {
           Get.snackbar("Visitor Is Registered Error", value.error.toString(), backgroundColor: Colors.red);
           _analyticsUseCase.execute("is_visitor_registered_error", {'error': value.error});
         }

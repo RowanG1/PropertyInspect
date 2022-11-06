@@ -56,4 +56,10 @@ class VisitorFlowController extends GetxController {
   Rx<s.State<bool>> getIsVisitorRegisteredRx() {
     return _visitorIsRegistered;
   }
+
+  @override
+  void dispose() {
+    _visitorIsRegistered.close();
+    super.dispose();
+  }
 }
