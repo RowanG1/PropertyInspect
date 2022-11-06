@@ -5,8 +5,9 @@ import '../../data/types/env.dart';
 
 class UnauthenticatedPage extends StatelessWidget {
   final Widget body;
+  final String? pageTitle;
 
-  const UnauthenticatedPage({required this.body, Key? key}) : super(key: key);
+  const UnauthenticatedPage({required this.body, this.pageTitle, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class UnauthenticatedPage extends StatelessWidget {
         child: Scaffold(
             endDrawer: SideDrawer(), // Populate the Drawer in the next step.
             appBar: AppBar(
-              title: Text(Get.find<Env>().appTitle),
+              title: Text(pageTitle ?? 'Property Check-in'),
             ),
             body: body));
   }

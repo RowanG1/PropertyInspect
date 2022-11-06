@@ -14,6 +14,7 @@ class Constants {
   static const checkinsRoute = '$checkinsBaseRoute/:id';
   static const checkinRoute = '$checkinBaseRoute/:id';
   static const continueToRouteKey = "continueToRoute";
+  static const privacyPolicyRouteKey = "/privacyPolicy";
 
   //Padding
   static final largePadding = 32.toDouble();
@@ -35,6 +36,7 @@ class Constants {
   static const postCodeLabel = 'Enter the post code';
   static const defaultValidationLabel = 'Please enter some text';
   static const emailValidationLabel = 'Please enter a valid email';
+  static const privacyPolicyLabel = 'Privacy Policy';
 
   //Footer
   static const abnLabel = "ABN: 67863792318";

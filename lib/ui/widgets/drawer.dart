@@ -49,7 +49,14 @@ class SideDrawer extends StatelessWidget {
                       loginController.logout();
                       goHomeAsync();
                     },),
-                  )
+                  ),
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: DrawerButton(iconData: Icons.contact_mail,
+                        label: Constants.privacyPolicyLabel, onPressed: () {
+                         Get.toNamed(Constants.privacyPolicyRouteKey);
+                        },),
+                    )
               ]))),
     Obx(() => Text(getPackageText(packageController.getPackageInfo()))),
           Padding(
