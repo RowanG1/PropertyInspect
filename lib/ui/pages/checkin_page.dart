@@ -35,7 +35,7 @@ class _CheckinPageState extends State<CheckinPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getCheckinStateSubscription =
           ever(checkinController.getCheckinState(), (value) {
-        if (value.error != null) {
+        if (value.error != null && loginController.getLoginState().value == true) {
           Get.snackbar("Check-in state Error", value.error.toString(),
               backgroundColor: Colors.red);
           _analyticsUseCase
@@ -45,7 +45,7 @@ class _CheckinPageState extends State<CheckinPage> {
 
       getPropertyAvailableSubscription =
           ever(checkinController.getListing(), (value) {
-        if (value.error != null) {
+        if (value.error != null && loginController.getLoginState().value == true) {
           Get.snackbar("Get Property Error", value.error.toString(),
               backgroundColor: Colors.red);
           _analyticsUseCase.execute(

@@ -32,8 +32,7 @@ final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       listingSubScription = ever(widget.controller.getListingRx(), (value) {
-        if (value.error != null && loginController.getLoginState().value ==
-            true) {
+        if (value.error != null && loginController.getLoginState().value == true) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
           _analyticsUseCase.execute("get_listing_error", { 'error' : value
