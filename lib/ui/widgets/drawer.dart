@@ -57,7 +57,7 @@ class SideDrawer extends StatelessWidget {
                       label: "Log out",
                       onPressed: () {
                         goHome();
-                        loginController.logout();
+                        logoutAsync();
                       },
                     ),
                   ),
@@ -91,6 +91,10 @@ class SideDrawer extends StatelessWidget {
         ],
       ), // Populate the Drawer in the next step.
     );
+  }
+
+  logoutAsync() async {
+    loginController.logout();
   }
 
   String getPackageText(PackageInfo? packageInfo) {
