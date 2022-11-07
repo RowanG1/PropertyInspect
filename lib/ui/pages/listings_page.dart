@@ -41,7 +41,7 @@ class _ListingsPageState extends State<ListingsPage> {
       });
 
       deleteListingSubscription = ever(controller.getDeleteState(), (value) {
-        if (value.error != null) {
+        if (value.error != null && loginController.getLoginState().value == true) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
           _analyticsUseCase.execute("delete_listing_state_error", { 'error' : value

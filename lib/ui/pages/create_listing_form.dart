@@ -5,6 +5,7 @@ import 'package:property_inspect/data/di/use_case_factories.dart';
 import 'package:property_inspect/domain/repository/analytics_repo.dart';
 import 'package:property_inspect/domain/utils/field_validation.dart';
 import 'package:property_inspect/ui/controllers/create_listing_controller.dart';
+import 'package:property_inspect/ui/controllers/login_controller.dart';
 import '../../domain/constants.dart';
 import '../../domain/usecase/analytics_use_case.dart';
 
@@ -27,6 +28,7 @@ class CreateListingFormState extends State<CreateListingForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
   final CreateListingController controller = Get.find();
+  final LoginController _loginController = Get.find();
   final FieldValidation validation = FieldValidation();
   final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
   late final Worker getCreateListingStateSubscription;
@@ -39,7 +41,7 @@ class CreateListingFormState extends State<CreateListingForm> {
       if (value.content == true) {
         Get.back();
       }
-      if (value.error != null) {
+      if (value.error != null && _loginController.getLoginState().value == true) {
         Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
         _analyticsUseCase.execute("create_listing_error", { 'error' : value
             .error});

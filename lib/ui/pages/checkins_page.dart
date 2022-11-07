@@ -31,7 +31,7 @@ class _CheckinsPageState extends State<CheckinsPage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getCheckinsSubscription = ever(controller.getCheckinsRx(), (value) {
-        if (value.error != null) {
+        if (value.error != null && loginController.getLoginState().value == true) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
           _analyticsUseCase.execute("get_login_state_error",
