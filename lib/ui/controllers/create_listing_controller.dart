@@ -16,8 +16,7 @@ class CreateListingController extends GetxController {
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   FieldValidation validation = FieldValidation();
 
-  CreateListingController(this.createListingUseCase, this._getLoginIdUseCase,
-      this._analyticsUseCase);
+  CreateListingController(this.createListingUseCase, this._getLoginIdUseCase, this._analyticsUseCase);
 
   @override
   void onInit() {
@@ -40,8 +39,7 @@ class CreateListingController extends GetxController {
     if (loginId != null) {
       _state.value = s.State(loading: true);
       try {
-        await createListingUseCase.execute(
-            loginId, address, suburb, postCode, phone);
+        await createListingUseCase.execute(loginId, address, suburb, postCode, phone);
         _state.value = s.State(content: true);
         _analyticsUseCase.execute('create_listing', {});
       } catch (e) {

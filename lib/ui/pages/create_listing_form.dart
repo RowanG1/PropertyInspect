@@ -28,26 +28,7 @@ class CreateListingFormState extends State<CreateListingForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
   final CreateListingController controller = Get.find();
-  final LoginController _loginController = Get.find();
   final FieldValidation validation = FieldValidation();
-  final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
-  late final Worker getCreateListingStateSubscription;
-
-  @override
-  void initState() {
-    super.initState();
-
-    getCreateListingStateSubscription = ever(controller.getCreateState(), (value) {
-      if (value.content == true) {
-        Get.back();
-      }
-      if (value.error != null && _loginController.getLoginState().value == true) {
-        Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
-        _analyticsUseCase.execute("create_listing_error", { 'error' : value
-            .error});
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,11 +110,5 @@ class CreateListingFormState extends State<CreateListingForm> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    getCreateListingStateSubscription.dispose();
-    super.dispose();
   }
 }
