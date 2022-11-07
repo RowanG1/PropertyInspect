@@ -5,7 +5,9 @@ import '../../domain/entities/state.dart' as s;
 import '../../domain/usecase/get_login_id_use_case.dart';
 
 class ListerFlowController extends GetxController {
-  final Rx<s.State<bool>> _listerIsRegistered = s.State<bool>().obs;
+  final Rx<s.State<bool>> _listerIsRegistered = s
+      .State<bool>()
+      .obs;
   final GetLoginIdUseCase _loginIdUseCase;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final IsListerRegisteredUseCase _isListerRegisteredUseCase;
@@ -51,5 +53,11 @@ class ListerFlowController extends GetxController {
 
   Rx<s.State<bool>> getIsListerRegisteredRx() {
     return _listerIsRegistered;
+  }
+
+  @override
+  void dispose() {
+    _listerIsRegistered.close();
+    super.dispose();
   }
 }
