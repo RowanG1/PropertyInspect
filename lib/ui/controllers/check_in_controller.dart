@@ -212,6 +212,7 @@ class CheckinController extends GetxController {
 
   @override
   void dispose() {
+    print('Disposing of checkin controller.');
     getPropertySub?.cancel();
     _checkInState.close();
     _propertyState.close();

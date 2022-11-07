@@ -117,6 +117,7 @@ final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
   void dispose() {
     listingSubScription.dispose();
     checkinStateSubScription.dispose();
+    widget.controller.dispose();
     super.dispose();
   }
 }

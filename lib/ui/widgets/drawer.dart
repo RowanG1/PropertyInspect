@@ -105,7 +105,6 @@ class SideDrawer extends StatelessWidget {
         (packageInfo?.buildNumber ?? '');
   }
 
-  // To avoid timing bug where snackbar is false triggered, do this async.
   void goHome() {
     Get.offAllNamed(Constants.homeRoute);
   }

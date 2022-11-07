@@ -86,6 +86,7 @@ class _VisitorFlowState extends State<VisitorFlow> {
   void dispose() {
     isVisitorRegisteredSubscription.dispose();
     isVisitorRegisterationCreatedSubscription.dispose();
+    _visitorFlowController.dispose();
     super.dispose();
   }
 }

@@ -77,6 +77,7 @@ class _CheckinPageState extends State<CheckinPage> {
   void dispose() {
     getCheckinStateSubscription.dispose();
     getPropertyAvailableSubscription.dispose();
+    checkinController.dispose();
     super.dispose();
   }
 }
