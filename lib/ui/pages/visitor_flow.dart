@@ -39,14 +39,14 @@ class _VisitorFlowState extends State<VisitorFlow> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       isVisitorRegisteredSubscription = ever(_visitorFlowController.getIsVisitorRegisteredRx(), (value) {
-        if (value.error != null) {
+        if (value.error != null && _loginController.getLoginState().value == true) {
           Get.snackbar("Visitor Is Registered Error", value.error.toString(), backgroundColor: Colors.red);
           _analyticsUseCase.execute("is_visitor_registered_error", {'error': value.error});
         }
       });
 
       isVisitorRegisterationCreatedSubscription = ever(_visitorRegistrationController.getCreateState(), (value) {
-        if (value.error != null) {
+        if (value.error != null && _loginController.getLoginState().value == true) {
           Get.snackbar("Is Visitor Created Error", value.error.toString(), backgroundColor: Colors.red);
           _analyticsUseCase.execute("create_visitor_error", {'error': value.error});
         }
