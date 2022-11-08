@@ -6,6 +6,7 @@ import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:property_inspect/domain/entities/visitor.dart' as _i3;
+import 'package:property_inspect/domain/repository/analytics_repo.dart' as _i5;
 import 'package:property_inspect/domain/repository/visitor_registration_repo.dart'
     as _i2;
 
@@ -37,4 +38,17 @@ class MockVisitorRegistrationRepo extends _i1.Mock
   _i4.Stream<_i3.Visitor?> getVisitor(String? id) => (super.noSuchMethod(
       Invocation.method(#getVisitor, [id]),
       returnValue: Stream<_i3.Visitor?>.empty()) as _i4.Stream<_i3.Visitor?>);
+}
+
+/// A class which mocks [AnalyticsRepo].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAnalyticsRepo extends _i1.Mock implements _i5.AnalyticsRepo {
+  MockAnalyticsRepo() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  dynamic sendEvent(String? type, Map<String, dynamic>? content) =>
+      super.noSuchMethod(Invocation.method(#sendEvent, [type, content]));
 }

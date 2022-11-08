@@ -11,7 +11,6 @@ import 'package:property_inspect/domain/usecase/create_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import 'package:property_inspect/ui/controllers/create_listing_controller.dart';
 import 'create_listing_test.mocks.dart';
-import 'login_controller_test.mocks.dart';
 import 'login_repo_mock.dart';
 
 @GenerateMocks([ListingRepo, AnalyticsRepo])

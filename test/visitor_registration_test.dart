@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/data/di/use_case_factories.dart';
 import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/domain/repository/analytics_repo.dart';
 import 'package:property_inspect/domain/repository/login_repo.dart';
@@ -10,7 +9,6 @@ import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
 import 'package:property_inspect/domain/usecase/create_visitor_registration_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import 'package:property_inspect/ui/controllers/visitor_registration_controller.dart';
-import 'login_controller_test.mocks.dart';
 import 'login_repo_mock.dart';
 import 'visitor_registration_test.mocks.dart';
 

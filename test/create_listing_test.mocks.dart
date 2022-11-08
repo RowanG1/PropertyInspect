@@ -6,6 +6,7 @@ import 'dart:async' as _i3;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:property_inspect/domain/entities/listing.dart' as _i4;
+import 'package:property_inspect/domain/repository/analytics_repo.dart' as _i5;
 import 'package:property_inspect/domain/repository/listing_repo.dart' as _i2;
 
 // ignore_for_file: comment_references
@@ -46,4 +47,17 @@ class MockListingRepo extends _i1.Mock implements _i2.ListingRepo {
       (super.noSuchMethod(Invocation.method(#deleteListing, [listingId]),
           returnValue: Future<void>.value(null),
           returnValueForMissingStub: Future.value()) as _i3.Future<void>);
+}
+
+/// A class which mocks [AnalyticsRepo].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAnalyticsRepo extends _i1.Mock implements _i5.AnalyticsRepo {
+  MockAnalyticsRepo() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  dynamic sendEvent(String? type, Map<String, dynamic>? content) =>
+      super.noSuchMethod(Invocation.method(#sendEvent, [type, content]));
 }
