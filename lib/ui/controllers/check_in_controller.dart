@@ -30,6 +30,8 @@ class CheckinController extends GetxController {
   final Rx<s.State<Visitor>> _getVisitorState = s.State<Visitor>().obs;
   final Rx<CheckinLumpedInputData> _checkinCombinedInputs =
       CheckinLumpedInputData().obs;
+  final Rx<GetPropertyLumpedInputData?> _lumpedPropertyInputs =
+      (null as GetPropertyLumpedInputData?).obs;
 
   StreamSubscription? getPropertySub;
 
@@ -44,10 +46,12 @@ class CheckinController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    final Stream<Optional<String>> loginIdStream = _getLoginIdUseCase.execute();
+    final Stream<Optional<String>> loginIdStream = _getLoginIdUseCase.execute().asBroadcastStream();
+
     _userId.bindStream(loginIdStream.handleError((onError) {
       print("Error on login Id checkin controller $onError");
     }));
+
     ever(_userId, (value) {
       if (value.value != null) {
         _getVisitor();
@@ -61,8 +65,10 @@ class CheckinController extends GetxController {
           propertyId: propertyId, userId: loginId.value);
     });
 
-    getPropertySub = lumpedPropertyInputStream.listen((data) {
-      if (data.userId != null && data.propertyId != null) {
+    _lumpedPropertyInputs.bindStream(lumpedPropertyInputStream);
+
+    ever(_lumpedPropertyInputs, (data) {
+      if (data?.userId != null && data?.propertyId != null) {
         _getProperty();
       }
     });
@@ -213,7 +219,6 @@ class CheckinController extends GetxController {
   @override
   void dispose() {
     print('Disposing of checkin controller.');
-    getPropertySub?.cancel();
     _checkInState.close();
     _propertyState.close();
     _isRegisteredState.close();

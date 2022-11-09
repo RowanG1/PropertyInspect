@@ -21,9 +21,18 @@ class CheckinPage extends StatefulWidget {
   final VisitorRegistrationController visitorRegistrationController;
   final CheckinController checkinController;
 
-  CheckinPage({Key? key, required this.analyticsUseCase, required this.loginController, required this.visitorFlowController, required
-  this.visitorRegistrationController, required this.checkinController }) :
-super(key: key);
+  CheckinPage(
+      {Key? key,
+      required this.analyticsUseCase,
+      required this.loginController,
+      required this.visitorFlowController,
+      required this.visitorRegistrationController,
+      required this.checkinController})
+      : super(key: key) {
+    Get.put(visitorRegistrationController);
+    Get.put(visitorFlowController);
+    Get.put(checkinController);
+  }
 
   @override
   State<CheckinPage> createState() => _CheckinPageState();
@@ -34,29 +43,22 @@ class _CheckinPageState extends State<CheckinPage> {
   late final Worker getPropertyAvailableSubscription;
   final loginController = Get.find<LoginController>();
 
-
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      getCheckinStateSubscription =
-          ever(widget.checkinController.getCheckinState(), (value) {
+      getCheckinStateSubscription = ever(widget.checkinController.getCheckinState(), (value) {
         if (value.error != null && loginController.getLoginState().value == true) {
-          Get.snackbar("Check-in state Error", value.error.toString(),
-              backgroundColor: Colors.red);
-          widget.analyticsUseCase
-              .execute("checked_in_state_error", {'error': value.error});
+          Get.snackbar("Check-in state Error", value.error.toString(), backgroundColor: Colors.red);
+          widget.analyticsUseCase.execute("checked_in_state_error", {'error': value.error});
         }
       });
 
-      getPropertyAvailableSubscription =
-          ever(widget.checkinController.getListing(), (value) {
+      getPropertyAvailableSubscription = ever(widget.checkinController.getListing(), (value) {
         if (value.error != null && loginController.getLoginState().value == true) {
-          Get.snackbar("Get Property Error", value.error.toString(),
-              backgroundColor: Colors.red);
-          widget.analyticsUseCase.execute(
-              "get_property_error", {'error': value.error, 'page': 'checkin'});
+          Get.snackbar("Get Property Error", value.error.toString(), backgroundColor: Colors.red);
+          widget.analyticsUseCase.execute("get_property_error", {'error': value.error, 'page': 'checkin'});
         }
       });
     });
@@ -67,8 +69,11 @@ class _CheckinPageState extends State<CheckinPage> {
 
   @override
   Widget build(BuildContext context) {
-    return VisitorFlow(analyticsUseCase: widget.analyticsUseCase, loginController: widget.loginController, visitorFlowController: widget
-        .visitorFlowController, visitorRegistrationController: widget.visitorRegistrationController,
+    return VisitorFlow(
+        analyticsUseCase: widget.analyticsUseCase,
+        loginController: widget.loginController,
+        visitorFlowController: widget.visitorFlowController,
+        visitorRegistrationController: widget.visitorRegistrationController,
         pageTitle: "Check in",
         body: Obx(() => Center(
             child: widget.checkinController.getIsLoading()
@@ -113,12 +118,7 @@ class CheckinContent extends StatelessWidget {
   final Visitor visitor;
   final CheckinController checkinController = Get.find<CheckinController>();
 
-  CheckinContent(
-      {Key? key,
-      required this.property,
-      required this.checkedIn,
-      required this.visitor})
-      : super(key: key);
+  CheckinContent({Key? key, required this.property, required this.checkedIn, required this.visitor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -129,15 +129,10 @@ class CheckinContent extends StatelessWidget {
 
     return Column(children: [
       Padding(
-          padding: EdgeInsets.all(Constants.largePadding),
-          child: Text('Welcome $name',
-              style: TextStyle(fontSize: Constants.headingSize))),
-      Padding(
-          padding: EdgeInsets.fromLTRB(0, 20, 0, 0), child: Text('$address')),
-      Padding(
-          padding: EdgeInsets.fromLTRB(0, 20, 0, 0), child: Text('$suburb')),
-      Padding(
-          padding: EdgeInsets.fromLTRB(0, 20, 0, 0), child: Text('$postCode')),
+          padding: EdgeInsets.all(Constants.largePadding), child: Text('Welcome $name', style: TextStyle(fontSize: Constants.headingSize))),
+      Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0), child: Text('$address')),
+      Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0), child: Text('$suburb')),
+      Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0), child: Text('$postCode')),
       if (!checkedIn)
         Padding(
           padding: const EdgeInsets.all(20.0),
@@ -152,13 +147,11 @@ class CheckinContent extends StatelessWidget {
       else ...[
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 55.0, 0, 0),
-          child: Text('You have successfully checked in',
-              style: TextStyle(fontWeight: FontWeight.bold)),
+          child: Text('You have successfully checked in', style: TextStyle(fontWeight: FontWeight.bold)),
         ),
         Padding(
           padding: const EdgeInsets.all(30.0),
-          child: const Icon(Icons.check_circle_outline_sharp,
-              color: Colors.green, size: 60),
+          child: const Icon(Icons.check_circle_outline_sharp, color: Colors.green, size: 60),
         )
       ]
     ]);
