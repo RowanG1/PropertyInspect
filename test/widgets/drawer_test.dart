@@ -9,12 +9,12 @@ import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 import 'package:property_inspect/domain/usecase/logout_use_case.dart';
 import 'package:property_inspect/ui/controllers/PackageController.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
-import 'package:property_inspect/ui/pages/privacy_policy_page.dart';
-import 'login_controller_test.mocks.dart';
-import 'login_repo_mock.dart';
+import 'package:property_inspect/ui/widgets/drawer.dart';
+import '../login_controller_test.mocks.dart';
+import '../login_repo_mock.dart';
+import 'mock_package_controller.dart';
 import 'overflow_helpers.dart';
 
-@GenerateMocks([PackageController])
 void main() {
   // Define a test. The TestWidgets function also provides a WidgetTester
   // to work with. The WidgetTester allows building and interacting
@@ -38,13 +38,7 @@ void main() {
     Get.put(controller);
     Get.put<PackageController>(packageController);
 
-    await tester.pumpWidget(GetMaterialApp(home: PrivacyPolicyPage()));
-    final policyFinder = find.textContaining('secure');
-    expect(policyFinder, findsOneWidget);
-
-    final ScaffoldState state = tester.firstState(find.byType(Scaffold));
-    state.openEndDrawer();
-    await tester.pump();
+    await tester.pumpWidget(GetMaterialApp(home: SideDrawer()));
 
     final contactUsOptionFinder = find.textContaining('Contact us');
     expect(contactUsOptionFinder, findsOneWidget);
@@ -59,11 +53,4 @@ void main() {
   });
 }
 
-class MyMockPackageController extends PackageController {
-  Rx<PackageInfo?> _packageInfo = PackageInfo(appName: "Good", version: '23', buildNumber: '43', packageName: "MyPackage").obs;
 
-  @override
-  getPackageInfo() {
-    return _packageInfo.value;
-  }
-}

@@ -1,13 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/data/di/use_case_factories.dart';
-import 'package:property_inspect/domain/repository/analytics_repo.dart';
 import 'package:property_inspect/domain/utils/field_validation.dart';
 import 'package:property_inspect/ui/controllers/create_listing_controller.dart';
-import 'package:property_inspect/ui/controllers/login_controller.dart';
 import '../../domain/constants.dart';
-import '../../domain/usecase/analytics_use_case.dart';
 
 class CreateListingForm extends StatefulWidget {
   const CreateListingForm({Key? key}) : super(key: key);
@@ -47,7 +43,7 @@ class CreateListingFormState extends State<CreateListingForm> {
                 child: Text(Constants.createListingHeading,
                     style: TextStyle(fontSize: Constants.headingSize)),
               ),
-              TextFormField(
+              TextFormField(key: const ValueKey("address"),
                 controller: controller.addressController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -58,7 +54,7 @@ class CreateListingFormState extends State<CreateListingForm> {
                   return controller.validate(controller.addressController);
                 },
               ),
-              TextFormField(
+              TextFormField(key: const ValueKey("suburb"),
                 controller: controller.suburbController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -69,7 +65,7 @@ class CreateListingFormState extends State<CreateListingForm> {
                   return controller.validate(controller.suburbController);
                 },
               ),
-              TextFormField(
+              TextFormField(key: const ValueKey("postCode"),
                 controller: controller.postCodeController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -80,7 +76,7 @@ class CreateListingFormState extends State<CreateListingForm> {
                   return controller.validate(controller.postCodeController);
                 },
               ),
-              TextFormField(
+              TextFormField(key: const ValueKey("phone"),
                 controller: controller.phoneController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -93,7 +89,7 @@ class CreateListingFormState extends State<CreateListingForm> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
-                child: ElevatedButton(
+                child: ElevatedButton(key: ValueKey("submit"),
                   onPressed: () {
                     // Validate returns true if the form is valid, or false otherwise.
                     if (_formKey.currentState!.validate()) {

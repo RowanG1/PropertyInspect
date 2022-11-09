@@ -11,22 +11,29 @@ import '../../domain/entities/listing.dart';
 import '../../domain/entities/visitor.dart';
 import '../../domain/usecase/analytics_use_case.dart';
 import '../controllers/login_controller.dart';
+import '../controllers/visitor_flow_controller.dart';
+import '../controllers/visitor_registration_controller.dart';
 
 class CheckinPage extends StatefulWidget {
-  CheckinPage({Key? key}) : super(key: key);
+  final AnalyticsUseCase analyticsUseCase;
+  final LoginController loginController;
+  final VisitorFlowController visitorFlowController;
+  final VisitorRegistrationController visitorRegistrationController;
+  final CheckinController checkinController;
+
+  CheckinPage({Key? key, required this.analyticsUseCase, required this.loginController, required this.visitorFlowController, required
+  this.visitorRegistrationController, required this.checkinController }) :
+super(key: key);
 
   @override
   State<CheckinPage> createState() => _CheckinPageState();
 }
 
 class _CheckinPageState extends State<CheckinPage> {
-  final CheckinController checkinController =
-      Get.put(CheckinControllerFactory().make());
-
   late final Worker getCheckinStateSubscription;
   late final Worker getPropertyAvailableSubscription;
   final loginController = Get.find<LoginController>();
-  final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
+
 
   @override
   void initState() {
@@ -34,41 +41,42 @@ class _CheckinPageState extends State<CheckinPage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getCheckinStateSubscription =
-          ever(checkinController.getCheckinState(), (value) {
+          ever(widget.checkinController.getCheckinState(), (value) {
         if (value.error != null && loginController.getLoginState().value == true) {
           Get.snackbar("Check-in state Error", value.error.toString(),
               backgroundColor: Colors.red);
-          _analyticsUseCase
+          widget.analyticsUseCase
               .execute("checked_in_state_error", {'error': value.error});
         }
       });
 
       getPropertyAvailableSubscription =
-          ever(checkinController.getListing(), (value) {
+          ever(widget.checkinController.getListing(), (value) {
         if (value.error != null && loginController.getLoginState().value == true) {
           Get.snackbar("Get Property Error", value.error.toString(),
               backgroundColor: Colors.red);
-          _analyticsUseCase.execute(
+          widget.analyticsUseCase.execute(
               "get_property_error", {'error': value.error, 'page': 'checkin'});
         }
       });
     });
 
     String? id = Get.parameters['id'];
-    checkinController.setPropertyId(id);
+    widget.checkinController.setPropertyId(id);
   }
 
   @override
   Widget build(BuildContext context) {
-    return VisitorFlow(
+    return VisitorFlow(analyticsUseCase: widget.analyticsUseCase, loginController: widget.loginController, visitorFlowController: widget
+        .visitorFlowController, visitorRegistrationController: widget.visitorRegistrationController,
         pageTitle: "Check in",
         body: Obx(() => Center(
-            child: checkinController.getIsLoading()
+            child: widget.checkinController.getIsLoading()
                 ? CircularProgressIndicator(
                     value: null,
                     semanticsLabel: 'Circular progress indicator',
                   )
-                : checkinController.isValidConfig()
+                : widget.checkinController.isValidConfig()
                     ? ValidCheckinContent()
                     : Text('Sorry, we encountered a problem.'))));
   }
@@ -77,7 +85,7 @@ class _CheckinPageState extends State<CheckinPage> {
   void dispose() {
     getCheckinStateSubscription.dispose();
     getPropertyAvailableSubscription.dispose();
-    checkinController.dispose();
+    widget.checkinController.dispose();
     super.dispose();
   }
 }

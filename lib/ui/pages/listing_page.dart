@@ -10,11 +10,16 @@ import '../../data/di/use_case_factories.dart';
 import '../../domain/constants.dart';
 import '../../domain/usecase/analytics_use_case.dart';
 import '../controllers/lister_flow_controller.dart';
+import '../controllers/lister_registration_controller.dart';
 
 class ListingPage extends StatefulWidget {
   final controller = Get.put(ViewListingControllerFactory().make());
+  AnalyticsUseCase analyticsUseCase;
+  final ListerRegistrationController listerRegistrationController;
+  final ListerFlowController listerFlowController;
 
-  ListingPage({Key? key}) : super(key: key);
+  ListingPage({Key? key, required this.listerRegistrationController, required this.listerFlowController, required this.analyticsUseCase}) : super(key:
+  key);
 
   @override
   State<ListingPage> createState() => _ListerFlowState();
@@ -59,6 +64,9 @@ final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
   @override
   Widget build(BuildContext context) {
     return ListerFlow(pageTitle: "Listing",
+        listerRegistrationController: widget.listerRegistrationController,
+        listerFlowController: widget.listerFlowController,
+        analyticsUseCase: widget.analyticsUseCase,
         // This is where you give you custom widget it's data.
         body: Obx(() => Center(
             child: widget.controller.isLoading()

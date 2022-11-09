@@ -7,8 +7,6 @@ import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
 import 'package:property_inspect/ui/controllers/lister_registration_controller.dart';
 import 'package:property_inspect/ui/pages/lister_registration_form.dart';
 import 'package:property_inspect/ui/pages/signin_container.dart';
-import '../../data/types/env.dart';
-import '../../domain/constants.dart';
 import '../controllers/lister_flow_controller.dart';
 import '../controllers/login_controller.dart';
 import '../widgets/drawer.dart';
@@ -16,8 +14,12 @@ import '../widgets/drawer.dart';
 class ListerFlow extends StatefulWidget {
   final Widget body;
   final String? pageTitle;
+  final ListerRegistrationController listerRegistrationController;
+  final ListerFlowController listerFlowController;
+  final AnalyticsUseCase analyticsUseCase;
 
-  const ListerFlow({required this.body, this.pageTitle, Key? key}) : super(key: key);
+  const ListerFlow({required this.body, this.pageTitle, required this.listerRegistrationController, required this.listerFlowController,
+    required this.analyticsUseCase, Key? key}) : super(key: key);
 
   @override
   State<ListerFlow> createState() => _ListerFlowState();
@@ -25,9 +27,7 @@ class ListerFlow extends StatefulWidget {
 
 class _ListerFlowState extends State<ListerFlow> {
   final LoginController _loginController = Get.find();
-  final ListerFlowController _listerFlowController = Get.put(ListerFlowControllerFactory().make());
-  final ListerRegistrationController _listerRegistrationController = Get.put(ListerRegistrationControllerFactory().make());
-  AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
+  final ListerFlowController _listerFlowController = Get.find();
   late final Worker isListerRegisteredSubscription;
   late final Worker createListerSubscription;
 
@@ -39,14 +39,14 @@ class _ListerFlowState extends State<ListerFlow> {
       isListerRegisteredSubscription = ever(_listerFlowController.getIsListerRegisteredRx(), (value) {
         if (value.error != null && _loginController.getLoginState().value == true) {
           Get.snackbar("Lister registered error", value.error.toString(), backgroundColor: Colors.red);
-          _analyticsUseCase.execute("is_lister_registered_error", {'error': value.error, 'page': 'lister_flow'});
+          widget.analyticsUseCase.execute("is_lister_registered_error", {'error': value.error, 'page': 'lister_flow'});
         }
       });
 
-      createListerSubscription = ever(_listerRegistrationController.getCreateListerState(), (value) {
+      createListerSubscription = ever(widget.listerRegistrationController.getCreateListerState(), (value) {
         if (value.error != null && _loginController.getLoginState().value == true) {
           Get.snackbar("Create Lister state Error", value.error.toString(), backgroundColor: Colors.red);
-          _analyticsUseCase.execute("create_lister_state_error", {
+          widget.analyticsUseCase.execute("create_lister_state_error", {
             'error': value.error, 'page': 'lister_flow'});
         }
       });
@@ -77,7 +77,7 @@ class _ListerFlowState extends State<ListerFlow> {
   }
 
   bool isLoading() {
-    return _listerRegistrationController.isLoading() ||
+    return widget.listerRegistrationController.isLoading() ||
         _listerFlowController.getIsLoading() ||
         _loginController.getLoginState().value == null;
   }

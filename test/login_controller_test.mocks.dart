@@ -31,6 +31,7 @@ class MockAnalyticsRepo extends _i1.Mock implements _i3.AnalyticsRepo {
   }
 
   @override
-  dynamic sendEvent(String? type, Map<String, dynamic>? content) =>
-      super.noSuchMethod(Invocation.method(#sendEvent, [type, content]));
+  void sendEvent(String? type, Map<String, dynamic>? content) =>
+      super.noSuchMethod(Invocation.method(#sendEvent, [type, content]),
+          returnValueForMissingStub: null);
 }

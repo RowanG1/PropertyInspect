@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
@@ -10,9 +9,15 @@ import '../../data/di/use_case_factories.dart';
 import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
 import '../../domain/usecase/analytics_use_case.dart';
+import '../controllers/lister_flow_controller.dart';
+import '../controllers/lister_registration_controller.dart';
 
 class ListingsPage extends StatefulWidget {
-  ListingsPage({Key? key}) : super(key: key);
+  AnalyticsUseCase analyticsUseCase;
+  final ListerRegistrationController listerRegistrationController;
+  final ListerFlowController listerFlowController;
+
+  ListingsPage({Key? key, required this.listerRegistrationController, required this.listerFlowController, required this.analyticsUseCase}) : super(key: key);
 
   @override
   State<ListingsPage> createState() => _ListingsPageState();
@@ -55,6 +60,9 @@ class _ListingsPageState extends State<ListingsPage> {
   Widget build(BuildContext context) {
     return ListerFlow(
       pageTitle: "Listings",
+      listerFlowController: widget.listerFlowController,
+      listerRegistrationController: widget.listerRegistrationController,
+      analyticsUseCase: widget.analyticsUseCase,
       // This is where you give you custom widget it's data.
       body: Obx(() => controller.isLoading()
           ? Center(

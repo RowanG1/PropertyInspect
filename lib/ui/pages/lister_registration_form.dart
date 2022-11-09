@@ -48,7 +48,7 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
                 child: Text(Constants.listerRegistrationHeading,
                     style: TextStyle(fontSize: Constants.headingSize)),
               ),
-              TextFormField(
+              TextFormField(key: ValueKey("name"),
                 controller: controller.nameController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -59,7 +59,7 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
                   return controller.validate(controller.nameController);
                 },
               ),
-              TextFormField(
+              TextFormField(key: ValueKey("lastName"),
                 controller: controller.lastNameController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -70,7 +70,7 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
                   return controller.validate(controller.lastNameController);
                 },
               ),
-              TextFormField(
+              TextFormField(key: ValueKey("phone"),
                 controller: controller.phoneController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -81,7 +81,7 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
                   return controller.validate(controller.phoneController);
                 },
               ),
-              TextFormField(
+              TextFormField(key: ValueKey("email"),
                 controller: controller.emailController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -94,7 +94,7 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
-                child: ElevatedButton(
+                child: ElevatedButton(key: ValueKey("submit"),
                   onPressed: () {
                     // Validate returns true if the form is valid, or false otherwise.
                     if (_formKey.currentState!.validate()) {

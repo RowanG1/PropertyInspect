@@ -1,3 +1,3 @@
 abstract class AnalyticsRepo {
-  sendEvent(String type, Map<String, dynamic> content);
+  void sendEvent(String type, Map<String, dynamic> content);
 }

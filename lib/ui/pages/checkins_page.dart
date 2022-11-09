@@ -1,17 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/ui/controllers/lister_flow_controller.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
 import '../../data/di/controllers_factories.dart';
 import '../../data/di/use_case_factories.dart';
 import '../../domain/entities/visitor.dart';
 import '../../domain/usecase/analytics_use_case.dart';
+import '../controllers/lister_flow_controller.dart';
+import '../controllers/lister_registration_controller.dart';
 import '../controllers/login_controller.dart';
 
 class CheckinsPage extends StatefulWidget {
-  CheckinsPage({Key? key}) : super(key: key);
+  final ListerRegistrationController listerRegistrationController;
+  final ListerFlowController listerFlowController;
+  final AnalyticsUseCase analyticsUseCase;
+
+  CheckinsPage({Key? key, required this.listerRegistrationController, required this.listerFlowController, required this.analyticsUseCase}) : super(key: key);
 
   @override
   State<CheckinsPage> createState() => _CheckinsPageState();
@@ -45,6 +49,9 @@ class _CheckinsPageState extends State<CheckinsPage> {
   Widget build(BuildContext context) {
     return ListerFlow(
       pageTitle: "Check-ins",
+      listerRegistrationController: widget.listerRegistrationController,
+      listerFlowController: widget.listerFlowController,
+      analyticsUseCase: widget.analyticsUseCase,
       // This is where you give you custom widget it's data.
       body: Obx(
         () => controller.isLoading()
