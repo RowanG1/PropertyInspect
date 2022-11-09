@@ -24,9 +24,8 @@ class CheckinController extends GetxController {
   final Rx<String?> _propertyId = (null as String?).obs;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<s.State<bool>> _checkInState = s.State<bool>().obs;
+  final Rx<s.State<bool>> _doCheckInState = s.State<bool>().obs;
   final Rx<s.State<Listing>> _propertyState = s.State<Listing>().obs;
-  final Rx<s.State<Optional<bool>>> _isRegisteredState =
-      s.State<Optional<bool>>().obs;
   final Rx<s.State<Visitor>> _getVisitorState = s.State<Visitor>().obs;
   final Rx<CheckinLumpedInputData> _checkinCombinedInputs =
       CheckinLumpedInputData().obs;
@@ -128,7 +127,7 @@ class CheckinController extends GetxController {
   getIsLoading() {
     return _propertyState.value.loading == true ||
         _checkInState.value.loading == true ||
-        _isRegisteredState.value.loading == true;
+        _doCheckInState.value.loading == true;
   }
 
   void setPropertyId(String? propertyId) {
@@ -177,7 +176,7 @@ class CheckinController extends GetxController {
   }
 
   void doCheckin() {
-    _checkInState.value = s.State<bool>(loading: true);
+    _doCheckInState.value = s.State<bool>(loading: true);
     try {
       final visitor = getVisitor();
       final listerId = _propertyState.value.content?.userId;
@@ -185,18 +184,15 @@ class CheckinController extends GetxController {
       _doCheckinUseCase.execute(
           userId!, _propertyId.value!, listerId!, visitor!);
       _analyticsUseCase.execute('checkin', {"listingId": _propertyId});
+      _doCheckInState.value = s.State<bool>(content: true);
     } catch (e) {
       print('Check-in error $e');
-      _checkInState.value = s.State<bool>(error: Exception('$e'));
+      _doCheckInState.value = s.State<bool>(error: Exception('$e'));
     }
   }
 
   Rx<s.State<bool>> getCheckinState() {
     return _checkInState;
-  }
-
-  bool isRegistered() {
-    return _isRegisteredState.value.content?.value == true;
   }
 
   void _getVisitor() {
@@ -221,7 +217,6 @@ class CheckinController extends GetxController {
     print('Disposing of checkin controller.');
     _checkInState.close();
     _propertyState.close();
-    _isRegisteredState.close();
     super.dispose();
   }
 }

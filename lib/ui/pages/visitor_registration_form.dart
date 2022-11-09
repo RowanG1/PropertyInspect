@@ -40,7 +40,7 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
                 child: Text(Constants.visitorRegistrationHeading,
                     style: TextStyle(fontSize: Constants.headingSize)),
               ),
-              TextFormField(
+              TextFormField(key: ValueKey("name"),
                 controller: controller.nameController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -51,7 +51,7 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
                   return controller.validate(controller.nameController);
                 },
               ),
-              TextFormField(
+              TextFormField(key: ValueKey("lastName"),
                 controller: controller.lastNameController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -62,7 +62,7 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
                   return controller.validate(controller.lastNameController);
                 },
               ),
-              TextFormField(
+              TextFormField(key: ValueKey("phone"),
                 controller: controller.phoneController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -73,7 +73,7 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
                   return controller.validate(controller.phoneController);
                 },
               ),
-              TextFormField(
+              TextFormField(key: ValueKey("email"),
                 controller: controller.emailController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -84,7 +84,7 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
                   controller.validate(controller.emailController);
                 },
               ),
-              TextFormField(
+              TextFormField(key: ValueKey("suburb"),
                 controller: controller.suburbController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -97,7 +97,7 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
-                child: ElevatedButton(
+                child: ElevatedButton(key: ValueKey("submit"),
                   onPressed: () {
                     // Validate returns true if the form is valid, or false otherwise.
                     if (_formKey.currentState!.validate()) {

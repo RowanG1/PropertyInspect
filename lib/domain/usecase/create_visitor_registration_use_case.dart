@@ -8,7 +8,7 @@ class CreateVisitorRegistrationUseCase {
 
   execute(String id, String name, String lastName, String email, String phone,
       String suburb) {
-    final visitor = Visitor(id, name, lastName, email, phone, suburb);
+    final visitor = Visitor(id: id, name: name, lastName: lastName, email: email, phone: phone, suburb: suburb);
     return visitorRegistrationRepo.createVisitorRegistration(visitor);
   }
 }

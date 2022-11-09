@@ -1,9 +1,13 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+import 'package:property_inspect/domain/constants.dart';
+import 'package:property_inspect/domain/entities/listing.dart';
 import 'package:property_inspect/domain/entities/visitor.dart';
 import 'package:property_inspect/domain/repository/analytics_repo.dart';
 import 'package:property_inspect/domain/repository/checkin_repo.dart';
@@ -28,11 +32,13 @@ import 'package:property_inspect/ui/controllers/test_mode_controller.dart';
 import 'package:property_inspect/ui/controllers/visitor_flow_controller.dart';
 import 'package:property_inspect/ui/controllers/visitor_registration_controller.dart';
 import 'package:property_inspect/ui/pages/checkin_page.dart';
+import 'package:property_inspect/ui/pages/unauthenticated_page.dart';
 import '../login_repo_mock.dart';
+import 'checkin_repo_mock.dart';
 import 'checkin_widget_test.mocks.dart';
 import 'mock_package_controller.dart';
 
-@GenerateMocks([ AnalyticsRepo, VisitorRegistrationRepo, LogoutRepo, CheckinRepo, ListingRepo])
+@GenerateMocks([ AnalyticsRepo, VisitorRegistrationRepo, LogoutRepo, ListingRepo])
 void main() {
   group('Checkin widget', () {
     late MockAnalyticsRepo analyticsRepo;
@@ -71,7 +77,7 @@ void main() {
       visitorFlowController = VisitorFlowController(visitorRegisteredUseCase, loginIdUseCase);
       createVisitorRegistrationUseCase = CreateVisitorRegistrationUseCase(visitorRegistrationRepo);
       visitorRegistrationController = VisitorRegistrationController(createVisitorRegistrationUseCase, loginIdUseCase, analyticsUseCase);
-      checkinRepo = MockCheckinRepo();
+      checkinRepo = CheckinRepoMock();
       checkedInUseCase = CheckedInUseCase(checkinRepo);
       doCheckinUseCase = DoCheckinUseCase(checkinRepo);
       listingRepo = MockListingRepo();
@@ -83,17 +89,76 @@ void main() {
       Get.put(loginController);
       Get.put(packageController);
       Get.put(TestModeController(isTestMode: true));
+
+      when(listingRepo.getListing('123')).
+      thenAnswer((_) => Stream.value(Listing(userId: '23', address: '32 Bell', suburb: 'Pyrmont', postCode:
+      '2345', phone: '23456')));
+
+      when(visitorRegistrationRepo.getVisitor('345')).
+      thenAnswer((_) => Stream.value(Visitor(id:'345', name: 'Rowan', lastName: 'Gont', email: 'rgon@gm.com', phone: '2345', suburb: 'Pyrm'
+          'ont')));
     });
 
     testWidgets('checkin', (tester) async {
-      await tester.pumpWidget(GetMaterialApp(
-          home: CheckinPage(
+      await tester.pumpWidget(GetMaterialApp(initialRoute: Constants.homeRoute,
+          getPages: [
+          GetPage(name: Constants.homeRoute, page: () => UnauthenticatedPage(
+            body: Text('Home page for test'),
+          )),
+          GetPage(name: Constants.checkinRoute, page: () => CheckinPage(
             analyticsUseCase: analyticsUseCase,
             loginController: loginController,
             visitorFlowController: visitorFlowController,
             visitorRegistrationController: visitorRegistrationController,
             checkinController: checkinController,
-          )));
+          ))]));
+
+      await tester.pumpAndSettle();
+
+      Get.toNamed(Constants.checkinBaseRoute+'/123');
+
+      await tester.pumpAndSettle();
+
+      // Expect sign in page.
+      final signInPageFinder = find.textContaining('Sign in');
+      expect(signInPageFinder, findsOneWidget);
+
+      loginRepo.setLoginState(true);
+      await tester.pumpAndSettle();
+
+      // Now expect registration page.
+      final registrationFinder = find.textContaining('registration');
+      expect(registrationFinder, findsOneWidget);
+
+      await tester.pumpAndSettle();
+
+      final nameFind = find.byKey(ValueKey("name"));
+      await tester.enterText(nameFind, "Rowan");
+
+      final lastNameFind = find.byKey(ValueKey("lastName"));
+      await tester.enterText(lastNameFind, "Gont");
+
+      final phoneFind = find.byKey(ValueKey("phone"));
+      await tester.enterText(phoneFind, "3435678");
+
+      final emailFind = find.byKey(ValueKey("email"));
+      await tester.enterText(emailFind, "rgon@gmail.com");
+
+      final suburbFind = find.byKey(ValueKey("suburb"));
+      await tester.enterText(suburbFind, "Pyrmont");
+
+      final submitFind = find.byKey(ValueKey("submit"));
+
+      await tester.tap(submitFind);
+
+      await tester.pumpAndSettle();
+
+      // Now checkin
+
+      final checkinHeaderFinder = find.textContaining('Check in');
+      expect(checkinHeaderFinder, findsOneWidget);
+
+
     });
   });
 }

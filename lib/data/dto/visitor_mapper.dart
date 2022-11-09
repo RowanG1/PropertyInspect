@@ -23,6 +23,6 @@ class VisitorMapper {
     final email = data['email'] as String;
     final phone = data['phone'] as String;
     final suburb = data['suburb'] as String;
-    return Visitor(id, name, lastName, email, phone, suburb);
+    return Visitor(id: id, name: name, lastName: lastName, email: email, phone: phone, suburb: suburb);
   }
 }

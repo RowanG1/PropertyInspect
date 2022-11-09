@@ -6,6 +6,6 @@ class Visitor {
   String phone;
   String suburb;
 
-  Visitor(this.id, this.name, this.lastName, this.email, this.phone, this
-      .suburb);
+  Visitor({required this.id, required this.name, required this.lastName, required this.email, required this.phone, required this
+      .suburb});
 }
