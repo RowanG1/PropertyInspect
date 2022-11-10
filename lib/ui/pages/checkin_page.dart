@@ -128,7 +128,7 @@ class CheckinContent extends StatelessWidget {
       Padding(
           padding: EdgeInsets.all(Constants.largePadding), child: Text('Welcome $name', style: TextStyle(fontSize: Constants.headingSize))),
       Padding(
-        padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
