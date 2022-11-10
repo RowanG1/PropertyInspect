@@ -155,7 +155,6 @@ void main() {
 
       await tester.tap(checkinFind);
       await tester.pumpAndSettle();
-      await tester.pumpAndSettle();
 
       final successFind = find.byKey(ValueKey("Success"));
       expect(successFind, findsOneWidget);
