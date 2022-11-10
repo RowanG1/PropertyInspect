@@ -104,12 +104,11 @@ class _ListingsPageState extends State<ListingsPage> {
   }
 
   List<Widget> getRows() {
-    return widget.controller.getListings().map<Widget>((item) {
-      return getTableRow(item);
-    }).toList();
+    return widget.controller.getListings().asMap().map((i, item) => MapEntry(i, getTableRow(item, i)
+    )).values.toList();
   }
 
-  Widget getTableRow(Listing item) {
+  Widget getTableRow(Listing item, int index) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
       child: Container(
@@ -174,8 +173,8 @@ class _ListingsPageState extends State<ListingsPage> {
                         },
                         child: Align(
                             alignment: Alignment.centerLeft,
-                            child: const Text("View",
-                                textAlign: TextAlign.start))),
+                            child: Text("View",
+                                textAlign: TextAlign.start, key: ValueKey('view_btn_${index.toString()}'),))),
                     TextButton(
                         onPressed: () {
                           showDeleteDialog(item.id);

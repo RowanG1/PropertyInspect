@@ -107,7 +107,12 @@ void main() {
                 controller: listingsController,
                 analyticsUseCase: analyticsUseCase,
                 listerFlowController: listerFlowController,
-                listerRegistrationController: listerRegistrationController))
+                listerRegistrationController: listerRegistrationController)),
+        GetPage(
+            name: Constants.listingRoute,
+            page: () => UnauthenticatedPage(
+              body: Text('Listing page for test'),
+            ))
       ]));
 
       Get.toNamed(Constants.listingsRoute);
@@ -134,6 +139,11 @@ void main() {
 
       final suburb2PageFinder = find.textContaining('Richmond');
       expect(suburb2PageFinder, findsOneWidget);
+
+      final viewBtn1Find = find.byKey(ValueKey("view_btn_1"));
+      await tester.tap(viewBtn1Find);
+
+      expect(Get.currentRoute, equals('${Constants.listingBaseRoute}/124'));
     });
   });
 }
