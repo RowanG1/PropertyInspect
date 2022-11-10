@@ -91,7 +91,7 @@ void main() {
       Get.put(TestModeController(isTestMode: true));
 
       when(listingRepo.getListing('123')).
-      thenAnswer((_) => Stream.value(Listing(id: '1',userId: '23', address: '32 Bell', suburb: 'Pyrmont', postCode:
+      thenAnswer((_) => Stream.value(Listing(id: '123',userId: '23', address: '32 Bell', suburb: 'Pyrmont', postCode:
       '2345', phone: '23456')));
     });
 

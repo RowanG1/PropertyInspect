@@ -26,7 +26,7 @@ class ViewListingController extends GetxController {
   void onInit() {
     super.onInit();
 
-    final loginIdStream = _getLoginIdUseCase.execute();
+    final loginIdStream = _getLoginIdUseCase.execute().asBroadcastStream();
     _userId.bindStream(loginIdStream);
 
     final propertyIdStream = _propertyId.stream;
@@ -102,7 +102,13 @@ class ViewListingController extends GetxController {
 
   String getQRCodeUrl() {
     final listingId = getPropertyId();
-    final origin = Uri.base.origin;
+    String origin;
+    try {
+      origin = Uri.base.origin;
+    } catch (e) {
+      origin = "http:";
+    }
+
     const checkinRoute = Constants.checkinBaseRoute;
     final checkinUrl = '$origin/#$checkinRoute/$listingId';
     return checkinUrl;

@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:property_inspect/ui/controllers/listings_controller.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
-import '../../data/di/controllers_factories.dart';
-import '../../data/di/use_case_factories.dart';
 import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
 import '../../domain/usecase/analytics_use_case.dart';
@@ -13,14 +12,16 @@ import '../controllers/lister_flow_controller.dart';
 import '../controllers/lister_registration_controller.dart';
 
 class ListingsPage extends StatefulWidget {
-  AnalyticsUseCase analyticsUseCase;
+  final AnalyticsUseCase analyticsUseCase;
   final ListerRegistrationController listerRegistrationController;
   final ListerFlowController listerFlowController;
+  final ListingsController controller;
 
-  ListingsPage({Key? key, required this.listerRegistrationController, required this.listerFlowController, required this
-      .analyticsUseCase}) : super(key: key) {
+  ListingsPage({Key? key, required this.listerRegistrationController, required this.listerFlowController, required this.analyticsUseCase,
+    required this.controller}) : super(key: key) {
     Get.put(listerFlowController);
     Get.put(listerRegistrationController);
+    Get.put(controller);
   }
 
   @override
@@ -28,32 +29,30 @@ class ListingsPage extends StatefulWidget {
 }
 
 class _ListingsPageState extends State<ListingsPage> {
-  final controller = Get.put(ViewListingsControllerFactory().make());
   final loginController = Get.find<LoginController>();
   late final Worker getListingsSubscription;
   late final Worker deleteListingSubscription;
-  final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      getListingsSubscription = ever(controller.getListingsRx(), (value) {
+      getListingsSubscription = ever(widget.controller.getListingsRx(), (value) {
         if (value.error != null && loginController.getLoginState().value ==
             true) {
           Get.snackbar("Get Listings Error", value.error.toString(),
               backgroundColor: Colors.red);
-          _analyticsUseCase.execute("get_listings_error", { 'error' : value
+          widget.analyticsUseCase.execute("get_listings_error", { 'error' : value
               .error, 'page': 'listings'});
         }
       });
 
-      deleteListingSubscription = ever(controller.getDeleteState(), (value) {
+      deleteListingSubscription = ever(widget.controller.getDeleteState(), (value) {
         if (value.error != null && loginController.getLoginState().value == true) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
-          _analyticsUseCase.execute("delete_listing_state_error", { 'error' : value
+          widget.analyticsUseCase.execute("delete_listing_state_error", { 'error' : value
               .error, 'page': 'listings'});
         }
       });
@@ -68,7 +67,7 @@ class _ListingsPageState extends State<ListingsPage> {
       listerRegistrationController: widget.listerRegistrationController,
       analyticsUseCase: widget.analyticsUseCase,
       // This is where you give you custom widget it's data.
-      body: Obx(() => controller.isLoading()
+      body: Obx(() => widget.controller.isLoading()
           ? Center(
             child: const CircularProgressIndicator(
                 value: null,
@@ -91,7 +90,7 @@ class _ListingsPageState extends State<ListingsPage> {
                     ),
                   ],
                 ),
-                if (controller.getListings().isEmpty) Center(
+                if (widget.controller.getListings().isEmpty) Center(
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text('No listings '
@@ -105,7 +104,7 @@ class _ListingsPageState extends State<ListingsPage> {
   }
 
   List<Widget> getRows() {
-    return controller.getListings().map<Widget>((item) {
+    return widget.controller.getListings().map<Widget>((item) {
       return getTableRow(item);
     }).toList();
   }
@@ -231,7 +230,7 @@ class _ListingsPageState extends State<ListingsPage> {
   }
 
   onOkDeleteDialog(String listingId) {
-    controller.deleteListing(listingId);
+    widget.controller.deleteListing(listingId);
     Navigator.pop(context, 'OK');
   }
 

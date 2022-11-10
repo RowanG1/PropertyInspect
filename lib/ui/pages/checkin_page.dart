@@ -144,7 +144,7 @@ class CheckinContent extends StatelessWidget {
       else ...[
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 55.0, 0, 0),
-          child: Text(key: ValueKey('Success'),'You have successfully checked in', style: TextStyle(fontWeight: FontWeight.bold)),
+          child: Text('You have successfully checked in', style: TextStyle(fontWeight: FontWeight.bold), key: ValueKey('Success')),
         ),
         Padding(
           padding: const EdgeInsets.all(30.0),

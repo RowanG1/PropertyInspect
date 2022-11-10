@@ -71,6 +71,7 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: Constants.listingsRoute,
             page: () => ListingsPage(
+                controller: ViewListingsControllerFactory().make(),
                 listerRegistrationController: ListerRegistrationControllerFactory().make(),
                 listerFlowController: ListerFlowControllerFactory().make(),
                 analyticsUseCase: AnalyticsUseCaseFactory().make())),
@@ -92,6 +93,7 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: Constants.listingRoute,
             page: () => ListingPage(
+                controller: ViewListingControllerFactory().make(),
                 listerRegistrationController: ListerRegistrationControllerFactory().make(),
                 listerFlowController: ListerFlowControllerFactory().make(),
                 analyticsUseCase: AnalyticsUseCaseFactory().make())),
