@@ -165,16 +165,26 @@ class _ListingsPageState extends State<ListingsPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    TextButton(
-                        onPressed: () {
-                          final route =
-                              '${Constants.listingBaseRoute}/${item.id}';
-                          Get.toNamed('$route');
-                        },
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("View",
-                                textAlign: TextAlign.start, key: ValueKey('view_btn_${index.toString()}'),))),
+                    GestureDetector(onTap: () {
+                      final route =
+                          '${Constants.listingBaseRoute}/${item.id}';
+                      Get.toNamed('$route');
+                    },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(3)),
+                          border: Border.all(color: Colors.black12),
+                          color: Colors.white,
+                        ),
+                        width: 150,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min,
+                            children: [Text("View", style: TextStyle(color: Colors.blue, fontSize: 11, fontFamily: "Arial"),)],
+                          ),
+                        ),
+                      ),
+                    ),
                     TextButton(
                         onPressed: () {
                           showDeleteDialog(item.id);
