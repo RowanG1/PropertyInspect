@@ -127,12 +127,69 @@ class CheckinContent extends StatelessWidget {
     return Column(children: [
       Padding(
           padding: EdgeInsets.all(Constants.largePadding), child: Text('Welcome $name', style: TextStyle(fontSize: Constants.headingSize))),
-      Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0), child: Text('$address')),
-      Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0), child: Text('$suburb')),
-      Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0), child: Text('$postCode')),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(width: 100,
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Text("Address:", textAlign: TextAlign.end,),
+              ),
+            ),
+            SizedBox(width: 100,
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  address,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(width: 100,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Suburb:", textAlign: TextAlign.end,),
+            ),
+          ),
+          SizedBox(width: 100,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(suburb, style: TextStyle(fontWeight: FontWeight.bold)),
+            ),
+          ),
+        ],
+      ),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 40),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(width: 100,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Post code:", textAlign: TextAlign.end),
+              ),
+            ),
+            SizedBox(width: 100,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(postCode, style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+            ),
+          ],
+        ),
+      ),
       if (!checkedIn)
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.fromLTRB(0, 0.0, 0, 0),
           child: ElevatedButton(key: ValueKey("Checkin"),
             onPressed: () {
               // Validate returns true if the form is valid, or false otherwise.
@@ -143,7 +200,7 @@ class CheckinContent extends StatelessWidget {
         )
       else ...[
         Padding(
-          padding: const EdgeInsets.fromLTRB(0, 55.0, 0, 0),
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
           child: Text('You have successfully checked in', style: TextStyle(fontWeight: FontWeight.bold), key: ValueKey('Success')),
         ),
         Padding(
