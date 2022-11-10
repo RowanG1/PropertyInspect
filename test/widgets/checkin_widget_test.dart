@@ -8,7 +8,6 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/domain/entities/listing.dart';
-import 'package:property_inspect/domain/entities/visitor.dart';
 import 'package:property_inspect/domain/repository/analytics_repo.dart';
 import 'package:property_inspect/domain/repository/checkin_repo.dart';
 import 'package:property_inspect/domain/repository/listing_repo.dart';
@@ -37,8 +36,9 @@ import '../login_repo_mock.dart';
 import 'checkin_repo_mock.dart';
 import 'checkin_widget_test.mocks.dart';
 import 'mock_package_controller.dart';
+import 'visitor_registration_repo_mock.dart';
 
-@GenerateMocks([ AnalyticsRepo, VisitorRegistrationRepo, LogoutRepo, ListingRepo])
+@GenerateMocks([ AnalyticsRepo, LogoutRepo, ListingRepo])
 void main() {
   group('Checkin widget', () {
     late MockAnalyticsRepo analyticsRepo;
@@ -54,7 +54,7 @@ void main() {
     late CreateVisitorRegistrationUseCase createVisitorRegistrationUseCase;
     late VisitorFlowController visitorFlowController;
     late VisitorRegistrationController visitorRegistrationController;
-    late CheckinRepo checkinRepo;
+    late CheckinRepoMock checkinRepo;
     late CheckedInUseCase checkedInUseCase;
     late DoCheckinUseCase doCheckinUseCase;
     late ListingRepo listingRepo;
@@ -71,7 +71,7 @@ void main() {
       loginIdUseCase = GetLoginIdUseCase(loginRepo);
       logoutRepo = MockLogoutRepo();
       logoutUseCase = LogoutUseCase(logoutRepo);
-      visitorRegistrationRepo = MockVisitorRegistrationRepo();
+      visitorRegistrationRepo = VisitorRegistrationRepoMock();
       visitorRegisteredUseCase = GetIsVisitorRegisteredUseCase(visitorRegistrationRepo);
       loginController = LoginController(loginStateUseCase, logoutUseCase, analyticsUseCase);
       visitorFlowController = VisitorFlowController(visitorRegisteredUseCase, loginIdUseCase);
@@ -91,12 +91,8 @@ void main() {
       Get.put(TestModeController(isTestMode: true));
 
       when(listingRepo.getListing('123')).
-      thenAnswer((_) => Stream.value(Listing(userId: '23', address: '32 Bell', suburb: 'Pyrmont', postCode:
+      thenAnswer((_) => Stream.value(Listing(id: '1',userId: '23', address: '32 Bell', suburb: 'Pyrmont', postCode:
       '2345', phone: '23456')));
-
-      when(visitorRegistrationRepo.getVisitor('345')).
-      thenAnswer((_) => Stream.value(Visitor(id:'345', name: 'Rowan', lastName: 'Gont', email: 'rgon@gm.com', phone: '2345', suburb: 'Pyrm'
-          'ont')));
     });
 
     testWidgets('checkin', (tester) async {
@@ -148,16 +144,21 @@ void main() {
       await tester.enterText(suburbFind, "Pyrmont");
 
       final submitFind = find.byKey(ValueKey("submit"));
-
       await tester.tap(submitFind);
 
       await tester.pumpAndSettle();
 
       // Now checkin
 
-      final checkinHeaderFinder = find.textContaining('Check in');
-      expect(checkinHeaderFinder, findsOneWidget);
+      final checkinFind = find.byKey(ValueKey("Checkin"));
+      expect(checkinFind, findsOneWidget);
 
+      await tester.tap(checkinFind);
+      await tester.pumpAndSettle();
+      await tester.pumpAndSettle();
+
+      final successFind = find.byKey(ValueKey("Success"));
+      expect(successFind, findsOneWidget);
 
     });
   });

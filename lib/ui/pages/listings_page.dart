@@ -17,7 +17,11 @@ class ListingsPage extends StatefulWidget {
   final ListerRegistrationController listerRegistrationController;
   final ListerFlowController listerFlowController;
 
-  ListingsPage({Key? key, required this.listerRegistrationController, required this.listerFlowController, required this.analyticsUseCase}) : super(key: key);
+  ListingsPage({Key? key, required this.listerRegistrationController, required this.listerFlowController, required this
+      .analyticsUseCase}) : super(key: key) {
+    Get.put(listerFlowController);
+    Get.put(listerRegistrationController);
+  }
 
   @override
   State<ListingsPage> createState() => _ListingsPageState();

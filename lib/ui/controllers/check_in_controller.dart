@@ -76,6 +76,7 @@ class CheckinController extends GetxController {
       final visitor = value.visitor;
       final listing = value.listing;
       if (visitor != null && listing != null) {
+        print('Running is checked in');
         _getIsCheckedIn(listing, visitor);
       }
     });
@@ -109,6 +110,7 @@ class CheckinController extends GetxController {
         _checkInState.value = s.State<bool>(loading: true);
         final isCheckedIn =
             _isCheckedInUseCase.execute(listerId, visitorId, listingId);
+        
         final mappedCheckin =
             isCheckedIn.map((event) => s.State<bool>(content: event));
 

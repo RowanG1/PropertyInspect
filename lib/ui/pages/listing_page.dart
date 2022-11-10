@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../data/di/controllers_factories.dart';
-import '../../data/di/use_case_factories.dart';
 import '../../domain/constants.dart';
 import '../../domain/usecase/analytics_use_case.dart';
 import '../controllers/lister_flow_controller.dart';
@@ -19,7 +17,10 @@ class ListingPage extends StatefulWidget {
   final ListerFlowController listerFlowController;
 
   ListingPage({Key? key, required this.listerRegistrationController, required this.listerFlowController, required this.analyticsUseCase}) : super(key:
-  key);
+  key) {
+    Get.put(listerFlowController);
+    Get.put(listerRegistrationController);
+  }
 
   @override
   State<ListingPage> createState() => _ListerFlowState();
@@ -29,7 +30,6 @@ class _ListerFlowState extends State<ListingPage> {
 late final Worker listingSubScription;
 late final Worker checkinStateSubScription;
 final loginController = Get.find<LoginController>();
-final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
         if (value.error != null && loginController.getLoginState().value == true) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
-          _analyticsUseCase.execute("get_listing_error", { 'error' : value
+          widget.analyticsUseCase.execute("get_listing_error", { 'error' : value
               .error});
         }
       });
@@ -51,7 +51,7 @@ final AnalyticsUseCase _analyticsUseCase = AnalyticsUseCaseFactory().make();
             true) {
           Get.snackbar("Error", value.error.toString(),
               backgroundColor: Colors.red);
-          _analyticsUseCase.execute("get_checkin_state_error", { 'error' : value
+          widget.analyticsUseCase.execute("get_checkin_state_error", { 'error' : value
               .error, 'page': 'listing'});
         }
       });

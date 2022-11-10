@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/data/di/controllers_factories.dart';
-import 'package:property_inspect/data/di/use_case_factories.dart';
 import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
 import 'package:property_inspect/ui/controllers/lister_registration_controller.dart';
 import 'package:property_inspect/ui/pages/lister_registration_form.dart';

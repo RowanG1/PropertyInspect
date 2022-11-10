@@ -5,14 +5,10 @@
 import 'dart:async' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:property_inspect/domain/entities/listing.dart' as _i9;
-import 'package:property_inspect/domain/entities/visitor.dart' as _i4;
+import 'package:property_inspect/domain/entities/listing.dart' as _i6;
 import 'package:property_inspect/domain/repository/analytics_repo.dart' as _i2;
-import 'package:property_inspect/domain/repository/checkin_repo.dart' as _i7;
-import 'package:property_inspect/domain/repository/listing_repo.dart' as _i8;
-import 'package:property_inspect/domain/repository/logout_repo.dart' as _i6;
-import 'package:property_inspect/domain/repository/visitor_registration_repo.dart'
-    as _i3;
+import 'package:property_inspect/domain/repository/listing_repo.dart' as _i4;
+import 'package:property_inspect/domain/repository/logout_repo.dart' as _i3;
 
 // ignore_for_file: comment_references
 // ignore_for_file: unnecessary_parenthesis
@@ -35,78 +31,25 @@ class MockAnalyticsRepo extends _i1.Mock implements _i2.AnalyticsRepo {
           returnValueForMissingStub: null);
 }
 
-/// A class which mocks [VisitorRegistrationRepo].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockVisitorRegistrationRepo extends _i1.Mock
-    implements _i3.VisitorRegistrationRepo {
-  MockVisitorRegistrationRepo() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  void createVisitorRegistration(_i4.Visitor? visitor) => super.noSuchMethod(
-      Invocation.method(#createVisitorRegistration, [visitor]),
-      returnValueForMissingStub: null);
-  @override
-  _i5.Stream<bool> getIsVisitorRegistered(String? id) =>
-      (super.noSuchMethod(Invocation.method(#getIsVisitorRegistered, [id]),
-          returnValue: Stream<bool>.empty()) as _i5.Stream<bool>);
-  @override
-  _i5.Stream<_i4.Visitor?> getVisitor(String? id) => (super.noSuchMethod(
-      Invocation.method(#getVisitor, [id]),
-      returnValue: Stream<_i4.Visitor?>.empty()) as _i5.Stream<_i4.Visitor?>);
-}
-
 /// A class which mocks [LogoutRepo].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLogoutRepo extends _i1.Mock implements _i6.LogoutRepo {
+class MockLogoutRepo extends _i1.Mock implements _i3.LogoutRepo {
   MockLogoutRepo() {
     _i1.throwOnMissingStub(this);
   }
 }
 
-/// A class which mocks [CheckinRepo].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockCheckinRepo extends _i1.Mock implements _i7.CheckinRepo {
-  MockCheckinRepo() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  void createCheckin(String? visitorId, String? propertyId, String? listerId,
-          _i4.Visitor? visitor) =>
-      super.noSuchMethod(
-          Invocation.method(
-              #createCheckin, [visitorId, propertyId, listerId, visitor]),
-          returnValueForMissingStub: null);
-  @override
-  _i5.Stream<bool> isCheckedIn(
-          String? listerId, String? visitorId, String? propertyId) =>
-      (super.noSuchMethod(
-          Invocation.method(#isCheckedIn, [listerId, visitorId, propertyId]),
-          returnValue: Stream<bool>.empty()) as _i5.Stream<bool>);
-  @override
-  _i5.Stream<List<_i4.Visitor>> getCheckins(
-          String? listerId, String? propertyId) =>
-      (super.noSuchMethod(
-              Invocation.method(#getCheckins, [listerId, propertyId]),
-              returnValue: Stream<List<_i4.Visitor>>.empty())
-          as _i5.Stream<List<_i4.Visitor>>);
-}
-
 /// A class which mocks [ListingRepo].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockListingRepo extends _i1.Mock implements _i8.ListingRepo {
+class MockListingRepo extends _i1.Mock implements _i4.ListingRepo {
   MockListingRepo() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<void> createListing(_i9.Listing? listing) =>
+  _i5.Future<void> createListing(_i6.Listing? listing) =>
       (super.noSuchMethod(Invocation.method(#createListing, [listing]),
           returnValue: Future<void>.value(null),
           returnValueForMissingStub: Future.value()) as _i5.Future<void>);
@@ -115,14 +58,14 @@ class MockListingRepo extends _i1.Mock implements _i8.ListingRepo {
       (super.noSuchMethod(Invocation.method(#isListingAvailable, [propertyId]),
           returnValue: Stream<bool>.empty()) as _i5.Stream<bool>);
   @override
-  _i5.Stream<_i9.Listing?> getListing(dynamic listingId) => (super.noSuchMethod(
+  _i5.Stream<_i6.Listing?> getListing(dynamic listingId) => (super.noSuchMethod(
       Invocation.method(#getListing, [listingId]),
-      returnValue: Stream<_i9.Listing?>.empty()) as _i5.Stream<_i9.Listing?>);
+      returnValue: Stream<_i6.Listing?>.empty()) as _i5.Stream<_i6.Listing?>);
   @override
-  _i5.Stream<List<_i9.Listing>> getListings(dynamic userId) =>
+  _i5.Stream<List<_i6.Listing>> getListings(dynamic userId) =>
       (super.noSuchMethod(Invocation.method(#getListings, [userId]),
-              returnValue: Stream<List<_i9.Listing>>.empty())
-          as _i5.Stream<List<_i9.Listing>>);
+              returnValue: Stream<List<_i6.Listing>>.empty())
+          as _i5.Stream<List<_i6.Listing>>);
   @override
   _i5.Future<void> deleteListing(String? listingId) =>
       (super.noSuchMethod(Invocation.method(#deleteListing, [listingId]),

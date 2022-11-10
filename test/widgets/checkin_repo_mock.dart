@@ -8,6 +8,7 @@ class CheckinRepoMock extends CheckinRepo {
   @override
   void createCheckin(String visitorId, String propertyId, String listerId, Visitor visitor) {
     isChecked.value = true;
+    print('Set is checked true');
   }
 
   @override
@@ -18,7 +19,7 @@ class CheckinRepoMock extends CheckinRepo {
 
   @override
   Stream<bool> isCheckedIn(String listerId, String visitorId, String propertyId) {
-    return isChecked.stream;
+    return isChecked.asBroadcastStream();
   }
 
 }

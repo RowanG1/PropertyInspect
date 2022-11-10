@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/data/di/controllers_factories.dart';
 import 'package:property_inspect/ui/controllers/check_in_controller.dart';
 import 'package:property_inspect/ui/pages/visitor_flow.dart';
-import '../../data/di/use_case_factories.dart';
 import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
 import '../../domain/entities/visitor.dart';
@@ -75,7 +72,7 @@ class _CheckinPageState extends State<CheckinPage> {
         visitorFlowController: widget.visitorFlowController,
         visitorRegistrationController: widget.visitorRegistrationController,
         pageTitle: "Check in",
-        body: Obx(() => Center(
+        body: Obx(() => Center(key: ValueKey('Center'),
             child: widget.checkinController.getIsLoading()
                 ? CircularProgressIndicator(
                     value: null,
@@ -136,7 +133,7 @@ class CheckinContent extends StatelessWidget {
       if (!checkedIn)
         Padding(
           padding: const EdgeInsets.all(20.0),
-          child: ElevatedButton(
+          child: ElevatedButton(key: ValueKey("Checkin"),
             onPressed: () {
               // Validate returns true if the form is valid, or false otherwise.
               checkinController.doCheckin();
@@ -147,7 +144,7 @@ class CheckinContent extends StatelessWidget {
       else ...[
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 55.0, 0, 0),
-          child: Text('You have successfully checked in', style: TextStyle(fontWeight: FontWeight.bold)),
+          child: Text(key: ValueKey('Success'),'You have successfully checked in', style: TextStyle(fontWeight: FontWeight.bold)),
         ),
         Padding(
           padding: const EdgeInsets.all(30.0),
