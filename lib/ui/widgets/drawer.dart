@@ -98,7 +98,7 @@ class SideDrawer extends StatelessWidget {
   }
 
   String getPackageText(PackageInfo? packageInfo) {
-    return 'Version number: ${packageInfo?.version ?? ''}, Build number: ${packageInfo?.buildNumber ?? ''}';
+    return 'Version: ${packageInfo?.version ?? ''}, Build: ${packageInfo?.buildNumber ?? ''}';
   }
 
   void goHome() {

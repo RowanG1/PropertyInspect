@@ -17,10 +17,13 @@ class ListingPage extends StatefulWidget {
   final ListerRegistrationController listerRegistrationController;
   final ListerFlowController listerFlowController;
 
-  ListingPage({Key? key, required this.listerRegistrationController, required this.listerFlowController, required this.analyticsUseCase,
-  required this.controller
-  }) : super(key:
-  key) {
+  ListingPage(
+      {Key? key,
+      required this.listerRegistrationController,
+      required this.listerFlowController,
+      required this.analyticsUseCase,
+      required this.controller})
+      : super(key: key) {
     Get.put(listerFlowController);
     Get.put(listerRegistrationController);
     Get.put(controller);
@@ -31,9 +34,9 @@ class ListingPage extends StatefulWidget {
 }
 
 class _ListerFlowState extends State<ListingPage> {
-late final Worker listingSubScription;
-late final Worker checkinStateSubScription;
-final loginController = Get.find<LoginController>();
+  late final Worker listingSubScription;
+  late final Worker checkinStateSubScription;
+  final loginController = Get.find<LoginController>();
 
   @override
   void initState() {
@@ -42,21 +45,15 @@ final loginController = Get.find<LoginController>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       listingSubScription = ever(widget.controller.getListingRx(), (value) {
         if (value.error != null && loginController.getLoginState().value == true) {
-          Get.snackbar("Error", value.error.toString(),
-              backgroundColor: Colors.red);
-          widget.analyticsUseCase.execute("get_listing_error", { 'error' : value
-              .error});
+          Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
+          widget.analyticsUseCase.execute("get_listing_error", {'error': value.error});
         }
       });
 
-      checkinStateSubScription = ever(widget.controller.getCheckinState(),
-      (value) {
-        if (value.error != null && loginController.getLoginState().value ==
-            true) {
-          Get.snackbar("Error", value.error.toString(),
-              backgroundColor: Colors.red);
-          widget.analyticsUseCase.execute("get_checkin_state_error", { 'error' : value
-              .error, 'page': 'listing'});
+      checkinStateSubScription = ever(widget.controller.getCheckinState(), (value) {
+        if (value.error != null && loginController.getLoginState().value == true) {
+          Get.snackbar("Error", value.error.toString(), backgroundColor: Colors.red);
+          widget.analyticsUseCase.execute("get_checkin_state_error", {'error': value.error, 'page': 'listing'});
         }
       });
 
@@ -67,7 +64,8 @@ final loginController = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
-    return ListerFlow(pageTitle: "Listing",
+    return ListerFlow(
+        pageTitle: "Listing",
         listerRegistrationController: widget.listerRegistrationController,
         listerFlowController: widget.listerFlowController,
         analyticsUseCase: widget.analyticsUseCase,
@@ -79,48 +77,84 @@ final loginController = Get.find<LoginController>();
                     semanticsLabel: 'Circular progress indicator',
                   )
                 : ((widget.controller.getListing() != null)
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 50, 0, 5),
-                              child: Text(
-                                  "${widget.controller.getListing()?.address}"),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                  "${widget.controller.getListing()?.suburb}"),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                  "${widget.controller.getListing()?.postCode}"),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: QrImage(
-                                data: widget.controller.getQRCodeUrl(),
-                                version: QrVersions.auto,
-                                size: 200.0,
+                    ? Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(width: 100,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Text("Address:", textAlign: TextAlign.end,),
+                                ),
+                              ),
+                              SizedBox(width: 100,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Text(
+                                    "${widget.controller.getListing()?.address}",
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(width: 100,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("Suburb:", textAlign: TextAlign.end,),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: ElevatedButton(
-                                  onPressed: widget.controller.doCheckinsExist()
-                                      ? () {
-                                          final route =
-                                              '${Constants.checkinsBaseRoute}/${widget.controller.getPropertyId()}';
-                                          Get.toNamed('$route');
-                                        }
-                                      : null,
-                                  child: Align(
-                                      widthFactor: 1,
-                                      alignment: Alignment.center,
-                                      child: const Text("Checkins"))),
+                            SizedBox(width: 100,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("${widget.controller.getListing()?.suburb}", style: TextStyle(fontWeight: FontWeight.bold)),
+                              ),
                             ),
-                          ])
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(width: 100,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("Post code:", textAlign: TextAlign.end),
+                              ),
+                            ),
+                            SizedBox(width: 100,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("${widget.controller.getListing()?.postCode}", style: TextStyle(fontWeight: FontWeight.bold)),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: QrImage(
+                            data: widget.controller.getQRCodeUrl(),
+                            version: QrVersions.auto,
+                            size: 200.0,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: ElevatedButton(
+                              onPressed: widget.controller.doCheckinsExist()
+                                  ? () {
+                                      final route = '${Constants.checkinsBaseRoute}/${widget.controller.getPropertyId()}';
+                                      Get.toNamed('$route');
+                                    }
+                                  : null,
+                              child: Align(widthFactor: 1, alignment: Alignment.center, child: const Text("Checkins"))),
+                        ),
+                      ])
                     : Text('Sorry, we can\'t find the listing.')))));
   }
 
