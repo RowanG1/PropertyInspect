@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:mockito/annotations.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
 import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 import 'package:property_inspect/domain/usecase/logout_use_case.dart';

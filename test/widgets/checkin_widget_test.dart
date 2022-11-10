@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -9,7 +7,6 @@ import 'package:mockito/mockito.dart';
 import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/domain/entities/listing.dart';
 import 'package:property_inspect/domain/repository/analytics_repo.dart';
-import 'package:property_inspect/domain/repository/checkin_repo.dart';
 import 'package:property_inspect/domain/repository/listing_repo.dart';
 import 'package:property_inspect/domain/repository/login_repo.dart';
 import 'package:property_inspect/domain/repository/logout_repo.dart';
@@ -95,7 +92,7 @@ void main() {
       '2345', phone: '23456')));
     });
 
-    testWidgets('checkin', (tester) async {
+    testWidgets('show checkin page.', (tester) async {
       await tester.pumpWidget(GetMaterialApp(initialRoute: Constants.homeRoute,
           getPages: [
           GetPage(name: Constants.homeRoute, page: () => UnauthenticatedPage(

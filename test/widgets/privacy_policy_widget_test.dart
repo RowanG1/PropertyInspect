@@ -21,7 +21,7 @@ void main() {
   // with widgets in the test environment.
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Checkin shows checkin button for new visitor.', (tester) async {
+  testWidgets('Show privacy policy page.', (tester) async {
     FlutterError.onError = ignoreOverflowErrors;
 
     // Create the widget by telling the tester to build it.

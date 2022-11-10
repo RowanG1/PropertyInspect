@@ -3,17 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/mockito.dart';
 import 'package:property_inspect/domain/constants.dart';
-import 'package:property_inspect/domain/entities/lister.dart';
 import 'package:property_inspect/domain/entities/listing.dart';
 import 'package:property_inspect/domain/repository/analytics_repo.dart';
-import 'package:property_inspect/domain/repository/lister_registration_repo.dart';
 import 'package:property_inspect/domain/repository/listing_repo.dart';
 import 'package:property_inspect/domain/repository/login_repo.dart';
 import 'package:mockito/annotations.dart';
 import 'package:property_inspect/domain/repository/logout_repo.dart';
 import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
 import 'package:property_inspect/domain/usecase/create_lister_registration.dart';
-import 'package:property_inspect/domain/usecase/create_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/do_checkins_exist_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
@@ -36,7 +33,7 @@ import 'mock_package_controller.dart';
 
 @GenerateMocks([ListingRepo, AnalyticsRepo, LogoutRepo])
 void main() {
-  group('Visitor registration controller', () {
+  group('Listing for single property page.', () {
     late LoginRepo loginRepo;
     LogoutRepo logoutRepo;
     late MockAnalyticsRepo analyticsRepo;
@@ -82,7 +79,7 @@ void main() {
           (_) => Stream.value(Listing(id: '123', userId: '23', address: '32 Bell', suburb: 'Pyrmont', postCode: '2345', phone: '23456')));
     });
 
-    testWidgets('create listing', (tester) async {
+    testWidgets('Show listing', (tester) async {
       Get.put(loginController);
       Get.put(packageController);
       Get.put(TestModeController(isTestMode: true));

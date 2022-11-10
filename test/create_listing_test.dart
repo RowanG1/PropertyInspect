@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/data/di/controllers_factories.dart';
 import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/domain/repository/analytics_repo.dart';
 import 'package:property_inspect/domain/repository/listing_repo.dart';
