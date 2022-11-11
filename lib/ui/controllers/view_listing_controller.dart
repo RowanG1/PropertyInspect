@@ -16,11 +16,9 @@ class ViewListingController extends GetxController {
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<s.State<Listing>> _propertyState = s.State<Listing>().obs;
   final Rx<s.State<bool>> _checkinExistState = s.State<bool>().obs;
-  late final Rx<CheckinsExistLumpedInput?> lumpedCheckinsExistDataRx = (null
-  as CheckinsExistLumpedInput?).obs;
+  late final Rx<CheckinsExistLumpedInput?> lumpedCheckinsExistDataRx = (null as CheckinsExistLumpedInput?).obs;
 
-  ViewListingController(this._getListingUseCase,
-      this._doCheckinsExistForListingUseCase, this._getLoginIdUseCase);
+  ViewListingController(this._getListingUseCase, this._doCheckinsExistForListingUseCase, this._getLoginIdUseCase);
 
   @override
   void onInit() {
@@ -31,20 +29,17 @@ class ViewListingController extends GetxController {
 
     final propertyIdStream = _propertyId.stream;
 
-    final lumpedCheckinsExistData = RxRaw.Rx.combineLatest2(
-        loginIdStream, propertyIdStream, (loginId, propertyId) {
+    final lumpedCheckinsExistData = RxRaw.Rx.combineLatest2(loginIdStream, propertyIdStream, (loginId, propertyId) {
       return CheckinsExistLumpedInput(propertyId, loginId.value);
     });
 
-    lumpedCheckinsExistDataRx.bindStream
-      (lumpedCheckinsExistData);
+    lumpedCheckinsExistDataRx.bindStream(lumpedCheckinsExistData);
 
-    final subscribed = ever(lumpedCheckinsExistDataRx, (event) {
+    ever(lumpedCheckinsExistDataRx, (event) {
       if (event != null) {
         final listingId = event.listingId;
         final listerId = event.listerId;
         if (listingId != null && listerId != null) {
-          print("Lister ID is: $listerId");
           _doCheckinsExist(listerId, listingId);
         }
       }
@@ -55,21 +50,14 @@ class ViewListingController extends GetxController {
     try {
       _propertyState.value = s.State<Listing>(loading: true);
       final propertyStream = _getListingUseCase.execute(_propertyId.value!);
-      final Stream<s.State<Listing>> mappedPropertyStream =
-          propertyStream.map<s.State<Listing>>((event) {
-        print("Mapped value:");
-        print(event);
+      final Stream<s.State<Listing>> mappedPropertyStream = propertyStream.map<s.State<Listing>>((event) {
         return s.State<Listing>(content: event);
       });
 
       _propertyState.bindStream(mappedPropertyStream.handleError((onError) {
-        print('View listing Error is:');
-        print(onError);
         _propertyState.value = s.State<Listing>(error: onError);
       }));
     } catch (e) {
-      print("Error on get listing:");
-      print(e);
       _propertyState.value = s.State<Listing>(
           error: Exception("Could not "
               "get property available state."));
@@ -87,7 +75,6 @@ class ViewListingController extends GetxController {
   void setPropertyId(String? propertyId) {
     _propertyId.value = propertyId;
     if (propertyId != null) {
-      print('Setting propertyId in view listing $propertyId');
       _getProperty();
     }
   }
@@ -116,12 +103,9 @@ class ViewListingController extends GetxController {
 
   _doCheckinsExist(String listerId, String propertyId) {
     _propertyState.value = s.State<Listing>(loading: true);
-    print("Running checkins exist");
     try {
-      final checkinsExistStream =
-          _doCheckinsExistForListingUseCase.execute(listerId, propertyId);
-      final checkinExistStateStream =
-          checkinsExistStream.map((event) => s.State<bool>(content: event));
+      final checkinsExistStream = _doCheckinsExistForListingUseCase.execute(listerId, propertyId);
+      final checkinExistStateStream = checkinsExistStream.map((event) => s.State<bool>(content: event));
       _checkinExistState.bindStream(checkinExistStateStream.handleError((onError) {
         _checkinExistState.value = s.State<bool>(error: onError);
       }));
@@ -140,6 +124,7 @@ class ViewListingController extends GetxController {
 
   @override
   void dispose() {
+    lumpedCheckinsExistDataRx.close();
     _checkinExistState.close();
     _propertyState.close();
     super.dispose();

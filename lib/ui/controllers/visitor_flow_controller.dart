@@ -59,7 +59,6 @@ class VisitorFlowController extends GetxController {
 
   @override
   void dispose() {
-    print('Disposing visitor flow controller');
     _visitorIsRegistered.close();
     super.dispose();
   }

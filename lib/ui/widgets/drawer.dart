@@ -107,7 +107,6 @@ class SideDrawer extends StatelessWidget {
 
   bool currentRouteIsHome() {
     final currentRoute = Get.currentRoute;
-    print("Current route is $currentRoute");
     return currentRoute == Constants.homeRoute;
   }
 }

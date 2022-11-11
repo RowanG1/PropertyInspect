@@ -48,7 +48,6 @@ class CheckinController extends GetxController {
     final Stream<Optional<String>> loginIdStream = _getLoginIdUseCase.execute().asBroadcastStream();
 
     _userId.bindStream(loginIdStream.handleError((onError) {
-      print("Error on login Id checkin controller $onError");
     }));
 
     ever(_userId, (value) {
@@ -76,7 +75,6 @@ class CheckinController extends GetxController {
       final visitor = value.visitor;
       final listing = value.listing;
       if (visitor != null && listing != null) {
-        print('Running is checked in');
         _getIsCheckedIn(listing, visitor);
       }
     });
@@ -104,8 +102,6 @@ class CheckinController extends GetxController {
         final listingId = listing.id!;
         final listerId = listing.userId;
         final visitorId = visitor.id;
-        print('Getting checkin state with userid $visitorId, propertyId '
-            '$listingId, lister ID: $listerId');
 
         _checkInState.value = s.State<bool>(loading: true);
         final isCheckedIn =
@@ -148,15 +144,11 @@ class CheckinController extends GetxController {
           property.map((event) {
         return s.State<Listing>(content: event);
       }).handleError((onError) {
-        print("get Property OnError:");
-        print(onError);
         _propertyState.value = s.State<Listing>(error: onError);
       });
 
       _propertyState.bindStream(mappedPropertyState);
     } catch (e) {
-      print("Get property error");
-      print(e);
       _propertyState.value = s.State<Listing>(
           error: Exception("Could not "
               "get property available state."));
@@ -188,7 +180,6 @@ class CheckinController extends GetxController {
       _analyticsUseCase.execute('checkin', {"listingId": _propertyId});
       _doCheckInState.value = s.State<bool>(content: true);
     } catch (e) {
-      print('Check-in error $e');
       _doCheckInState.value = s.State<bool>(error: Exception('$e'));
     }
   }
@@ -216,7 +207,6 @@ class CheckinController extends GetxController {
 
   @override
   void dispose() {
-    print('Disposing of checkin controller.');
     _checkInState.close();
     _propertyState.close();
     super.dispose();

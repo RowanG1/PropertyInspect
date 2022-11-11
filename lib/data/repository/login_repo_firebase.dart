@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' hide PhoneAuthProvider;
+import 'package:logger/logger.dart';
 import 'package:property_inspect/data/types/optional.dart';
 import 'package:property_inspect/domain/repository/login_repo.dart';
 import 'package:rxdart/rxdart.dart';
@@ -31,7 +32,6 @@ class LoginFirebaseRepo implements LoginRepo {
 
   @override
   setUserId(String? userId) {
-    print('Setting user id in fire repo $userId');
     _userId.add(Optional<String>(userId));
   }
 

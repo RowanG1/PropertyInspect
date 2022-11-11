@@ -8,7 +8,6 @@ class CheckinRepoMock extends CheckinRepo {
   @override
   void createCheckin(String visitorId, String propertyId, String listerId, Visitor visitor) {
     isChecked.value = true;
-    print('Set is checked true');
   }
 
   @override

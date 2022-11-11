@@ -6,7 +6,6 @@ class AnalyticsFirebaseRepo implements AnalyticsRepo {
 
   @override
   sendEvent(String type, Map<String, dynamic> content) {
-    print("Sent event to firebase");
     analytics.logEvent(name: type, parameters: content);
   }
 }
