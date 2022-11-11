@@ -29,12 +29,6 @@ class ViewListingController extends GetxController {
 
     final propertyIdStream = _propertyId.stream.asBroadcastStream();
 
-    ever(_propertyId, (propertyId) {
-      if (propertyId != null) {
-        _getProperty();
-      }
-    });
-
     final lumpedCheckinsExistData = RxRaw.Rx.combineLatest2(loginIdStream, propertyIdStream, (loginId, propertyId) {
       return CheckinsExistLumpedInput(propertyId, loginId.value);
     }).asBroadcastStream();
@@ -46,6 +40,7 @@ class ViewListingController extends GetxController {
         final listingId = event.listingId;
         final listerId = event.listerId;
         if (listingId != null && listerId != null) {
+          _getProperty();
           _doCheckinsExist(listerId, listingId);
         }
       }
