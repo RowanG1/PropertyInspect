@@ -27,7 +27,7 @@ class ViewListingController extends GetxController {
     final loginIdStream = _getLoginIdUseCase.execute().asBroadcastStream();
     _userId.bindStream(loginIdStream);
 
-    final propertyIdStream = _propertyId.stream;
+    final propertyIdStream = _propertyId.stream.asBroadcastStream();
 
     final lumpedCheckinsExistData = RxRaw.Rx.combineLatest2(loginIdStream, propertyIdStream, (loginId, propertyId) {
       return CheckinsExistLumpedInput(propertyId, loginId.value);
@@ -104,13 +104,19 @@ class ViewListingController extends GetxController {
   _doCheckinsExist(String listerId, String propertyId) {
     _propertyState.value = s.State<Listing>(loading: true);
     try {
+      print('Start run checkins exist');
       final checkinsExistStream = _doCheckinsExistForListingUseCase.execute(listerId, propertyId);
       final checkinExistStateStream = checkinsExistStream.map((event) => s.State<bool>(content: event));
       _checkinExistState.bindStream(checkinExistStateStream.handleError((onError) {
         _checkinExistState.value = s.State<bool>(error: onError);
+        print('Checkin exist error');
+        print(onError);
       }));
+      print('End of checkins exist');
     } catch (e) {
       _checkinExistState.value = s.State<bool>(error: Exception('$e'));
+      print('Checkin exist error');
+      print(e);
     }
   }
 
