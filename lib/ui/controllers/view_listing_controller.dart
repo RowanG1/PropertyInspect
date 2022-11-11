@@ -29,9 +29,15 @@ class ViewListingController extends GetxController {
 
     final propertyIdStream = _propertyId.stream.asBroadcastStream();
 
+    ever(_propertyId, (propertyId) {
+      if (propertyId != null) {
+        _getProperty();
+      }
+    });
+
     final lumpedCheckinsExistData = RxRaw.Rx.combineLatest2(loginIdStream, propertyIdStream, (loginId, propertyId) {
       return CheckinsExistLumpedInput(propertyId, loginId.value);
-    });
+    }).asBroadcastStream();
 
     lumpedCheckinsExistDataRx.bindStream(lumpedCheckinsExistData);
 
@@ -74,9 +80,6 @@ class ViewListingController extends GetxController {
 
   void setPropertyId(String? propertyId) {
     _propertyId.value = propertyId;
-    if (propertyId != null) {
-      _getProperty();
-    }
   }
 
   String? getPropertyId() {
