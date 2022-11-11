@@ -165,7 +165,7 @@ class _ListingsPageState extends State<ListingsPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    GestureDetector(onTap: () {
+                    GestureDetector(key: ValueKey("view_btn_$index"),onTap: () {
                       final route =
                           '${Constants.listingBaseRoute}/${item.id}';
                       Get.toNamed('$route');
