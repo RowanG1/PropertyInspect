@@ -47,6 +47,7 @@ class ViewListingController extends GetxController {
   }
 
   setupStreams() {
+    logger.d("Setting up streams.");
     final loginIdStream = _getLoginIdUseCase.execute().asBroadcastStream();
     _userId.bindStream(loginIdStream);
 
