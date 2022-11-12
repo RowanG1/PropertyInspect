@@ -13,7 +13,7 @@ Future<void> main() async {
 }
 
 void setupEnv() {
-  Get.put(Env(appTitle: "Property Check-in"));
+  Get.put(Env(appTitle: "Property Check-in", env: "prod"));
 }
 
 initFirebase() async {

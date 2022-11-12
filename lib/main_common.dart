@@ -1,6 +1,7 @@
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:property_inspect/data/di/logger_factory.dart';
 import 'package:property_inspect/data/di/use_case_factories.dart';
 import 'package:property_inspect/data/repository/analytics_firebase_repo.dart';
 import 'package:property_inspect/data/repository/login_repo_firebase.dart';
@@ -33,6 +34,7 @@ mainSetup() async {
   initLoginController();
   Get.put(PackageController());
   Get.put(TestModeController());
+  Get.put(LoggerFactory().make());
   runApp(const MyApp());
 }
 

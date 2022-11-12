@@ -22,7 +22,6 @@ class LoginRepoTest implements LoginRepo {
 
   @override
   setUserId(String? userId) {
-    // TODO: implement setUserId
-    throw UnimplementedError();
+
   }
 }

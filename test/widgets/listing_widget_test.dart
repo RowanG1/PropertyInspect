@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:mockito/mockito.dart';
 import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/domain/entities/listing.dart';
@@ -55,6 +56,7 @@ void main() {
     late PackageController packageController;
 
     setUp(() {
+      Get.put(Logger());
       loginRepo = LoginRepoTest();
       analyticsRepo = MockAnalyticsRepo();
       analyticsUseCase = AnalyticsUseCase(analyticsRepo);

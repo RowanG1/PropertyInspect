@@ -12,12 +12,12 @@ Future<void> main() async {
 }
 
 void setupEnv() {
-  Get.put(Env(appTitle: "Property Check-in (staging)"));
+  Get.put(Env(appTitle: "Property Check-in (staging)", env: "staging"));
 }
 
 initFirebase() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+    options: DefaultFirebaseOptions.currentPlatform
   );
 }
