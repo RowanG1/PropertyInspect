@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:get/get.dart';
@@ -21,6 +22,7 @@ class ViewListingController extends GetxController {
   final Rx<s.State<bool>> _checkinExistState = s.State<bool>().obs;
   late final Rx<CheckinsExistLumpedInput?> lumpedCheckinsExistDataRx = (null as CheckinsExistLumpedInput?).obs;
   Logger logger = Get.find();
+  late StreamSubscription<bool?> checkinExistStream;
 
   ViewListingController(this._getListingUseCase, this._doCheckinsExistForListingUseCase, this._getLoginIdUseCase);
 
@@ -113,7 +115,13 @@ class ViewListingController extends GetxController {
     }
     try {
       logger.d('Start');
-      final checkinsExistStream = _doCheckinsExistForListingUseCase.execute(listerId, propertyId);
+      final checkinsExistStream = _doCheckinsExistForListingUseCase.execute(listerId, propertyId).asBroadcastStream();
+      checkinExistStream = checkinsExistStream.listen((event) {
+        logger.d('Got value for checkin exist stream: ${event}');
+      }, onDone: () {
+        logger.d('Checkin exist stream done.');
+      });
+
       final checkinExistStateStream = checkinsExistStream.map((event) => s.State<bool>(content: event));
       _checkinExistState.bindStream(checkinExistStateStream.handleError((onError) {
         _checkinExistState.value = s.State<bool>(error: onError);
@@ -139,6 +147,7 @@ class ViewListingController extends GetxController {
     lumpedCheckinsExistDataRx.close();
     _checkinExistState.close();
     _propertyState.close();
+    checkinExistStream.cancel();
     super.dispose();
   }
 }
