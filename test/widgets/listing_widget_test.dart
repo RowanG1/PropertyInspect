@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:mockito/mockito.dart';
@@ -26,6 +27,7 @@ import 'package:property_inspect/ui/controllers/test_mode_controller.dart';
 import 'package:property_inspect/ui/controllers/view_listing_controller.dart';
 import 'package:property_inspect/ui/pages/listing_page.dart';
 import 'package:property_inspect/ui/pages/unauthenticated_page.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import '../login_registration_mock.dart';
 import '../login_repo_mock.dart';
 import 'checkin_repo_mock.dart';
@@ -79,6 +81,8 @@ void main() {
 
       when(listingRepo.getListing('123')).thenAnswer(
           (_) => Stream.value(Listing(id: '123', userId: '23', address: '32 Bell', suburb: 'Pyrmont', postCode: '2345', phone: '23456')));
+
+      VisibilityDetectorController.instance.updateInterval = Duration.zero;
     });
 
     testWidgets('Show listing', (tester) async {
@@ -117,11 +121,12 @@ void main() {
       expect(registrationFinder, findsOneWidget);
 
       listerRegistrationRepo.setIsRegistered(true);
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(seconds:1));
 
       // Now view listing
       final suburbPageFinder = find.textContaining('Pyrmont');
       expect(suburbPageFinder, findsOneWidget);
+      await tester.pumpAndSettle(const Duration(seconds:1));
     });
   });
 }

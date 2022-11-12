@@ -21,28 +21,12 @@ class ViewListingController extends GetxController {
   final Rx<s.State<bool>> _checkinExistState = s.State<bool>().obs;
   late final Rx<CheckinsExistLumpedInput?> lumpedCheckinsExistDataRx = (null as CheckinsExistLumpedInput?).obs;
   Logger logger = Get.find();
-  bool viewFirstOpened = false;
 
   ViewListingController(this._getListingUseCase, this._doCheckinsExistForListingUseCase, this._getLoginIdUseCase);
 
   @override
   void onInit() {
     super.onInit();
-    setupStreams();
-
-    ever(lumpedCheckinsExistDataRx, (event) {
-      if (event != null) {
-        final listingId = event.listingId;
-        final listerId = event.listerId;
-        if (listingId != null && listerId != null) {
-          _getProperty();
-          _doCheckinsExist(listerId, listingId);
-        }
-      }
-    });
-  }
-
-  onVisibilityGained() {
     setupStreams();
   }
 
@@ -58,6 +42,17 @@ class ViewListingController extends GetxController {
     }).asBroadcastStream();
 
     lumpedCheckinsExistDataRx.bindStream(lumpedCheckinsExistData);
+
+    ever(lumpedCheckinsExistDataRx, (event) {
+      if (event != null) {
+        final listingId = event.listingId;
+        final listerId = event.listerId;
+        if (listingId != null && listerId != null) {
+          _getProperty();
+          _doCheckinsExist(listerId, listingId);
+        }
+      }
+    });
   }
 
   _getProperty() {
@@ -113,7 +108,9 @@ class ViewListingController extends GetxController {
   }
 
   _doCheckinsExist(String listerId, String propertyId) {
-    _propertyState.value = s.State<Listing>(loading: true);
+    if (_propertyState.value.content == null) {
+      _propertyState.value = s.State<Listing>(loading: true);
+    }
     try {
       logger.d('Start');
       final checkinsExistStream = _doCheckinsExistForListingUseCase.execute(listerId, propertyId);
