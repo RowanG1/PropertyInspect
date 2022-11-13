@@ -126,7 +126,12 @@ void main() {
       // Now view listing
       final suburbPageFinder = find.textContaining('Pyrmont');
       expect(suburbPageFinder, findsOneWidget);
-      await tester.pumpAndSettle(const Duration(seconds:1));
+
+      // Test that re-setting the input data still keeps a correct output from stream updates.
+      loginRepo.setUserId('43');
+      listingController.setPropertyId("123");
+      await tester.pumpAndSettle();
+      expect(suburbPageFinder, findsOneWidget);
     });
   });
 }

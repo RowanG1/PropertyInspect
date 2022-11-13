@@ -4,6 +4,7 @@ import 'package:rxdart/rxdart.dart';
 
 class LoginRepoTest implements LoginRepo {
   BehaviorSubject<bool> _isLoggedIn = BehaviorSubject<bool>.seeded(false);
+  BehaviorSubject<Optional<String>> _loginId = BehaviorSubject<Optional<String>>.seeded(Optional("345"));
 
   @override
   Stream<bool> getLoginState() {
@@ -17,11 +18,11 @@ class LoginRepoTest implements LoginRepo {
 
   @override
   Stream<Optional<String>> getUserId() {
-    return Stream.value(Optional("345"));
+    return _loginId.stream;
   }
 
   @override
   setUserId(String? userId) {
-
+    _loginId.value = Optional(userId);
   }
 }
