@@ -81,7 +81,7 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
                 ),
                 // The validator receives the text that the user has entered.
                 validator: (value) {
-                  controller.validate(controller.emailController);
+                  return controller.validate(controller.emailController);
                 },
               ),
               TextFormField(key: ValueKey("suburb"),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:property_inspect/ui/widgets/checkbox_form_field.dart';
 import '../../domain/constants.dart';
 import '../controllers/lister_flow_controller.dart';
 import '../controllers/lister_registration_controller.dart';
@@ -45,10 +46,10 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
-                child: Text(Constants.listerRegistrationHeading,
-                    style: TextStyle(fontSize: Constants.headingSize)),
+                child: Text(Constants.listerRegistrationHeading, style: TextStyle(fontSize: Constants.headingSize)),
               ),
-              TextFormField(key: ValueKey("name"),
+              TextFormField(
+                key: ValueKey("name"),
                 controller: controller.nameController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -59,7 +60,8 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
                   return controller.validate(controller.nameController);
                 },
               ),
-              TextFormField(key: ValueKey("lastName"),
+              TextFormField(
+                key: ValueKey("lastName"),
                 controller: controller.lastNameController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -70,7 +72,8 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
                   return controller.validate(controller.lastNameController);
                 },
               ),
-              TextFormField(key: ValueKey("phone"),
+              TextFormField(
+                key: ValueKey("phone"),
                 controller: controller.phoneController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -81,7 +84,8 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
                   return controller.validate(controller.phoneController);
                 },
               ),
-              TextFormField(key: ValueKey("email"),
+              TextFormField(
+                key: ValueKey("email"),
                 controller: controller.emailController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -89,12 +93,29 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
                 ),
                 // The validator receives the text that the user has entered.
                 validator: (value) {
-                  controller.validate(controller.emailController);
+                  return controller.validate(controller.emailController);
                 },
               ),
               Padding(
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: Row(
+                  children: [
+                    TextButton(
+                      child: Text('Accept privacy policy'),
+                      onPressed: () {
+                        Get.toNamed(Constants.privacyPolicyRouteKey);
+                      },
+                    ),
+                    CheckboxFormField(validator: (value) {
+                      return (value == true) ? null : "Error";
+                    }),
+                  ],
+                ),
+              ),
+              Padding(
                 padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
-                child: ElevatedButton(key: ValueKey("submit"),
+                child: ElevatedButton(
+                  key: ValueKey("submit"),
                   onPressed: () {
                     // Validate returns true if the form is valid, or false otherwise.
                     if (_formKey.currentState!.validate()) {
