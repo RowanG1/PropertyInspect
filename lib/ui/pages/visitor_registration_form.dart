@@ -99,8 +99,9 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
                 padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: Row(
                   children: [
+                    Text('Accept'),
                     TextButton(
-                      child: Text('Accept privacy policy'),
+                      child: Text('privacy policy'),
                       onPressed: () {
                         Get.toNamed(Constants.privacyPolicyRouteKey);
                       },
@@ -113,7 +114,6 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
                 padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
                 child: ElevatedButton(key: ValueKey("submit"),
                   onPressed: () {
-                  print('Hit submit button');
                     // Validate returns true if the form is valid, or false otherwise.
                     if (_formKey.currentState!.validate()) {
                       // If the form is valid, display a snackbar. In the real world,

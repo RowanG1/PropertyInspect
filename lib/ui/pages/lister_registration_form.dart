@@ -100,8 +100,9 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
                 padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: Row(
                   children: [
+                    Text('Accept'),
                     TextButton(
-                      child: Text('Accept privacy policy'),
+                      child: Text('privacy policy'),
                       onPressed: () {
                         Get.toNamed(Constants.privacyPolicyRouteKey);
                       },
