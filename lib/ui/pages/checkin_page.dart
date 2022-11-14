@@ -190,7 +190,7 @@ class CheckinContent extends StatelessWidget {
       if (!checkedIn)
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 0.0, 0, 0),
-          child: ElevatedButton(key: ValueKey("Checkin"),
+          child: ElevatedButton(key: ValueKey("checkin"),
             onPressed: () {
               // Validate returns true if the form is valid, or false otherwise.
               checkinController.doCheckin();

@@ -106,7 +106,7 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
                         Get.toNamed(Constants.privacyPolicyRouteKey);
                       },
                     ),
-                    CheckboxFormField(validator: controller.getCheckboxValidator()),
+                    CheckboxFormField(key: ValueKey('checkbox'), validator: controller.getCheckboxValidator()),
                   ],
                 ),
               ),

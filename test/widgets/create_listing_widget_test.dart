@@ -111,6 +111,9 @@ void main() {
       final emailFind = find.byKey(ValueKey("email"));
       await tester.enterText(emailFind, "rgon@gmail.com");
 
+      final checkboxFind = find.byKey(ValueKey("checkbox"));
+      await tester.tap(checkboxFind);
+
       final submitFind = find.byKey(ValueKey("submit"));
 
       await tester.tap(submitFind);

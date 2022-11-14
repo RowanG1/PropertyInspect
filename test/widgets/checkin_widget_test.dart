@@ -93,6 +93,10 @@ void main() {
     });
 
     testWidgets('show checkin page.', (tester) async {
+      // Due to submit button being off-page, make the size of the test screen larger.
+      tester.binding.window.physicalSizeTestValue = Size(3000, 1800);
+      addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+
       await tester.pumpWidget(GetMaterialApp(initialRoute: Constants.homeRoute,
           getPages: [
           GetPage(name: Constants.homeRoute, page: () => UnauthenticatedPage(
@@ -140,6 +144,9 @@ void main() {
       final suburbFind = find.byKey(ValueKey("suburb"));
       await tester.enterText(suburbFind, "Pyrmont");
 
+      final checkboxFind = find.byKey(ValueKey("checkbox"));
+      await tester.tap(checkboxFind);
+
       final submitFind = find.byKey(ValueKey("submit"));
       await tester.tap(submitFind);
 
@@ -147,7 +154,7 @@ void main() {
 
       // Now checkin
 
-      final checkinFind = find.byKey(ValueKey("Checkin"));
+      final checkinFind = find.byKey(ValueKey("checkin"));
       expect(checkinFind, findsOneWidget);
 
       await tester.tap(checkinFind);

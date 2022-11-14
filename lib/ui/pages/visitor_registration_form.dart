@@ -105,7 +105,7 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
                         Get.toNamed(Constants.privacyPolicyRouteKey);
                       },
                     ),
-                    CheckboxFormField(validator: controller.getCheckboxValidator()),
+                    CheckboxFormField(key: ValueKey('checkbox'), validator: controller.getCheckboxValidator()),
                   ],
                 ),
               ),
@@ -113,10 +113,12 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
                 padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
                 child: ElevatedButton(key: ValueKey("submit"),
                   onPressed: () {
+                  print('Hit submit button');
                     // Validate returns true if the form is valid, or false otherwise.
                     if (_formKey.currentState!.validate()) {
                       // If the form is valid, display a snackbar. In the real world,
                       // you'd often call a server or save the information in a database.
+                      print('Trying to create user');
                       controller.createUser();
                     }
                   },
