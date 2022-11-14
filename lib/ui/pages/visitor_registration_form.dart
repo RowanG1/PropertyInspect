@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/ui/controllers/visitor_registration_controller.dart';
 import '../../domain/constants.dart';
+import '../widgets/checkbox_form_field.dart';
 
 class VisitorRegistrationForm extends StatefulWidget {
   const VisitorRegistrationForm({Key? key}) : super(key: key);
@@ -94,6 +95,19 @@ class VisitorRegistrationFormState extends State<VisitorRegistrationForm> {
                 validator: (value) {
                   return controller.validate(controller.suburbController);
                 },
+              ),     Padding(
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: Row(
+                  children: [
+                    TextButton(
+                      child: Text('Accept privacy policy'),
+                      onPressed: () {
+                        Get.toNamed(Constants.privacyPolicyRouteKey);
+                      },
+                    ),
+                    CheckboxFormField(validator: controller.getCheckboxValidator()),
+                  ],
+                ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: Constants.largePadding),

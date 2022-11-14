@@ -20,4 +20,8 @@ class FieldValidation {
     }
     return null;
   }
+
+  String? getCheckboxValidation(bool? value) {
+    return (value == true) ? null : "Error";
+  }
 }

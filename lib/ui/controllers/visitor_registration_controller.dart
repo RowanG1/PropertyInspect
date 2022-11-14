@@ -62,6 +62,10 @@ class VisitorRegistrationController extends GetxController {
     }
   }
 
+  getCheckboxValidator() {
+    return validation.getCheckboxValidation;
+  }
+
   Optional<String> _getUserId() {
     return _userId.value;
   }
