@@ -28,9 +28,11 @@ All your personal information will reside in Australia using a secure cloud prov
   @override
   Widget build(BuildContext context) {
     return UnauthenticatedPage(
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Text(policy),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Text(policy),
+        ),
       ),
       pageTitle: Constants.privacyPolicyLabel,
     );
