@@ -61,15 +61,17 @@ class HomePage extends StatelessWidget {
     ];
 
     return UnauthenticatedPage(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ...[
-            Center(
-              child: Column(children: [...commonWidgets]),
-            )
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ...[
+              Center(
+                child: Column(children: [...commonWidgets]),
+              )
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
