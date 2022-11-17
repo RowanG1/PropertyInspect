@@ -3,7 +3,7 @@
   "short_name": "Prop Checkin",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#0175C2",
+  "background_color": "#FFFFFF",
   "theme_color": "#0175C2",
   "description": "Check in to a property for inspection.",
   "orientation": "portrait-primary",
