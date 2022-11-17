@@ -173,7 +173,7 @@ class _ListingsPageState extends State<ListingsPage> {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(3)),
-                          border: Border.all(color: Colors.black12),
+                          border: Border.all(color: Colors.black26),
                           color: Colors.white,
                         ),
                         width: 150,
