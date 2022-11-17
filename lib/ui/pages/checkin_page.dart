@@ -167,29 +167,26 @@ class CheckinContent extends StatelessWidget {
           ),
         ],
       ),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 40),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(width: 100,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("Post code:", textAlign: TextAlign.end),
-              ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(width: 100,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Post code:", textAlign: TextAlign.end),
             ),
-            SizedBox(width: 100,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(postCode, style: TextStyle(fontWeight: FontWeight.bold)),
-              ),
+          ),
+          SizedBox(width: 100,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(postCode, style: TextStyle(fontWeight: FontWeight.bold)),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       if (!checkedIn)
         Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0.0, 0, 0),
+          padding: const EdgeInsets.fromLTRB(0, 40.0, 0, 0),
           child: ElevatedButton(key: ValueKey("checkin"),
             onPressed: () {
               // Validate returns true if the form is valid, or false otherwise.
@@ -200,7 +197,7 @@ class CheckinContent extends StatelessWidget {
         )
       else ...[
         Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+          padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
           child: Text('You have successfully checked in', style: TextStyle(fontWeight: FontWeight.bold), key: ValueKey('Success')),
         ),
         Padding(
