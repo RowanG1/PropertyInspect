@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:property_inspect/domain/entities/listing.dart';
 import 'package:property_inspect/domain/repository/listing_repo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

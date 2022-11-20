@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/domain/utils/field_validation.dart';
@@ -89,7 +88,7 @@ class CreateListingFormState extends State<CreateListingForm> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
-                child: ElevatedButton(key: ValueKey("submit"),
+                child: ElevatedButton(key: const ValueKey("submit"),
                   onPressed: () {
                     // Validate returns true if the form is valid, or false otherwise.
                     if (_formKey.currentState!.validate()) {

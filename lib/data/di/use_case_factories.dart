@@ -2,9 +2,8 @@ import 'package:property_inspect/data/di/repo_factories.dart';
 import 'package:property_inspect/data/repository/checkin_firebase_repo.dart';
 import 'package:property_inspect/data/repository/lister_registration_repo_firebase.dart';
 import 'package:property_inspect/data/repository/listing_repo_firebase.dart';
-import 'package:property_inspect/data/repository/login_repo_firebase.dart';
+import 'package:property_inspect/data/repository/package_info_flutter.dart';
 import 'package:property_inspect/data/repository/visitor_registration_firebase_repo.dart';
-import 'package:property_inspect/domain/repository/visitor_registration_repo.dart';
 import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
 import 'package:property_inspect/domain/usecase/checked_in_use_case.dart';
 import 'package:property_inspect/domain/usecase/create_lister_registration.dart';
@@ -22,6 +21,7 @@ import '../../domain/usecase/create_visitor_registration_use_case.dart';
 import '../../domain/usecase/delete_listing_use_case.dart';
 import '../../domain/usecase/do_checkins_exist_use_case.dart';
 import '../../domain/usecase/get_listings_use_case.dart';
+import '../../domain/usecase/get_packageinfo_use_case.dart';
 import '../../domain/usecase/get_visitor_use_case.dart';
 import '../repository/analytics_firebase_repo.dart';
 
@@ -123,5 +123,11 @@ class DoCheckinsExistForListingUseCaseFactory {
 class AnalyticsUseCaseFactory {
   AnalyticsUseCase make() {
     return AnalyticsUseCase(AnalyticsFirebaseRepo());
+  }
+}
+
+class PackageInfoUseCaseFactory {
+  GetPackageInfoUseCase make() {
+    return GetPackageInfoUseCase(PackageInfoFlutter());
   }
 }

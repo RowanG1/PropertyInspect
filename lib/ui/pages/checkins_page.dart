@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
@@ -15,7 +14,7 @@ class CheckinsPage extends StatefulWidget {
   final ListerFlowController listerFlowController;
   final AnalyticsUseCase analyticsUseCase;
 
-  CheckinsPage({Key? key, required this.listerRegistrationController, required this.listerFlowController, required this.analyticsUseCase}) : super(key: key);
+  const CheckinsPage({Key? key, required this.listerRegistrationController, required this.listerFlowController, required this.analyticsUseCase}) : super(key: key);
 
   @override
   State<CheckinsPage> createState() => _CheckinsPageState();
@@ -55,7 +54,7 @@ class _CheckinsPageState extends State<CheckinsPage> {
       // This is where you give you custom widget it's data.
       body: Obx(
         () => controller.isLoading()
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(
                 value: null,
                 semanticsLabel: 'Circular progress indicator',
@@ -82,8 +81,8 @@ class _CheckinsPageState extends State<CheckinsPage> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
       child: Container(
-        decoration: new BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
           border: new Border.all(color: Colors.black45),
           color: Colors.white,
         ),
@@ -94,29 +93,29 @@ class _CheckinsPageState extends State<CheckinsPage> {
             children: <Widget>[
               Row(
                 children: [
-                  Container(
+                  const SizedBox(
                     width: 70,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 0, 0, 8),
+                      padding: EdgeInsets.fromLTRB(0.0, 0, 0, 8),
                       child: Text('Name:', textAlign: TextAlign.start),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 8),
                     child: Text(
-                      '${item.name}',
+                      item.name,
                       textAlign: TextAlign.start,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   )
                 ],
               ),
               Row(
                 children: [
-                  Container(
+                  const SizedBox(
                     width: 70,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 0, 0, 8),
+                      padding: EdgeInsets.fromLTRB(0.0, 0, 0, 8),
                       child: Text('Surname:', textAlign: TextAlign.start),
                     ),
                   ),
@@ -125,45 +124,45 @@ class _CheckinsPageState extends State<CheckinsPage> {
                     child: Text(
                       '${item.lastName}',
                       textAlign: TextAlign.start,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   )
                 ],
               ),
               Row(
                 children: [
-                  Container(
+                  const SizedBox(
                     width: 70,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 0, 0, 8),
+                      padding: EdgeInsets.fromLTRB(0.0, 0, 0, 8),
                       child: Text('Email:', textAlign: TextAlign.start),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 8),
                     child: Text(
-                      '${item.email}',
+                      item.email,
                       textAlign: TextAlign.start,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   )
                 ],
               ),
               Row(
                 children: [
-                  Container(
+                  const SizedBox(
                     width: 70,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 0, 0, 8),
+                      padding: EdgeInsets.fromLTRB(0.0, 0, 0, 8),
                       child: Text('Phone:', textAlign: TextAlign.start),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 8),
                     child: Text(
-                      '${item.phone}',
+                      item.phone,
                       textAlign: TextAlign.start,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   )
                 ],

@@ -10,12 +10,12 @@ import '../../domain/entities/lister.dart';
 import '../../domain/utils/field_validation.dart';
 
 class ListerRegistrationController extends GetxController {
-  CreateListerRegistrationUseCase _listerRegistration;
-  GetLoginIdUseCase _loginIdUseCase;
-  AnalyticsUseCase _analyticsUseCase;
+  final CreateListerRegistrationUseCase _listerRegistration;
+  final GetLoginIdUseCase _loginIdUseCase;
+  final AnalyticsUseCase _analyticsUseCase;
   FieldValidation validation = FieldValidation();
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
-  Rx<s.State<bool>> _createListerState = s.State<bool>().obs;
+  final Rx<s.State<bool>> _createListerState = s.State<bool>().obs;
 
   ListerRegistrationController(this._listerRegistration, this
       ._loginIdUseCase, this._analyticsUseCase);

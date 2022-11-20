@@ -10,8 +10,8 @@ import 'package:property_inspect/domain/entities/state.dart' as s;
 
 class VisitorRegistrationController extends GetxController {
   CreateVisitorRegistrationUseCase visitorRegistration;
-  GetLoginIdUseCase _loginIdUseCase;
-  AnalyticsUseCase _analyticsUseCase;
+  final GetLoginIdUseCase _loginIdUseCase;
+  final AnalyticsUseCase _analyticsUseCase;
   FieldValidation validation = FieldValidation();
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<s.State<bool>> _createState = s.State<bool>().obs;

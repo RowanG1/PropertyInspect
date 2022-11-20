@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/ui/controllers/listings_controller.dart';
@@ -68,8 +66,8 @@ class _ListingsPageState extends State<ListingsPage> {
       analyticsUseCase: widget.analyticsUseCase,
       // This is where you give you custom widget it's data.
       body: Obx(() => widget.controller.isLoading()
-          ? Center(
-            child: const CircularProgressIndicator(
+          ? const Center(
+            child: CircularProgressIndicator(
                 value: null,
                 semanticsLabel: 'Circular progress indicator',
               ),
@@ -90,9 +88,9 @@ class _ListingsPageState extends State<ListingsPage> {
                     ),
                   ],
                 ),
-                if (widget.controller.getListings().isEmpty) Center(
+                if (widget.controller.getListings().isEmpty) const Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: EdgeInsets.all(20.0),
                     child: Text('No listings '
                         'currently.'),
                   ),
@@ -112,9 +110,9 @@ class _ListingsPageState extends State<ListingsPage> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
       child: Container(
-        decoration: new BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          border: new Border.all(color: Colors.black45),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          border: Border.all(color: Colors.black45),
           color: Colors.white,
         ),
         child: Padding(
@@ -126,8 +124,8 @@ class _ListingsPageState extends State<ListingsPage> {
                 children: [
                   Container(
                     width: 70,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 0, 0, 8),
+                    child: const Padding(
+                      padding: EdgeInsets.fromLTRB(0.0, 0, 0, 8),
                       child: Text('Address:', textAlign: TextAlign.start),
                     ),
                   ),
@@ -136,7 +134,7 @@ class _ListingsPageState extends State<ListingsPage> {
                     child: Text(
                       '${item.address}',
                       textAlign: TextAlign.start,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   )
                 ],
@@ -145,8 +143,8 @@ class _ListingsPageState extends State<ListingsPage> {
                 children: [
                   Container(
                     width: 70,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 0, 0, 8),
+                    child: const Padding(
+                      padding: EdgeInsets.fromLTRB(0.0, 0, 0, 8),
                       child: Text('Suburb:', textAlign: TextAlign.start),
                     ),
                   ),
@@ -155,7 +153,7 @@ class _ListingsPageState extends State<ListingsPage> {
                     child: Text(
                       '${item.suburb}',
                       textAlign: TextAlign.start,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   )
                 ],
@@ -172,7 +170,7 @@ class _ListingsPageState extends State<ListingsPage> {
                     },
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(3)),
+                          borderRadius: const BorderRadius.all(Radius.circular(3)),
                           border: Border.all(color: Colors.black26),
                           color: Colors.white,
                         ),
@@ -180,7 +178,7 @@ class _ListingsPageState extends State<ListingsPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min,
-                            children: [Text("View", style: TextStyle(color: Colors.blue, fontSize: 11, fontFamily: "Arial"),)],
+                            children: const [Text("View", style: TextStyle(color: Colors.blue, fontSize: 11, fontFamily: "Arial"),)],
                           ),
                         ),
                       ),

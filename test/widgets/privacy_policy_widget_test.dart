@@ -6,7 +6,7 @@ import 'package:mockito/annotations.dart';
 import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
 import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 import 'package:property_inspect/domain/usecase/logout_use_case.dart';
-import 'package:property_inspect/ui/controllers/PackageController.dart';
+import 'package:property_inspect/ui/controllers/package_controller.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/pages/privacy_policy_page.dart';
 import '../login_controller_test.mocks.dart';
@@ -30,7 +30,7 @@ void main() {
     final logout = MockLogoutRepo();
     final logoutUseCase = LogoutUseCase(logout);
     final analyticsRepo = MockAnalyticsRepo();
-    final packageController = MyMockPackageController();
+    final packageController = MyMockPackageControllerFactory().make();
     final analyticsUseCase = AnalyticsUseCase(analyticsRepo);
 
     var controller = LoginController(loginUseCase, logoutUseCase, analyticsUseCase);

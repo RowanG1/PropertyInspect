@@ -1,4 +1,3 @@
-import 'package:property_inspect/data/types/optional.dart';
 import 'package:property_inspect/domain/repository/visitor_registration_repo.dart';
 
 class GetIsVisitorRegisteredUseCase {

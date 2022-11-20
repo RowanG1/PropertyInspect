@@ -7,9 +7,9 @@ import '../../domain/usecase/get_listings_use_case.dart';
 import '../../domain/usecase/get_login_id_use_case.dart';
 
 class ListingsController extends GetxController {
-  GetListingsUseCase _getListingsUseCase;
-  GetLoginIdUseCase _getLoginIdUseCase;
-  DeleteListingUseCase _deleteListingUseCase;
+  final GetListingsUseCase _getListingsUseCase;
+  final GetLoginIdUseCase _getLoginIdUseCase;
+  final DeleteListingUseCase _deleteListingUseCase;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<s.State<List<Listing>>> _propertiesState =
       s.State<List<Listing>>().obs;
@@ -65,7 +65,7 @@ class ListingsController extends GetxController {
     } catch (e) {
       _deletePropertiesState.value = s.State<bool>(
           error: Exception("Could not "
-              "delete property. ${e}"));
+              "delete property. $e"));
     }
   }
 

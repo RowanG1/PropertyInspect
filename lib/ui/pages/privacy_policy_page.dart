@@ -36,12 +36,12 @@ All your personal information will reside in Australia using a secure cloud prov
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Visitors:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Text(visitorPolicy),
-              Text('Listers:', style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text('Listers:', style: TextStyle(fontWeight: FontWeight.bold)),
               Text(listerPolicy),
               Text(otherPolicy),
             ],

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:property_inspect/ui/controllers/PackageController.dart';
+import 'package:property_inspect/ui/controllers/package_controller.dart';
 import 'package:property_inspect/ui/widgets/drawer_button.dart';
 import '../../data/utils/open_email_link.dart';
 import '../../domain/constants.dart';

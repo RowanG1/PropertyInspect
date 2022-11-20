@@ -1,8 +1,12 @@
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:property_inspect/domain/usecase/get_packageinfo_use_case.dart';
 
 class PackageController extends GetxController {
-  Rx<PackageInfo?> _packageInfo = (null as PackageInfo?).obs;
+  final Rx<PackageInfo?> _packageInfo = (null as PackageInfo?).obs;
+  final GetPackageInfoUseCase _packageInfoUseCase;
+
+  PackageController(this._packageInfoUseCase);
 
   @override
   void onInit() {
@@ -11,8 +15,7 @@ class PackageController extends GetxController {
   }
 
   _getPackageInfo() async {
-    final packageInfo = await PackageInfo.fromPlatform();
-    _packageInfo.value = packageInfo;
+    _packageInfo.value = await _packageInfoUseCase.execute();
   }
 
   PackageInfo? getPackageInfo() {

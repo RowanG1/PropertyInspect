@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/domain/constants.dart';
@@ -10,8 +9,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final commonWidgets = [
-      Padding(
-        padding: const EdgeInsets.fromLTRB(0, 50, 10, 0),
+      const Padding(
+        padding: EdgeInsets.fromLTRB(0, 50, 10, 0),
         child: Text("Visitor?",
             style: TextStyle(
                 fontSize: 18,
@@ -19,25 +18,25 @@ class HomePage extends StatelessWidget {
                 fontWeight: FontWeight.bold),
             textAlign: TextAlign.center),
       ),
-      Padding(
-        padding: const EdgeInsets.all(30.0),
+      const Padding(
+        padding: EdgeInsets.all(30.0),
         child: Text(
             "To check in to a property, you can scan the QR code at "
             "the venue.",
             style: TextStyle(fontSize: 18),
             textAlign: TextAlign.center),
       ),
-      Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: const Divider(
+      const Padding(
+        padding: EdgeInsets.all(18.0),
+        child: Divider(
           thickness: 0.9,
           indent: 20,
           endIndent: 20,
           color: Colors.black,
         ),
       ),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(0, 20, 10, 0),
+      const Padding(
+        padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
         child: Text("Lister?",
             style: TextStyle(
                 fontSize: 18,
@@ -45,9 +44,9 @@ class HomePage extends StatelessWidget {
                 fontWeight: FontWeight.bold),
             textAlign: TextAlign.center),
       ),
-      Padding(
-        padding: const EdgeInsets.all(40.0),
-        child: const Text(
+      const Padding(
+        padding: EdgeInsets.all(40.0),
+        child: Text(
           "Would you like to list a property for inspection?",
           style: TextStyle(fontSize: 18),
         ),

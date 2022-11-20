@@ -9,7 +9,6 @@ import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
 import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 import 'package:property_inspect/domain/usecase/logout_use_case.dart';
 import 'package:property_inspect/domain/constants.dart';
-import 'package:property_inspect/ui/controllers/PackageController.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/controllers/test_mode_controller.dart';
 import 'package:property_inspect/ui/pages/checkin_page.dart';
@@ -32,7 +31,7 @@ mainSetup() async {
   WidgetsFlutterBinding.ensureInitialized();
   commonFirebaseUISetup();
   initLoginController();
-  Get.put(PackageController());
+  Get.put(PackageControllerFactory().make());
   Get.put(TestModeController());
   Get.put(LoggerFactory().make());
   runApp(const MyApp());

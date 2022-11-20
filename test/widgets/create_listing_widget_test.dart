@@ -13,7 +13,7 @@ import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import 'package:property_inspect/domain/usecase/is_lister_registered_use_case.dart';
 import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 import 'package:property_inspect/domain/usecase/logout_use_case.dart';
-import 'package:property_inspect/ui/controllers/PackageController.dart';
+import 'package:property_inspect/ui/controllers/package_controller.dart';
 import 'package:property_inspect/ui/controllers/create_listing_controller.dart';
 import 'package:property_inspect/ui/controllers/lister_flow_controller.dart';
 import 'package:property_inspect/ui/controllers/lister_registration_controller.dart';
@@ -64,7 +64,7 @@ void main() {
       listerFlowController = ListerFlowController(isListerRegisteredUseCase, loginIdUseCase);
       createListerRegistrationUseCase = CreateListerRegistrationUseCase(listerRegistrationRepo);
       listerRegistrationController = ListerRegistrationController(createListerRegistrationUseCase, loginIdUseCase, analyticsUseCase);
-      packageController = MyMockPackageController();
+      packageController = MyMockPackageControllerFactory().make();
     });
 
     testWidgets('show create listing page.', (tester) async {

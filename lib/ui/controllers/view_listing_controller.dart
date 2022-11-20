@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -13,10 +12,10 @@ import '../../domain/usecase/get_login_id_use_case.dart';
 import 'package:rxdart/rxdart.dart' as RxRaw;
 
 class ViewListingController extends GetxController {
-  Rx<String?> _propertyId = (null as String?).obs;
-  GetListingUseCase _getListingUseCase;
-  DoCheckinsExistForListingUseCase _doCheckinsExistForListingUseCase;
-  GetLoginIdUseCase _getLoginIdUseCase;
+  final Rx<String?> _propertyId = (null as String?).obs;
+  final GetListingUseCase _getListingUseCase;
+  final DoCheckinsExistForListingUseCase _doCheckinsExistForListingUseCase;
+  final GetLoginIdUseCase _getLoginIdUseCase;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<s.State<Listing>> _propertyState = s.State<Listing>().obs;
   final Rx<s.State<bool>> _checkinExistState = s.State<bool>().obs;
@@ -117,7 +116,7 @@ class ViewListingController extends GetxController {
       logger.d('Start');
       final checkinsExistStream = _doCheckinsExistForListingUseCase.execute(listerId, propertyId).asBroadcastStream();
       checkinExistStream = checkinsExistStream.listen((event) {
-        logger.d('Got value for checkin exist stream: ${event}');
+        logger.d('Got value for checkin exist stream: $event');
       }, onDone: () {
         logger.d('Checkin exist stream done.');
       });

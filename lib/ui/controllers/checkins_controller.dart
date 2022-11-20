@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_rx/src/rx_workers/rx_workers.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:property_inspect/domain/usecase/get_checkins_for_listing_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../domain/entities/state.dart' as s;
@@ -13,10 +9,10 @@ import 'package:rxdart/rxdart.dart' as RxRaw;
 class CheckinsController extends GetxController {
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<Optional<String>> _listingId = Optional<String>(null).obs;
-  GetLoginIdUseCase _getLoginIdUseCase;
-  GetCheckinsForListingUseCase _checkinsForListingUseCase;
-  Rx<s.State<List<Visitor>>> _checkedInVisitors = s.State<List<Visitor>>().obs;
-Rx<CheckInsLumpedInputData> _checkInsLumpedInput = CheckInsLumpedInputData().obs;
+  final GetLoginIdUseCase _getLoginIdUseCase;
+  final GetCheckinsForListingUseCase _checkinsForListingUseCase;
+  final Rx<s.State<List<Visitor>>> _checkedInVisitors = s.State<List<Visitor>>().obs;
+final Rx<CheckInsLumpedInputData> _checkInsLumpedInput = CheckInsLumpedInputData().obs;
   CheckinsController(this._getLoginIdUseCase, this._checkinsForListingUseCase);
 
   @override

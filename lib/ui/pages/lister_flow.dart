@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
@@ -61,14 +60,14 @@ class _ListerFlowState extends State<ListerFlow> {
           title: Text(widget.pageTitle ?? ""),
         ),
         body: Obx(() => isLoading()
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(
                   value: null,
                   semanticsLabel: 'Circular progress indicator',
                 ),
               )
             : _loginController.getLoginState().value == true
-                ? (_listerFlowController.getIsListerRegistered() ? widget.body : ListerRegistrationForm())
+                ? (_listerFlowController.getIsListerRegistered() ? widget.body : const ListerRegistrationForm())
                 : SignInContainer()),
       ),
     );

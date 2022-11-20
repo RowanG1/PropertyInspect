@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/ui/controllers/check_in_controller.dart';
@@ -72,15 +71,15 @@ class _CheckinPageState extends State<CheckinPage> {
         visitorFlowController: widget.visitorFlowController,
         visitorRegistrationController: widget.visitorRegistrationController,
         pageTitle: "Check in",
-        body: Obx(() => Center(key: ValueKey('Center'),
+        body: Obx(() => Center(key: const ValueKey('Center'),
             child: widget.checkinController.getIsLoading()
-                ? CircularProgressIndicator(
+                ? const CircularProgressIndicator(
                     value: null,
                     semanticsLabel: 'Circular progress indicator',
                   )
                 : widget.checkinController.isValidConfig()
                     ? ValidCheckinContent()
-                    : Text('Sorry, we encountered a problem.'))));
+                    : const Text('Sorry, we encountered a problem.'))));
   }
 
   @override
@@ -132,9 +131,9 @@ class CheckinContent extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(width: 100,
+            const SizedBox(width: 100,
               child: Padding(
-                padding: const EdgeInsets.all(8),
+                padding: EdgeInsets.all(8),
                 child: Text("Address:", textAlign: TextAlign.end,),
               ),
             ),
@@ -143,7 +142,7 @@ class CheckinContent extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 child: Text(
                   address,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -153,16 +152,16 @@ class CheckinContent extends StatelessWidget {
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(width: 100,
+          const SizedBox(width: 100,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text("Suburb:", textAlign: TextAlign.end,),
             ),
           ),
           SizedBox(width: 100,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(suburb, style: TextStyle(fontWeight: FontWeight.bold)),
+              child: Text(suburb, style: const TextStyle(fontWeight: FontWeight.bold)),
             ),
           ),
         ],
@@ -170,16 +169,16 @@ class CheckinContent extends StatelessWidget {
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(width: 100,
+          const SizedBox(width: 100,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text("Post code:", textAlign: TextAlign.end),
             ),
           ),
           SizedBox(width: 100,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(postCode, style: TextStyle(fontWeight: FontWeight.bold)),
+              child: Text(postCode, style: const TextStyle(fontWeight: FontWeight.bold)),
             ),
           ),
         ],
@@ -187,22 +186,22 @@ class CheckinContent extends StatelessWidget {
       if (!checkedIn)
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 40.0, 0, 0),
-          child: ElevatedButton(key: ValueKey("checkin"),
+          child: ElevatedButton(key: const ValueKey("checkin"),
             onPressed: () {
               // Validate returns true if the form is valid, or false otherwise.
               checkinController.doCheckin();
             },
-            child: Text('Check in'),
+            child: const Text('Check in'),
           ),
         )
       else ...[
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+        const Padding(
+          padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
           child: Text('You have successfully checked in', style: TextStyle(fontWeight: FontWeight.bold), key: ValueKey('Success')),
         ),
-        Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: const Icon(Icons.check_circle_outline_sharp, color: Colors.green, size: 60),
+        const Padding(
+          padding: EdgeInsets.all(30.0),
+          child: Icon(Icons.check_circle_outline_sharp, color: Colors.green, size: 60),
         )
       ]
     ]);

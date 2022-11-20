@@ -22,7 +22,7 @@ import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import 'package:property_inspect/domain/usecase/is_lister_registered_use_case.dart';
 import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 import 'package:property_inspect/domain/usecase/logout_use_case.dart';
-import 'package:property_inspect/ui/controllers/PackageController.dart';
+import 'package:property_inspect/ui/controllers/package_controller.dart';
 import 'package:property_inspect/ui/controllers/lister_flow_controller.dart';
 import 'package:property_inspect/ui/controllers/lister_registration_controller.dart';
 import 'package:property_inspect/ui/controllers/listings_controller.dart';
@@ -82,7 +82,7 @@ void main() {
       doCheckinsExistForListingUseCase = DoCheckinsExistForListingUseCase(checkinRepo);
       deleteListingUseCase = DeleteListingUseCase(listingRepo);
       listingsController = ListingsController(getListingsUseCase, loginIdUseCase, deleteListingUseCase);
-      packageController = MyMockPackageController();
+      packageController = MyMockPackageControllerFactory().make();
 
       when(listingRepo.getListings('345')).thenAnswer(
           (_) => Stream.value([Listing(id: '123', userId: '345', address: '32 Bell', suburb: 'Pyrmont', postCode: '2345', phone: '23456'),

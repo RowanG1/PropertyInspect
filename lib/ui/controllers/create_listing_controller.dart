@@ -11,8 +11,8 @@ import '../../domain/entities/state.dart' as s;
 class CreateListingController extends GetxController {
   final Rx<s.State<bool>> _state = s.State<bool>().obs;
   CreateListingUseCase createListingUseCase;
-  AnalyticsUseCase _analyticsUseCase;
-  GetLoginIdUseCase _getLoginIdUseCase;
+  final AnalyticsUseCase _analyticsUseCase;
+  final GetLoginIdUseCase _getLoginIdUseCase;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   FieldValidation validation = FieldValidation();
 

@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/controllers/view_listing_controller.dart';
@@ -72,7 +70,7 @@ class _ListerFlowState extends State<ListingPage> {
         // This is where you give you custom widget it's data.
         body: Obx(() => Center(
             child: widget.controller.isLoading()
-                ? CircularProgressIndicator(
+                ? const CircularProgressIndicator(
                     value: null,
                     semanticsLabel: 'Circular progress indicator',
                   )
@@ -83,9 +81,9 @@ class _ListerFlowState extends State<ListingPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(width: 100,
+                              const SizedBox(width: 100,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8),
+                                  padding: EdgeInsets.all(8),
                                   child: Text("Address:", textAlign: TextAlign.end,),
                                 ),
                               ),
@@ -94,7 +92,7 @@ class _ListerFlowState extends State<ListingPage> {
                                   padding: const EdgeInsets.all(8),
                                   child: Text(
                                     "${widget.controller.getListing()?.address}",
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style: const TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ),
@@ -104,16 +102,16 @@ class _ListerFlowState extends State<ListingPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(width: 100,
+                            const SizedBox(width: 100,
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(8.0),
                                 child: Text("Suburb:", textAlign: TextAlign.end,),
                               ),
                             ),
                             SizedBox(width: 100,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text("${widget.controller.getListing()?.suburb}", style: TextStyle(fontWeight: FontWeight.bold)),
+                                child: Text("${widget.controller.getListing()?.suburb}", style: const TextStyle(fontWeight: FontWeight.bold)),
                               ),
                             ),
                           ],
@@ -121,16 +119,16 @@ class _ListerFlowState extends State<ListingPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(width: 100,
+                            const SizedBox(width: 100,
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(8.0),
                                 child: Text("Post code:", textAlign: TextAlign.end),
                               ),
                             ),
                             SizedBox(width: 100,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text("${widget.controller.getListing()?.postCode}", style: TextStyle(fontWeight: FontWeight.bold)),
+                                child: Text("${widget.controller.getListing()?.postCode}", style: const TextStyle(fontWeight: FontWeight.bold)),
                               ),
                             ),
                           ],
@@ -152,10 +150,10 @@ class _ListerFlowState extends State<ListingPage> {
                                       Get.toNamed('$route');
                                     }
                                   : null,
-                              child: Align(widthFactor: 1, alignment: Alignment.center, child: const Text("Checkins"))),
+                              child: const Align(widthFactor: 1, alignment: Alignment.center, child: Text("Checkins"))),
                         ),
                       ])
-                    : Text('Sorry, we can\'t find the listing.')))));
+                    : const Text('Sorry, we can\'t find the listing.')))));
   }
 
   @override

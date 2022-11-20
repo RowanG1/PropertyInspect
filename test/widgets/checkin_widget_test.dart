@@ -21,7 +21,7 @@ import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_visitor_use_case.dart';
 import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 import 'package:property_inspect/domain/usecase/logout_use_case.dart';
-import 'package:property_inspect/ui/controllers/PackageController.dart';
+import 'package:property_inspect/ui/controllers/package_controller.dart';
 import 'package:property_inspect/ui/controllers/check_in_controller.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/controllers/test_mode_controller.dart';
@@ -81,7 +81,7 @@ void main() {
       getListingUseCase = GetListingUseCase(listingRepo);
       getVisitorUseCase = GetVisitorUseCase(visitorRegistrationRepo);
       checkinController = CheckinController(checkedInUseCase, loginIdUseCase, doCheckinUseCase, getListingUseCase, getVisitorUseCase, analyticsUseCase);
-      packageController = MyMockPackageController();
+      packageController = MyMockPackageControllerFactory().make();
 
       Get.put(loginController);
       Get.put(packageController);

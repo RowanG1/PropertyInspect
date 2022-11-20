@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_rx/src/rx_workers/rx_workers.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:property_inspect/domain/usecase/get_is_visitor_registerd_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../domain/entities/state.dart' as s;

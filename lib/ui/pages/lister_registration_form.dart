@@ -49,7 +49,7 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
                 child: Text(Constants.listerRegistrationHeading, style: TextStyle(fontSize: Constants.headingSize)),
               ),
               TextFormField(
-                key: ValueKey("name"),
+                key: const ValueKey("name"),
                 controller: controller.nameController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -61,7 +61,7 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
                 },
               ),
               TextFormField(
-                key: ValueKey("lastName"),
+                key: const ValueKey("lastName"),
                 controller: controller.lastNameController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -73,7 +73,7 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
                 },
               ),
               TextFormField(
-                key: ValueKey("phone"),
+                key: const ValueKey("phone"),
                 controller: controller.phoneController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -85,7 +85,7 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
                 },
               ),
               TextFormField(
-                key: ValueKey("email"),
+                key: const ValueKey("email"),
                 controller: controller.emailController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
@@ -100,21 +100,21 @@ class ListerRegistrationFormState extends State<ListerRegistrationForm> {
                 padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: Row(
                   children: [
-                    Text('Accept'),
+                    const Text('Accept'),
                     TextButton(
-                      child: Text('privacy policy'),
+                      child: const Text('privacy policy'),
                       onPressed: () {
                         Get.toNamed(Constants.privacyPolicyRouteKey);
                       },
                     ),
-                    CheckboxFormField(key: ValueKey('checkbox'), validator: controller.getCheckboxValidator()),
+                    CheckboxFormField(key: const ValueKey('checkbox'), validator: controller.getCheckboxValidator()),
                   ],
                 ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: Constants.largePadding),
                 child: ElevatedButton(
-                  key: ValueKey("submit"),
+                  key: const ValueKey("submit"),
                   onPressed: () {
                     // Validate returns true if the form is valid, or false otherwise.
                     if (_formKey.currentState!.validate()) {

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/ui/controllers/create_listing_controller.dart';
@@ -10,9 +9,9 @@ import '../controllers/login_controller.dart';
 import 'lister_flow.dart';
 
 class CreateListingPage extends StatefulWidget {
-  CreateListingController createListingController;
-  AnalyticsUseCase analyticsUseCase;
-  LoginController loginController;
+  final CreateListingController createListingController;
+  final AnalyticsUseCase analyticsUseCase;
+  final LoginController loginController;
   final ListerRegistrationController listerRegistrationController;
   final ListerFlowController listerFlowController;
 
@@ -56,11 +55,11 @@ class _CreateListingPageState extends State<CreateListingPage> {
       // This is where you give you custom widget it's data.
       body: Center(
         child: Obx(() => widget.createListingController.getIsLoading()
-            ? CircularProgressIndicator(
+            ? const CircularProgressIndicator(
                 value: null,
                 semanticsLabel: 'Circular progress indicator',
               )
-            : CreateListingForm()),
+            : const CreateListingForm()),
       ),
     );
   }
