@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_cast
+
 import 'dart:async';
 
 import 'package:get/get.dart';
@@ -9,7 +11,7 @@ import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
 import '../../domain/entities/state.dart' as s;
 import '../../domain/usecase/get_login_id_use_case.dart';
-import 'package:rxdart/rxdart.dart' as RxRaw;
+import 'package:rxdart/rxdart.dart' as rx_raw;
 
 class ViewListingController extends GetxController {
   final Rx<String?> _propertyId = (null as String?).obs;
@@ -38,7 +40,7 @@ class ViewListingController extends GetxController {
 
     final propertyIdStream = _propertyId.stream.asBroadcastStream();
 
-    final lumpedCheckinsExistData = RxRaw.Rx.combineLatest2(loginIdStream, propertyIdStream, (loginId, propertyId) {
+    final lumpedCheckinsExistData = rx_raw.Rx.combineLatest2(loginIdStream, propertyIdStream, (loginId, propertyId) {
       return CheckinsExistLumpedInput(propertyId, loginId.value);
     }).asBroadcastStream();
 

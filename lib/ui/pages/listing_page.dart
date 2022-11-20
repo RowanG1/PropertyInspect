@@ -11,7 +11,7 @@ import '../controllers/lister_registration_controller.dart';
 
 class ListingPage extends StatefulWidget {
   final ViewListingController controller;
-  AnalyticsUseCase analyticsUseCase;
+  final AnalyticsUseCase analyticsUseCase;
   final ListerRegistrationController listerRegistrationController;
   final ListerFlowController listerFlowController;
 

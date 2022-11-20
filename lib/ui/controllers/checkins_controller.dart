@@ -4,7 +4,7 @@ import '../../data/types/optional.dart';
 import '../../domain/entities/state.dart' as s;
 import '../../domain/entities/visitor.dart';
 import '../../domain/usecase/get_login_id_use_case.dart';
-import 'package:rxdart/rxdart.dart' as RxRaw;
+import 'package:rxdart/rxdart.dart' as rx_raw;
 
 class CheckinsController extends GetxController {
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
@@ -20,7 +20,7 @@ final Rx<CheckInsLumpedInputData> _checkInsLumpedInput = CheckInsLumpedInputData
     super.onInit();
     _userId.bindStream(_getLoginIdUseCase.execute());
 
-    final lumpedStream = RxRaw.Rx.combineLatest2(_userId.stream, _listingId.stream,
+    final lumpedStream = rx_raw.Rx.combineLatest2(_userId.stream, _listingId.stream,
             (a, b)
     => CheckInsLumpedInputData(userId: a.value, listingId: b.value));
 

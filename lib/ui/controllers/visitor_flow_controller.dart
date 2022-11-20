@@ -9,6 +9,7 @@ class VisitorFlowController extends GetxController {
   final GetLoginIdUseCase _loginIdUseCase;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final GetIsVisitorRegisteredUseCase _isVisitorRegisteredUseCase;
+  // ignore: unnecessary_cast
   final Rx<String?> currentPage = (null as String?).obs;
 
   VisitorFlowController(this._isVisitorRegisteredUseCase, this._loginIdUseCase);

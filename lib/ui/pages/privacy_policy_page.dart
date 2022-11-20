@@ -27,6 +27,8 @@ info@property-checkin.com.au
 All your personal information will reside in Australia using a secure cloud provider.
 """;
 
+  const PrivacyPolicyPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return UnauthenticatedPage(

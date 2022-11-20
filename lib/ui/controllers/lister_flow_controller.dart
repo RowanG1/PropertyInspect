@@ -11,6 +11,7 @@ class ListerFlowController extends GetxController {
   final GetLoginIdUseCase _loginIdUseCase;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final IsListerRegisteredUseCase _isListerRegisteredUseCase;
+  // ignore: unnecessary_cast
   final Rx<String?> currentPage = (null as String?).obs;
 
   ListerFlowController(this._isListerRegisteredUseCase, this._loginIdUseCase);

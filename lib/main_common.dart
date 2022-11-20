@@ -98,7 +98,7 @@ class MyApp extends StatelessWidget {
                 listerRegistrationController: ListerRegistrationControllerFactory().make(),
                 listerFlowController: ListerFlowControllerFactory().make(),
                 analyticsUseCase: AnalyticsUseCaseFactory().make())),
-        GetPage(name: Constants.privacyPolicyRouteKey, page: () => PrivacyPolicyPage()),
+        GetPage(name: Constants.privacyPolicyRouteKey, page: () => const PrivacyPolicyPage()),
       ],
     );
   }

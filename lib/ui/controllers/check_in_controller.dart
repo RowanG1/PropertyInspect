@@ -11,7 +11,7 @@ import '../../domain/entities/state.dart' as s;
 import '../../domain/usecase/checked_in_use_case.dart';
 import '../../domain/usecase/do_checkin_use_case.dart';
 import '../../domain/usecase/get_visitor_use_case.dart';
-import 'package:rxdart/rxdart.dart' as RxRaw;
+import 'package:rxdart/rxdart.dart' as rx_raw;
 
 class CheckinController extends GetxController {
   final CheckedInUseCase _isCheckedInUseCase;
@@ -21,6 +21,7 @@ class CheckinController extends GetxController {
   final GetVisitorUseCase _getVisitorUseCase;
   final AnalyticsUseCase _analyticsUseCase;
 
+  // ignore: unnecessary_cast
   final Rx<String?> _propertyId = (null as String?).obs;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<s.State<bool>> _checkInState = s.State<bool>().obs;
@@ -30,6 +31,7 @@ class CheckinController extends GetxController {
   final Rx<CheckinLumpedInputData> _checkinCombinedInputs =
       CheckinLumpedInputData().obs;
   final Rx<GetPropertyLumpedInputData?> _lumpedPropertyInputs =
+      // ignore: unnecessary_cast
       (null as GetPropertyLumpedInputData?).obs;
 
   StreamSubscription? getPropertySub;
@@ -57,7 +59,7 @@ class CheckinController extends GetxController {
     });
 
     final propertyIdStream = _propertyId.stream;
-    final lumpedPropertyInputStream = RxRaw.Rx.combineLatest2(
+    final lumpedPropertyInputStream = rx_raw.Rx.combineLatest2(
         propertyIdStream, loginIdStream, (propertyId, loginId) {
       return GetPropertyLumpedInputData(
           propertyId: propertyId, userId: loginId.value);
@@ -79,7 +81,7 @@ class CheckinController extends GetxController {
       }
     });
 
-    final combinedCheckinInputs = RxRaw.Rx.combineLatest3(
+    final combinedCheckinInputs = rx_raw.Rx.combineLatest3(
         _propertyState.stream, _getVisitorState.stream, _userId.stream,
         (property, visitor, userId) {
       return CheckinLumpedInputData(

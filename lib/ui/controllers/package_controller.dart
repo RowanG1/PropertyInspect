@@ -3,6 +3,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:property_inspect/domain/usecase/get_packageinfo_use_case.dart';
 
 class PackageController extends GetxController {
+  // ignore: unnecessary_cast
   final Rx<PackageInfo?> _packageInfo = (null as PackageInfo?).obs;
   final GetPackageInfoUseCase _packageInfoUseCase;
 

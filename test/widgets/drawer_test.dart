@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:property_inspect/domain/repository/analytics_repo.dart';
 import 'package:property_inspect/domain/repository/logout_repo.dart';
 import 'package:property_inspect/domain/repository/package_repo.dart';
@@ -23,14 +22,6 @@ void main() {
   // to work with. The WidgetTester allows building and interacting
   // with widgets in the test environment.
   TestWidgetsFlutterBinding.ensureInitialized();
-
-  Future<PackageInfo> getPackageInfo() {
-    final packageInfo = PackageInfo(appName: "Good", version: '23',
-        buildNumber: '43',
-        packageName:
-        "MyPackage");
-    return Future<PackageInfo>.value(packageInfo);
-  }
 
   testWidgets('Checkin shows checkin button for new visitor.', (tester) async {
     FlutterError.onError = ignoreOverflowErrors;

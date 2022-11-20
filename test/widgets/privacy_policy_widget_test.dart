@@ -37,7 +37,7 @@ void main() {
     Get.put(controller);
     Get.put<PackageController>(packageController);
 
-    await tester.pumpWidget(GetMaterialApp(home: PrivacyPolicyPage()));
+    await tester.pumpWidget(const GetMaterialApp(home: PrivacyPolicyPage()));
     final policyFinder = find.textContaining('secure');
     expect(policyFinder, findsOneWidget);
   });

@@ -12,7 +12,6 @@ import 'package:property_inspect/domain/repository/logout_repo.dart';
 import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
 import 'package:property_inspect/domain/usecase/create_lister_registration.dart';
 import 'package:property_inspect/domain/usecase/delete_listing_use_case.dart';
-import 'package:property_inspect/domain/usecase/do_checkins_exist_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_listings_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import 'package:property_inspect/domain/usecase/is_lister_registered_use_case.dart';
@@ -28,7 +27,6 @@ import 'package:property_inspect/ui/pages/listings_page.dart';
 import 'package:property_inspect/ui/pages/unauthenticated_page.dart';
 import '../login_registration_mock.dart';
 import '../login_repo_mock.dart';
-import 'checkin_repo_mock.dart';
 import 'listing_widget_test.mocks.dart';
 import 'mock_package_controller.dart';
 
@@ -50,10 +48,8 @@ void main() {
     late CreateListerRegistrationUseCase createListerRegistrationUseCase;
     late GetListingsUseCase getListingsUseCase;
     late ListingRepo listingRepo;
-    late DoCheckinsExistForListingUseCase doCheckinsExistForListingUseCase;
     late DeleteListingUseCase deleteListingUseCase;
     late ListingsController listingsController;
-    late CheckinRepoMock checkinRepo;
     late PackageController packageController;
 
     setUp(() {
@@ -72,8 +68,6 @@ void main() {
       listerRegistrationController = ListerRegistrationController(createListerRegistrationUseCase, loginIdUseCase, analyticsUseCase);
       listingRepo = MockListingRepo();
       getListingsUseCase = GetListingsUseCase(listingRepo);
-      checkinRepo = CheckinRepoMock();
-      doCheckinsExistForListingUseCase = DoCheckinsExistForListingUseCase(checkinRepo);
       deleteListingUseCase = DeleteListingUseCase(listingRepo);
       listingsController = ListingsController(getListingsUseCase, loginIdUseCase, deleteListingUseCase);
       packageController = MyMockPackageControllerFactory().make();

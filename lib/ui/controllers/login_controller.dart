@@ -10,6 +10,7 @@ class LoginController extends GetxController {
   final AnalyticsUseCase _analyticsUseCase;
 
   String? loginCompletionGoToRoute;
+  // ignore: unnecessary_cast
   final Rx<bool?> _loginState = (null as bool?).obs;
 
   LoginController(

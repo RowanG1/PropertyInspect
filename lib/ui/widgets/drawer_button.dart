@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class DrawerButton extends StatelessWidget {
   final IconData iconData;
-  Function()? onPressed;
-  String label;
-  DrawerButton(
+  final Function()? onPressed;
+  final String label;
+  const DrawerButton(
       {Key? key, required this.iconData, this.onPressed, required this.label})
       : super(key: key);
 

@@ -26,7 +26,6 @@ import 'package:property_inspect/ui/controllers/test_mode_controller.dart';
 import 'package:property_inspect/ui/controllers/view_listing_controller.dart';
 import 'package:property_inspect/ui/pages/listing_page.dart';
 import 'package:property_inspect/ui/pages/unauthenticated_page.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 import '../login_registration_mock.dart';
 import '../login_repo_mock.dart';
 import 'checkin_repo_mock.dart';
@@ -81,7 +80,6 @@ void main() {
       when(listingRepo.getListing('123')).thenAnswer(
           (_) => Stream.value(Listing(id: '123', userId: '23', address: '32 Bell', suburb: 'Pyrmont', postCode: '2345', phone: '23456')));
 
-      VisibilityDetectorController.instance.updateInterval = Duration.zero;
     });
 
     testWidgets('Show listing', (tester) async {

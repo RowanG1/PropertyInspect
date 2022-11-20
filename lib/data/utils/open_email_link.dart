@@ -5,6 +5,7 @@ class EmailLink {
     final mailUrl = 'mailto:$email';
     try {
       await launchUrl(Uri.parse(mailUrl));
+    // ignore: empty_catches
     } catch (e) {}
   }
 }

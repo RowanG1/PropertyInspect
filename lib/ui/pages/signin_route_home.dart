@@ -13,7 +13,7 @@ class SignInRouteHome extends StatelessWidget {
 
   SignInRouteHome({Key? key}) : super(key: key);
 
-  late StreamSubscription<bool?> loggedInListener;
+  late final StreamSubscription<bool?> loggedInListener;
 
   @override
   Widget build(BuildContext context) {
