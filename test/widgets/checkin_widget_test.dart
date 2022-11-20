@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:property_inspect/domain/constants.dart';
@@ -94,12 +93,12 @@ void main() {
 
     testWidgets('show checkin page.', (tester) async {
       // Due to submit button being off-page, make the size of the test screen larger.
-      tester.binding.window.physicalSizeTestValue = Size(3000, 1800);
+      tester.binding.window.physicalSizeTestValue = const Size(3000, 1800);
       addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
 
       await tester.pumpWidget(GetMaterialApp(initialRoute: Constants.homeRoute,
           getPages: [
-          GetPage(name: Constants.homeRoute, page: () => UnauthenticatedPage(
+          GetPage(name: Constants.homeRoute, page: () => const UnauthenticatedPage(
             body: Text('Home page for test'),
           )),
           GetPage(name: Constants.checkinRoute, page: () => CheckinPage(
@@ -112,7 +111,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      Get.toNamed(Constants.checkinBaseRoute+'/123');
+      Get.toNamed('${Constants.checkinBaseRoute}/123');
 
       await tester.pumpAndSettle();
 
@@ -129,38 +128,38 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      final nameFind = find.byKey(ValueKey("name"));
+      final nameFind = find.byKey(const ValueKey("name"));
       await tester.enterText(nameFind, "Rowan");
 
-      final lastNameFind = find.byKey(ValueKey("lastName"));
+      final lastNameFind = find.byKey(const ValueKey("lastName"));
       await tester.enterText(lastNameFind, "Gont");
 
-      final phoneFind = find.byKey(ValueKey("phone"));
+      final phoneFind = find.byKey(const ValueKey("phone"));
       await tester.enterText(phoneFind, "3435678");
 
-      final emailFind = find.byKey(ValueKey("email"));
+      final emailFind = find.byKey(const ValueKey("email"));
       await tester.enterText(emailFind, "rgon@gmail.com");
 
-      final suburbFind = find.byKey(ValueKey("suburb"));
+      final suburbFind = find.byKey(const ValueKey("suburb"));
       await tester.enterText(suburbFind, "Pyrmont");
 
-      final checkboxFind = find.byKey(ValueKey("checkbox"));
+      final checkboxFind = find.byKey(const ValueKey("checkbox"));
       await tester.tap(checkboxFind);
 
-      final submitFind = find.byKey(ValueKey("submit"));
+      final submitFind = find.byKey(const ValueKey("submit"));
       await tester.tap(submitFind);
 
       await tester.pumpAndSettle();
 
       // Now checkin
 
-      final checkinFind = find.byKey(ValueKey("checkin"));
+      final checkinFind = find.byKey(const ValueKey("checkin"));
       expect(checkinFind, findsOneWidget);
 
       await tester.tap(checkinFind);
       await tester.pumpAndSettle();
 
-      final successFind = find.byKey(ValueKey("Success"));
+      final successFind = find.byKey(const ValueKey("Success"));
       expect(successFind, findsOneWidget);
 
     });

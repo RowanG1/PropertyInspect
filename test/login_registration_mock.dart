@@ -1,11 +1,9 @@
-import 'package:property_inspect/data/types/optional.dart';
 import 'package:property_inspect/domain/entities/lister.dart';
 import 'package:property_inspect/domain/repository/lister_registration_repo.dart';
-import 'package:property_inspect/domain/repository/login_repo.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ListerRegistrationRepoTest implements ListerRegistrationRepo {
-  BehaviorSubject<bool> _isRegistered = BehaviorSubject<bool>.seeded(false);
+  final BehaviorSubject<bool> _isRegistered = BehaviorSubject<bool>.seeded(false);
 
   setIsRegistered(bool value) {
     _isRegistered.value = value;

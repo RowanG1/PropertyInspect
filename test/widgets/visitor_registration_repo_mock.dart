@@ -3,7 +3,7 @@ import 'package:property_inspect/domain/repository/visitor_registration_repo.dar
 import 'package:rxdart/rxdart.dart';
 
 class VisitorRegistrationRepoMock extends VisitorRegistrationRepo {
-  BehaviorSubject<bool> _isRegistered = BehaviorSubject.seeded(false);
+  final BehaviorSubject<bool> _isRegistered = BehaviorSubject.seeded(false);
 
   @override
   void createVisitorRegistration(Visitor visitor) {

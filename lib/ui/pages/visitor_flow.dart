@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/data/di/controllers_factories.dart';
 import 'package:property_inspect/ui/controllers/visitor_registration_controller.dart';
 import 'package:property_inspect/ui/pages/signin_container.dart';
 import 'package:property_inspect/ui/pages/visitor_registration_form.dart';
@@ -18,7 +16,7 @@ class VisitorFlow extends StatefulWidget {
   final LoginController loginController;
   final AnalyticsUseCase analyticsUseCase;
 
-  VisitorFlow({required this.body, this.pageTitle, required this.visitorFlowController, required this.visitorRegistrationController, required this
+  const VisitorFlow({required this.body, this.pageTitle, required this.visitorFlowController, required this.visitorRegistrationController, required this
       .loginController, required this.analyticsUseCase, Key? key}) :
         super(key: key);
 
@@ -59,15 +57,15 @@ class _VisitorFlowState extends State<VisitorFlow> {
         appBar: AppBar(title: Text(widget.pageTitle ?? "")),
         body: Obx(
           () => isLoading()
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(
                     value: null,
                     semanticsLabel: 'Circular progress indicator',
                   ),
                 )
               : widget.loginController.getLoginState().value == true
-                  ? (widget.visitorFlowController.getIsVisitorRegistered() ? widget.body : VisitorRegistrationForm())
-                  : SignInContainer(),
+                  ? (widget.visitorFlowController.getIsVisitorRegistered() ? widget.body : const VisitorRegistrationForm())
+                  : const SignInContainer(),
         ),
       ),
     );

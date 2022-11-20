@@ -147,7 +147,7 @@ class _ListerFlowState extends State<ListingPage> {
                               onPressed: widget.controller.doCheckinsExist()
                                   ? () {
                                       final route = '${Constants.checkinsBaseRoute}/${widget.controller.getPropertyId()}';
-                                      Get.toNamed('$route');
+                                      Get.toNamed(route);
                                     }
                                   : null,
                               child: const Align(widthFactor: 1, alignment: Alignment.center, child: Text("Checkins"))),

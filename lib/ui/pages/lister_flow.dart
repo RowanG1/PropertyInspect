@@ -68,7 +68,7 @@ class _ListerFlowState extends State<ListerFlow> {
               )
             : _loginController.getLoginState().value == true
                 ? (_listerFlowController.getIsListerRegistered() ? widget.body : const ListerRegistrationForm())
-                : SignInContainer()),
+                : const SignInContainer()),
       ),
     );
   }

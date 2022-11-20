@@ -72,7 +72,7 @@ void main() {
       Get.put(packageController);
       Get.put(TestModeController(isTestMode: true));
 
-      await tester.pumpWidget(GetMaterialApp(
+      await tester.pumpWidget(const GetMaterialApp(
           home: UnauthenticatedPage(
         body: Text('Home page for test'),
       )));
@@ -99,22 +99,22 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      final nameFind = find.byKey(ValueKey("name"));
+      final nameFind = find.byKey(const ValueKey("name"));
       await tester.enterText(nameFind, "Rowan");
 
-      final lastNameFind = find.byKey(ValueKey("lastName"));
+      final lastNameFind = find.byKey(const ValueKey("lastName"));
       await tester.enterText(lastNameFind, "Gont");
 
-      final phoneFind = find.byKey(ValueKey("phone"));
+      final phoneFind = find.byKey(const ValueKey("phone"));
       await tester.enterText(phoneFind, "3435678");
 
-      final emailFind = find.byKey(ValueKey("email"));
+      final emailFind = find.byKey(const ValueKey("email"));
       await tester.enterText(emailFind, "rgon@gmail.com");
 
-      final checkboxFind = find.byKey(ValueKey("checkbox"));
+      final checkboxFind = find.byKey(const ValueKey("checkbox"));
       await tester.tap(checkboxFind);
 
-      final submitFind = find.byKey(ValueKey("submit"));
+      final submitFind = find.byKey(const ValueKey("submit"));
 
       await tester.tap(submitFind);
 
@@ -125,13 +125,13 @@ void main() {
       final createListingFinder = find.textContaining('listing form');
       expect(createListingFinder, findsOneWidget);
 
-      final addressFind = find.byKey(ValueKey("address"));
+      final addressFind = find.byKey(const ValueKey("address"));
       await tester.enterText(addressFind, "12 Willingdon St.");
 
-      final suburbFind = find.byKey(ValueKey("suburb"));
+      final suburbFind = find.byKey(const ValueKey("suburb"));
       await tester.enterText(suburbFind, "Pyrmont");
 
-      final postCodeFind = find.byKey(ValueKey("postCode"));
+      final postCodeFind = find.byKey(const ValueKey("postCode"));
       await tester.enterText(postCodeFind, "2009");
 
       await tester.enterText(phoneFind, "3435678");

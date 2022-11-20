@@ -9,7 +9,7 @@ import 'mock_package_controller.mocks.dart';
 
 @GenerateMocks([PackageInfoRepo])
 class MyMockPackageControllerFactory {
-  Rx<PackageInfo?> _packageInfo = PackageInfo(appName: "Good", version: '23', buildNumber: '43', packageName: "MyPackage").obs;
+  final Rx<PackageInfo?> _packageInfo = PackageInfo(appName: "Good", version: '23', buildNumber: '43', packageName: "MyPackage").obs;
 
   Future<PackageInfo> _getPackageInfo() {
     final packageInfo = PackageInfo(appName: "Good", version: '23',

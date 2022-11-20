@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CenterHorizontal extends StatelessWidget {
 
-  CenterHorizontal({required this.child});
+  const CenterHorizontal({required this.child});
   final Widget child;
 
   @override

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:mockito/mockito.dart';
@@ -93,7 +92,7 @@ void main() {
       await tester.pumpWidget(GetMaterialApp(initialRoute: Constants.homeRoute, getPages: [
         GetPage(
             name: Constants.homeRoute,
-            page: () => UnauthenticatedPage(
+            page: () => const UnauthenticatedPage(
                   body: Text('Home page for test'),
                 )),
         GetPage(
@@ -105,7 +104,7 @@ void main() {
                 listerRegistrationController: listerRegistrationController))
       ]));
 
-      Get.toNamed(Constants.listingBaseRoute + '/123');
+      Get.toNamed('${Constants.listingBaseRoute}/123');
 
       await tester.pumpAndSettle();
 

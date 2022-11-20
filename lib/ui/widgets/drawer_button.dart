@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DrawerButton extends StatelessWidget {
@@ -14,7 +13,7 @@ class DrawerButton extends StatelessWidget {
     return GestureDetector(onTap: () { onPressed?.call(); },
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(3)),
+          borderRadius: const BorderRadius.all(Radius.circular(3)),
           border: Border.all(color: Colors.black12),
           color: Colors.white,
         ),
@@ -22,7 +21,7 @@ class DrawerButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min,
-            children: [Text(label, style: TextStyle(color: Colors.blue, fontSize: 11, fontFamily: "Arial"),)],
+            children: [Text(label, style: const TextStyle(color: Colors.blue, fontSize: 11, fontFamily: "Arial"),)],
           ),
         ),
       ),

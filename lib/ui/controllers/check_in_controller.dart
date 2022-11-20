@@ -164,8 +164,7 @@ class CheckinController extends GetxController {
   }
 
   bool isValidConfig() {
-    return _propertyId != null &&
-        _propertyState.value.content != null &&
+    return _propertyState.value.content != null &&
         _getVisitorState.value.content != null;
   }
 

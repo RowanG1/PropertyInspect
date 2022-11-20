@@ -3,20 +3,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/mockito.dart';
 import 'package:property_inspect/domain/constants.dart';
-import 'package:property_inspect/domain/entities/lister.dart';
 import 'package:property_inspect/domain/entities/listing.dart';
 import 'package:property_inspect/domain/repository/analytics_repo.dart';
-import 'package:property_inspect/domain/repository/lister_registration_repo.dart';
 import 'package:property_inspect/domain/repository/listing_repo.dart';
 import 'package:property_inspect/domain/repository/login_repo.dart';
 import 'package:mockito/annotations.dart';
 import 'package:property_inspect/domain/repository/logout_repo.dart';
 import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
 import 'package:property_inspect/domain/usecase/create_lister_registration.dart';
-import 'package:property_inspect/domain/usecase/create_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/delete_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/do_checkins_exist_use_case.dart';
-import 'package:property_inspect/domain/usecase/get_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_listings_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import 'package:property_inspect/domain/usecase/is_lister_registered_use_case.dart';
@@ -28,8 +24,6 @@ import 'package:property_inspect/ui/controllers/lister_registration_controller.d
 import 'package:property_inspect/ui/controllers/listings_controller.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/ui/controllers/test_mode_controller.dart';
-import 'package:property_inspect/ui/controllers/view_listing_controller.dart';
-import 'package:property_inspect/ui/pages/listing_page.dart';
 import 'package:property_inspect/ui/pages/listings_page.dart';
 import 'package:property_inspect/ui/pages/unauthenticated_page.dart';
 import '../login_registration_mock.dart';
@@ -98,7 +92,7 @@ void main() {
       await tester.pumpWidget(GetMaterialApp(initialRoute: Constants.homeRoute, getPages: [
         GetPage(
             name: Constants.homeRoute,
-            page: () => UnauthenticatedPage(
+            page: () => const UnauthenticatedPage(
                   body: Text('Home page for test'),
                 )),
         GetPage(
@@ -110,7 +104,7 @@ void main() {
                 listerRegistrationController: listerRegistrationController)),
         GetPage(
             name: Constants.listingRoute,
-            page: () => UnauthenticatedPage(
+            page: () => const UnauthenticatedPage(
               body: Text('Listing page for test'),
             ))
       ]));
@@ -140,7 +134,7 @@ void main() {
       final suburb2PageFinder = find.textContaining('Richmond');
       expect(suburb2PageFinder, findsOneWidget);
 
-      final viewBtn1Find = find.byKey(ValueKey("view_btn_1"));
+      final viewBtn1Find = find.byKey(const ValueKey("view_btn_1"));
       await tester.tap(viewBtn1Find);
 
       expect(Get.currentRoute, equals('${Constants.listingBaseRoute}/124'));

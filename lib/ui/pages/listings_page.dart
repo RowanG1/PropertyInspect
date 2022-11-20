@@ -81,8 +81,8 @@ class _ListingsPageState extends State<ListingsPage> {
                       padding: const EdgeInsets.fromLTRB(0, 30, 0, 20),
                       child: ElevatedButton(
                           onPressed: () {
-                            const route = '${Constants.createListingRoute}';
-                            Get.toNamed('$route');
+                            const route = Constants.createListingRoute;
+                            Get.toNamed(route);
                           },
                           child: const Text("Create Listing")),
                     ),
@@ -122,9 +122,9 @@ class _ListingsPageState extends State<ListingsPage> {
             children: <Widget>[
               Row(
                 children: [
-                  Container(
+                  const SizedBox(
                     width: 70,
-                    child: const Padding(
+                    child: Padding(
                       padding: EdgeInsets.fromLTRB(0.0, 0, 0, 8),
                       child: Text('Address:', textAlign: TextAlign.start),
                     ),
@@ -132,7 +132,7 @@ class _ListingsPageState extends State<ListingsPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 8),
                     child: Text(
-                      '${item.address}',
+                      item.address,
                       textAlign: TextAlign.start,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
@@ -141,9 +141,9 @@ class _ListingsPageState extends State<ListingsPage> {
               ),
               Row(
                 children: [
-                  Container(
+                  const SizedBox(
                     width: 70,
-                    child: const Padding(
+                    child: Padding(
                       padding: EdgeInsets.fromLTRB(0.0, 0, 0, 8),
                       child: Text('Suburb:', textAlign: TextAlign.start),
                     ),
@@ -151,7 +151,7 @@ class _ListingsPageState extends State<ListingsPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 8),
                     child: Text(
-                      '${item.suburb}',
+                      item.suburb,
                       textAlign: TextAlign.start,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
@@ -166,7 +166,7 @@ class _ListingsPageState extends State<ListingsPage> {
                     GestureDetector(key: ValueKey("view_btn_$index"),onTap: () {
                       final route =
                           '${Constants.listingBaseRoute}/${item.id}';
-                      Get.toNamed('$route');
+                      Get.toNamed(route);
                     },
                       child: Container(
                         decoration: BoxDecoration(

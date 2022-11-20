@@ -83,7 +83,7 @@ class _CheckinsPageState extends State<CheckinsPage> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(10)),
-          border: new Border.all(color: Colors.black45),
+          border: Border.all(color: Colors.black45),
           color: Colors.white,
         ),
         child: Padding(
@@ -122,7 +122,7 @@ class _CheckinsPageState extends State<CheckinsPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 8),
                     child: Text(
-                      '${item.lastName}',
+                      item.lastName,
                       textAlign: TextAlign.start,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
