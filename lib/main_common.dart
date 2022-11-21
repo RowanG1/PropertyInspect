@@ -10,7 +10,6 @@ import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
 import 'package:property_inspect/domain/usecase/logout_use_case.dart';
 import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
-import 'package:property_inspect/ui/controllers/test_mode_controller.dart';
 import 'package:property_inspect/ui/pages/checkin_page.dart';
 import 'package:property_inspect/ui/pages/checkins_page.dart';
 import 'package:property_inspect/ui/pages/create_listing_page.dart';
@@ -32,7 +31,6 @@ mainSetup() async {
   commonFirebaseUISetup();
   initLoginController();
   Get.put(PackageControllerFactory().make());
-  Get.put(TestModeController());
   Get.put(LoggerFactory().make());
   runApp(const MyApp());
 }

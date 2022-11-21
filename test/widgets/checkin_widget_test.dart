@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:property_inspect/data/types/env.dart';
 import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/domain/entities/listing.dart';
 import 'package:property_inspect/domain/repository/analytics_repo.dart';
@@ -23,7 +24,6 @@ import 'package:property_inspect/domain/usecase/logout_use_case.dart';
 import 'package:property_inspect/ui/controllers/package_controller.dart';
 import 'package:property_inspect/ui/controllers/check_in_controller.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
-import 'package:property_inspect/ui/controllers/test_mode_controller.dart';
 import 'package:property_inspect/ui/controllers/visitor_flow_controller.dart';
 import 'package:property_inspect/ui/controllers/visitor_registration_controller.dart';
 import 'package:property_inspect/ui/pages/checkin_page.dart';
@@ -84,7 +84,7 @@ void main() {
 
       Get.put(loginController);
       Get.put(packageController);
-      Get.put(TestModeController(isTestMode: true));
+      Get.put(Env(appTitle: "Title", env: Constants.unitTestEnv));
 
       when(listingRepo.getListing('123')).
       thenAnswer((_) => Stream.value(Listing(id: '123',userId: '23', address: '32 Bell', suburb: 'Pyrmont', postCode:

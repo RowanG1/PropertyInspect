@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/mockito.dart';
+import 'package:property_inspect/data/types/env.dart';
 import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/domain/entities/listing.dart';
 import 'package:property_inspect/domain/repository/analytics_repo.dart';
@@ -22,7 +23,6 @@ import 'package:property_inspect/ui/controllers/lister_flow_controller.dart';
 import 'package:property_inspect/ui/controllers/lister_registration_controller.dart';
 import 'package:property_inspect/ui/controllers/listings_controller.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
-import 'package:property_inspect/ui/controllers/test_mode_controller.dart';
 import 'package:property_inspect/ui/pages/listings_page.dart';
 import 'package:property_inspect/ui/pages/unauthenticated_page.dart';
 import '../login_registration_mock.dart';
@@ -81,7 +81,7 @@ void main() {
     testWidgets('Show listings page.', (tester) async {
       Get.put(loginController);
       Get.put(packageController);
-      Get.put(TestModeController(isTestMode: true));
+      Get.put(Env(appTitle: "Title", env: Constants.unitTestEnv));
 
       await tester.pumpWidget(GetMaterialApp(initialRoute: Constants.homeRoute, getPages: [
         GetPage(

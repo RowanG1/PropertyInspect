@@ -1,4 +1,7 @@
 class Constants {
+  // Environment
+  static const unitTestEnv = "unitTest";
+
   static const loggedInAnalytics = "logged_in";
 
   //Routing
