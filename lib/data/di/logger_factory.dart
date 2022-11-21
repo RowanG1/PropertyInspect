@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import '../../domain/constants.dart';
 import '../types/env.dart';
 
 class LoggerFactory {
@@ -26,6 +27,6 @@ class MyFilter extends LogFilter {
   @override
   bool shouldLog(LogEvent event) {
     final Env env = Get.find();
-    return env.env == "staging";
+    return env.env == Constants.stagingEnv;
   }
 }

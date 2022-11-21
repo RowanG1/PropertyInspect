@@ -1,5 +1,7 @@
 class Constants {
   // Environment
+  static const stagingEnv = "staging";
+  static const prodEnv = "prod";
   static const unitTestEnv = "unitTest";
 
   static const loggedInAnalytics = "logged_in";
