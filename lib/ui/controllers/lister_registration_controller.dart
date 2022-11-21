@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/domain/entities/state.dart' as s;
+import 'package:property_inspect/data/types/state.dart' as s;
 import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
 import 'package:property_inspect/domain/usecase/create_lister_registration.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';

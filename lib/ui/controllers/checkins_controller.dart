@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:property_inspect/domain/usecase/get_checkins_for_listing_use_case.dart';
 import '../../data/types/optional.dart';
-import '../../domain/entities/state.dart' as s;
+import '../../data/types/state.dart' as s;
 import '../../domain/entities/visitor.dart';
 import '../../domain/usecase/get_login_id_use_case.dart';
 import 'package:rxdart/rxdart.dart' as rx_raw;

@@ -6,7 +6,7 @@ import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../domain/usecase/analytics_use_case.dart';
 import '../../data/utils/field_validation.dart';
-import '../../domain/entities/state.dart' as s;
+import '../../data/types/state.dart' as s;
 
 class CreateListingController extends GetxController {
   final Rx<s.State<bool>> _state = s.State<bool>().obs;

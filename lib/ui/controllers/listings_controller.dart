@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:property_inspect/domain/usecase/delete_listing_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../domain/entities/listing.dart';
-import '../../domain/entities/state.dart' as s;
+import '../../data/types/state.dart' as s;
 import '../../domain/usecase/get_listings_use_case.dart';
 import '../../domain/usecase/get_login_id_use_case.dart';
 

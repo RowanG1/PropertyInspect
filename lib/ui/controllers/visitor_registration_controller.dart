@@ -6,7 +6,7 @@ import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../domain/usecase/create_visitor_registration_use_case.dart';
 import '../../data/utils/field_validation.dart';
-import 'package:property_inspect/domain/entities/state.dart' as s;
+import 'package:property_inspect/data/types/state.dart' as s;
 
 class VisitorRegistrationController extends GetxController {
   CreateVisitorRegistrationUseCase visitorRegistration;

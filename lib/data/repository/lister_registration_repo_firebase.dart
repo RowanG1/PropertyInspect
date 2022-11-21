@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:property_inspect/data/dto/lister_mapper.dart';
 import 'package:property_inspect/domain/entities/lister.dart';
 import 'package:property_inspect/domain/repository/lister_registration_repo.dart';
+import '../data_mappers/lister_mapper.dart';
 
 class ListerRegistrationRepoFirebase implements ListerRegistrationRepo {
   final CollectionReference collection =
