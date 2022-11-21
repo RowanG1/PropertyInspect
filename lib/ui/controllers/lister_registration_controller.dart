@@ -7,7 +7,7 @@ import 'package:property_inspect/domain/usecase/create_lister_registration.dart'
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../domain/entities/lister.dart';
-import '../../domain/utils/field_validation.dart';
+import '../../data/utils/field_validation.dart';
 
 class ListerRegistrationController extends GetxController {
   final CreateListerRegistrationUseCase _listerRegistration;

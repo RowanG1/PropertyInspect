@@ -5,7 +5,7 @@ import 'package:property_inspect/domain/usecase/create_listing_use_case.dart';
 import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../domain/usecase/analytics_use_case.dart';
-import '../../domain/utils/field_validation.dart';
+import '../../data/utils/field_validation.dart';
 import '../../domain/entities/state.dart' as s;
 
 class CreateListingController extends GetxController {

@@ -1,4 +1,4 @@
-import '../constants.dart';
+import '../../domain/constants.dart';
 
 class FieldValidation {
   bool isEmailValid(String? email) {
