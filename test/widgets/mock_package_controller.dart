@@ -2,7 +2,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:property_inspect/domain/repository/package_repo.dart';
-import 'package:property_inspect/domain/usecase/get_packageinfo_use_case.dart';
+import 'package:property_inspect/application/usecase/get_packageinfo_use_case.dart';
 import 'package:property_inspect/ui/controllers/package_controller.dart';
 import 'mock_package_controller.mocks.dart';
 

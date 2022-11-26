@@ -4,7 +4,7 @@ import 'package:property_inspect/ui/pages/lister_flow.dart';
 import '../../data/di/controllers_factories.dart';
 import '../../data/di/use_case_factories.dart';
 import '../../domain/entities/visitor.dart';
-import '../../domain/usecase/analytics_use_case.dart';
+import '../../application/usecase/analytics_use_case.dart';
 import '../controllers/lister_flow_controller.dart';
 import '../controllers/lister_registration_controller.dart';
 import '../controllers/login_controller.dart';

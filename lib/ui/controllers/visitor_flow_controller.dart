@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:property_inspect/domain/usecase/get_is_visitor_registerd_use_case.dart';
+import 'package:property_inspect/application/usecase/get_is_visitor_registerd_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../data/types/state.dart' as s;
-import '../../domain/usecase/get_login_id_use_case.dart';
+import '../../application/usecase/get_login_id_use_case.dart';
 
 class VisitorFlowController extends GetxController {
   final Rx<s.State<bool>> _visitorIsRegistered = s.State<bool>().obs;

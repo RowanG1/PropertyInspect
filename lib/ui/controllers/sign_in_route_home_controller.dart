@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import '../../domain/usecase/login_state_use_case.dart';
+import '../../application/usecase/login_state_use_case.dart';
 
 class SigninRouteHomeController extends GetxController {
   final LoginStateUseCase _loginStateUseCase;

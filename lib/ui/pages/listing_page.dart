@@ -5,7 +5,7 @@ import 'package:property_inspect/ui/controllers/view_listing_controller.dart';
 import 'package:property_inspect/ui/pages/lister_flow.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../domain/constants.dart';
-import '../../domain/usecase/analytics_use_case.dart';
+import '../../application/usecase/analytics_use_case.dart';
 import '../controllers/lister_flow_controller.dart';
 import '../controllers/lister_registration_controller.dart';
 

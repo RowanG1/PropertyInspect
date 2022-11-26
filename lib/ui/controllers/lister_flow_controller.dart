@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:property_inspect/domain/usecase/is_lister_registered_use_case.dart';
+import 'package:property_inspect/application/usecase/is_lister_registered_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../data/types/state.dart' as s;
-import '../../domain/usecase/get_login_id_use_case.dart';
+import '../../application/usecase/get_login_id_use_case.dart';
 
 class ListerFlowController extends GetxController {
   final Rx<s.State<bool>> _listerIsRegistered = s

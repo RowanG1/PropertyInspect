@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:property_inspect/data/types/optional.dart';
 import 'package:property_inspect/domain/entities/visitor.dart';
-import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
-import 'package:property_inspect/domain/usecase/get_listing_use_case.dart';
-import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
+import 'package:property_inspect/application/usecase/analytics_use_case.dart';
+import 'package:property_inspect/application/usecase/get_listing_use_case.dart';
+import 'package:property_inspect/application/usecase/get_login_id_use_case.dart';
 import '../../domain/entities/listing.dart';
 import '../../data/types/state.dart' as s;
-import '../../domain/usecase/checked_in_use_case.dart';
-import '../../domain/usecase/do_checkin_use_case.dart';
-import '../../domain/usecase/get_visitor_use_case.dart';
+import '../../application/usecase/checked_in_use_case.dart';
+import '../../application/usecase/do_checkin_use_case.dart';
+import '../../application/usecase/get_visitor_use_case.dart';
 import 'package:rxdart/rxdart.dart' as rx_raw;
 
 class CheckinController extends GetxController {

@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
-import 'package:property_inspect/domain/usecase/login_state_use_case.dart';
-import 'package:property_inspect/domain/usecase/logout_use_case.dart';
+import 'package:property_inspect/application/usecase/analytics_use_case.dart';
+import 'package:property_inspect/application/usecase/login_state_use_case.dart';
+import 'package:property_inspect/application/usecase/logout_use_case.dart';
 import 'package:property_inspect/domain/repository/analytics_repo.dart';
 import 'package:property_inspect/ui/controllers/login_controller.dart';
 import 'package:property_inspect/domain/repository/logout_repo.dart';

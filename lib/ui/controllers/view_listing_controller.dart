@@ -4,13 +4,13 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:property_inspect/domain/usecase/do_checkins_exist_use_case.dart';
-import 'package:property_inspect/domain/usecase/get_listing_use_case.dart';
+import 'package:property_inspect/application/usecase/do_checkins_exist_use_case.dart';
+import 'package:property_inspect/application/usecase/get_listing_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
 import '../../data/types/state.dart' as s;
-import '../../domain/usecase/get_login_id_use_case.dart';
+import '../../application/usecase/get_login_id_use_case.dart';
 import 'package:rxdart/rxdart.dart' as rx_raw;
 
 class ViewListingController extends GetxController {

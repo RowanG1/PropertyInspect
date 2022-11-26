@@ -1,4 +1,4 @@
-import '../repository/listing_repo.dart';
+import '../../domain/repository/listing_repo.dart';
 
 class DeleteListingUseCase {
   ListingRepo listingRepo;

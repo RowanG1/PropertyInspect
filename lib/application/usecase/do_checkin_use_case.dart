@@ -1,5 +1,5 @@
-import '../entities/visitor.dart';
-import '../repository/checkin_repo.dart';
+import '../../domain/entities/visitor.dart';
+import '../../domain/repository/checkin_repo.dart';
 
 class DoCheckinUseCase {
   final CheckinRepo checkin;

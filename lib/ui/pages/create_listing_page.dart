@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:property_inspect/ui/controllers/create_listing_controller.dart';
 import 'package:property_inspect/ui/pages/create_listing_form.dart';
-import '../../domain/usecase/analytics_use_case.dart';
+import '../../application/usecase/analytics_use_case.dart';
 import '../controllers/lister_flow_controller.dart';
 import '../controllers/lister_registration_controller.dart';
 import '../controllers/login_controller.dart';

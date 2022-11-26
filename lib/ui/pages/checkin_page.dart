@@ -5,7 +5,7 @@ import 'package:property_inspect/ui/pages/visitor_flow.dart';
 import '../../domain/constants.dart';
 import '../../domain/entities/listing.dart';
 import '../../domain/entities/visitor.dart';
-import '../../domain/usecase/analytics_use_case.dart';
+import '../../application/usecase/analytics_use_case.dart';
 import '../controllers/login_controller.dart';
 import '../controllers/visitor_flow_controller.dart';
 import '../controllers/visitor_registration_controller.dart';

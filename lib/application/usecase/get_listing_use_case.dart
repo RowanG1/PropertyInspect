@@ -1,6 +1,6 @@
 import 'package:property_inspect/domain/repository/listing_repo.dart';
 
-import '../entities/listing.dart';
+import '../../domain/entities/listing.dart';
 
 class GetListingUseCase {
   ListingRepo listingRepo;

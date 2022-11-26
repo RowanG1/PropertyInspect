@@ -1,4 +1,4 @@
-import '../repository/checkin_repo.dart';
+import '../../domain/repository/checkin_repo.dart';
 
 class DoCheckinsExistForListingUseCase {
   final CheckinRepo checkin;

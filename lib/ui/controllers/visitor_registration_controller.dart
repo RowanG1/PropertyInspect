@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:property_inspect/domain/usecase/analytics_use_case.dart';
-import 'package:property_inspect/domain/usecase/get_login_id_use_case.dart';
+import 'package:property_inspect/application/usecase/analytics_use_case.dart';
+import 'package:property_inspect/application/usecase/get_login_id_use_case.dart';
 import '../../data/types/optional.dart';
-import '../../domain/usecase/create_visitor_registration_use_case.dart';
+import '../../application/usecase/create_visitor_registration_use_case.dart';
 import '../../data/utils/field_validation.dart';
 import 'package:property_inspect/data/types/state.dart' as s;
 
