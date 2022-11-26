@@ -1,7 +1,7 @@
-# property_inspect
+# Property Check-in
 Flutter Web project, for doing check-ins at property inspections in Australia.
 
-####Setup
+#### Setup
 To fetch the packages:
 In terminal, enter `flutter pub get`, or open pubspec.yaml, and click `pub get`.
 
