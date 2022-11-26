@@ -13,6 +13,7 @@ class CheckboxFormField extends FormField<bool> {
                   activeColor: Colors.green,
                   fillColor: getFillMaterialStateColor(state.errorText),
                   onChanged: (newValue) {
+                    FocusManager.instance.primaryFocus?.unfocus();
                     state.didChange(newValue ?? false);
                   });
             });

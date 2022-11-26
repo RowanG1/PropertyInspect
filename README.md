@@ -11,9 +11,7 @@ button. See `.run`   folder for configs.
 
 #### Architecture
 * Uses the GetX state management library. This implies the usage of streams, and Rx.
-* Clean architecture- presentation/UI layer, domain layer, data layer.
-  Note that the use cases are in the domain folder, although a better folder could have been `application`, to 
-  distinguish the application player.
+* Clean architecture- presentation/UI layer, application layer, domain layer, data layer.
 * To help with having an authenticated/registration flow, `VisitorFlow` and `ListerFlow` widgets were created. This 
   allows any particular page to be accessed, with gates in place for logging in and registering.
 * Multi environment: staging (used as development) and production. See `main-staging.dart` and `main-prod.dart`, with 
