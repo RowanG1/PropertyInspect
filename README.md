@@ -21,7 +21,8 @@ button. See `.run`   folder for configs.
 #### Releases
 * Github actions is used- see `.github` folder.
 * When releasing new versions of the app, it is advisable to bump the version in pubspec. Not strictly needed, as the 
-  build number is auto-incremented by CI/CD, which will cause the PWA cache to refresh.
+  build number is auto-incremented by CI/CD, which will cause the PWA to refresh the user's app. PWA is only active 
+  on Android devices.
 * To do a prod release, just merge the code into the main branch. For staging release, this is done on each push onto 
 develop.
 
