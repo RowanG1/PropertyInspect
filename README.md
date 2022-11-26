@@ -35,9 +35,11 @@ To run a coverage report, enter in terminal:
 3) `open coverage/html/index.html`
 
 When adding tests, and mockito mocks are needed, after adding the mock configuration eg:
+```
 @GenerateMocks([ListingRepo, AnalyticsRepo])
 void main() {
 }
+```
 run the following command in terminal:
 `flutter pub run build_runner build`
 to generate the mock file for the specified classes. When importing this mock file in your tests, sometimes
