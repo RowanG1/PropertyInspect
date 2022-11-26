@@ -52,11 +52,11 @@ auto-import does not work, so manual import is needed. Eg.
    dependencies for controllers. While not a strict adherence to clean architecture, for a smaller application like
    this, it could be more practical.
    Eg:
-   `
+   ```
    class MyController {
    MyController(this._repo1, this._useCase1);
    }
-   `
+   ```
 
 3) Resolve issue where upon selecting a checkbox in the registration forms, the keyboard opens.
 
