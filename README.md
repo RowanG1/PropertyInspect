@@ -7,7 +7,7 @@ In terminal, enter `flutter pub get`, or open pubspec.yaml, and click `pub get`.
 
 Tor run:
 If Using Android Studio, select `main-staging.dart` configuration, with Chrome(web) for the device. Then click run 
-button.
+button. See `.run`   folder for configs.
 
 #### Architecture
 * Uses the GetX state management library. This implies the usage of streams, and Rx.
@@ -18,23 +18,11 @@ button.
   corresponding 
   `firebase_options_{env}.dart` (note the imports in `main-{env}.dart` ) files
 
-<u>Improvements that could be made:</u>
-1) For loading/error logic in controllers, this could be placed at the repository level.
-2) Avoid use cases where there is no logic. If there are only a few use cases, use a mix of repo and use case 
-   dependencies for controllers. While not a strict adherence to clean architecture, for a smaller application like 
-   this, it could be more practical.
-Eg: 
-`
-class MyController {
-MyController(this._repo1, this._use1Case1);
-}
-`
-
-3) Resolve issue where upon selecting a checkbox in the registration forms, the keyboard opens.
-
 #### Releases
-When releasing new versions of the app, bump the version in pubspec.
-To do a prod release, just merge the code into the main branch. For staging release, this is done on each push onto 
+* Github actions is used- see `.github` folder.
+* When releasing new versions of the app, it is advisable to bump the version in pubspec. Not strictly needed, as the 
+  build number is auto-incremented by CI/CD, which will cause the PWA cache to refresh.
+* To do a prod release, just merge the code into the main branch. For staging release, this is done on each push onto 
 develop.
 
 #### Tests
@@ -54,6 +42,21 @@ run the following command in terminal:
 to generate the mock file for the specified classes. When importing this mock file in your tests, sometimes
 auto-import does not work, so manual import is needed. Eg.
 `import 'listing_widget_test.mocks.dart'`;
+
+#### Improvements that could be made:
+1) For loading/error logic in controllers, this could be placed at the repository level.
+2) Avoid use cases where there is no logic. If there are only a few use cases, use a mix of repo and use case
+   dependencies for controllers. While not a strict adherence to clean architecture, for a smaller application like
+   this, it could be more practical.
+   Eg:
+   `
+   class MyController {
+   MyController(this._repo1, this._useCase1);
+   }
+   `
+
+3) Resolve issue where upon selecting a checkbox in the registration forms, the keyboard opens.
+
 
 #### Original App Plan
 See `UserFlow.txt` for plan of app.
