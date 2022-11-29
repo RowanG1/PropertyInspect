@@ -33,7 +33,7 @@ class CheckinController extends GetxController {
   StreamSubscription? getIsCheckedInSubscription;
   StreamSubscription? _getPropertySubscription;
 
-  Logger logger = Get.find();
+  final Logger _logger = Get.find();
 
   CheckinController(this._isCheckedInUseCase, this._getLoginIdUseCase, this._doCheckinUseCase, this._getListingUseCase,
       this._getVisitorUseCase, this._analyticsUseCase);
@@ -205,7 +205,7 @@ class CheckinController extends GetxController {
       _checkInState.close();
       _propertyState.close();
     } catch (e) {
-      logger.d('Error on dispose streams', e);
+      _logger.d('Error on dispose streams', e);
     }
     super.dispose();
   }

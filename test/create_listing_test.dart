@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:property_inspect/domain/constants.dart';
 import 'package:property_inspect/domain/repository/analytics_repo.dart';
 import 'package:property_inspect/domain/repository/listing_repo.dart';
@@ -30,6 +31,7 @@ void main() {
       analyticsRepo = MockAnalyticsRepo();
       analyticsUseCase = AnalyticsUseCase(analyticsRepo);
       loginIdUseCase = GetLoginIdUseCase(loginRepo);
+      Get.put(Logger());
       controller = CreateListingController(createListingUseCase,
         loginIdUseCase, analyticsUseCase);
     });

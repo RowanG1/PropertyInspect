@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:property_inspect/application/usecase/get_checkins_for_listing_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../data/types/state.dart' as s;
@@ -14,6 +15,7 @@ class CheckinsController extends GetxController {
   final Rx<s.State<List<Visitor>>> _checkedInVisitors = s.State<List<Visitor>>().obs;
 final Rx<CheckInsLumpedInputData> _checkInsLumpedInput = CheckInsLumpedInputData().obs;
   CheckinsController(this._getLoginIdUseCase, this._checkinsForListingUseCase);
+  final Logger _logger = Get.find();
 
   @override
   void onInit() {
@@ -61,7 +63,11 @@ final Rx<CheckInsLumpedInputData> _checkInsLumpedInput = CheckInsLumpedInputData
 
   @override
   void dispose() {
-    _checkedInVisitors.close();
+    try {
+      _checkedInVisitors.close();
+    } catch(e) {
+      _logger.d('Error on dispose streams', e);
+    }
     super.dispose();
   }
 }

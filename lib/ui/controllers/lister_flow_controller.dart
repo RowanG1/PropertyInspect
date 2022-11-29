@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:property_inspect/application/usecase/is_lister_registered_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../data/types/state.dart' as s;
@@ -13,6 +14,8 @@ class ListerFlowController extends GetxController {
   final IsListerRegisteredUseCase _isListerRegisteredUseCase;
   // ignore: unnecessary_cast
   final Rx<String?> currentPage = (null as String?).obs;
+  Worker? _userIdSubscription;
+  final Logger _logger = Get.find();
 
   ListerFlowController(this._isListerRegisteredUseCase, this._loginIdUseCase);
 
@@ -21,7 +24,7 @@ class ListerFlowController extends GetxController {
     super.onInit();
     _userId.bindStream(_loginIdUseCase.execute());
 
-    ever(_userId, (id) {
+    _userIdSubscription = ever(_userId, (id) {
       if (id.value != null) {
         _getIsListerRegistered(id.value!);
       }
@@ -58,7 +61,12 @@ class ListerFlowController extends GetxController {
 
   @override
   void dispose() {
-    _listerIsRegistered.close();
+    try {
+      _listerIsRegistered.close();
+      _userIdSubscription?.dispose();
+    } catch (e) {
+      _logger.d("Dispose streams error", e);
+    }
     super.dispose();
   }
 }

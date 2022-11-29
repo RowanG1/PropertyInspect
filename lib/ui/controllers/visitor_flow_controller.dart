@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:property_inspect/application/usecase/get_is_visitor_registerd_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../data/types/state.dart' as s;
@@ -11,6 +12,8 @@ class VisitorFlowController extends GetxController {
   final GetIsVisitorRegisteredUseCase _isVisitorRegisteredUseCase;
   // ignore: unnecessary_cast
   final Rx<String?> currentPage = (null as String?).obs;
+  final Logger _logger = Get.find();
+  Worker? _userIdSubscription;
 
   VisitorFlowController(this._isVisitorRegisteredUseCase, this._loginIdUseCase);
 
@@ -19,7 +22,7 @@ class VisitorFlowController extends GetxController {
     super.onInit();
     _userId.bindStream(_loginIdUseCase.execute());
 
-    ever(_userId, (id) {
+    _userIdSubscription = ever(_userId, (id) {
       if (id.value != null) {
         _getIsVisitorRegistered(id.value!);
       }
@@ -29,14 +32,12 @@ class VisitorFlowController extends GetxController {
   _getIsVisitorRegistered(String id) {
     try {
       _visitorIsRegistered.value = s.State<bool>(loading: true);
-      final isRegistered =
-      _isVisitorRegisteredUseCase.execute(id);
+      final isRegistered = _isVisitorRegisteredUseCase.execute(id);
 
-      final mappedIsRegistered =
-      isRegistered.map((event) => s.State<bool>(content: event));
+      final mappedIsRegistered = isRegistered.map((event) => s.State<bool>(content: event));
 
-      _visitorIsRegistered.bindStream(mappedIsRegistered.handleError(
-              (onError) => _visitorIsRegistered.value = s.State<bool>(error: onError)));
+      _visitorIsRegistered
+          .bindStream(mappedIsRegistered.handleError((onError) => _visitorIsRegistered.value = s.State<bool>(error: onError)));
     } catch (e) {
       _visitorIsRegistered.value = s.State<bool>(error: Exception("$e"));
     }
@@ -56,7 +57,12 @@ class VisitorFlowController extends GetxController {
 
   @override
   void dispose() {
-    _visitorIsRegistered.close();
+    try {
+      _visitorIsRegistered.close();
+      _userIdSubscription?.dispose();
+    } catch (e) {
+      _logger.d("Dispose streams error", e);
+    }
     super.dispose();
   }
 }

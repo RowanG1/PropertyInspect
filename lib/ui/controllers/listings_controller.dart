@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:property_inspect/application/usecase/delete_listing_use_case.dart';
 import '../../data/types/optional.dart';
 import '../../domain/entities/listing.dart';
@@ -11,12 +13,11 @@ class ListingsController extends GetxController {
   final GetLoginIdUseCase _getLoginIdUseCase;
   final DeleteListingUseCase _deleteListingUseCase;
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
-  final Rx<s.State<List<Listing>>> _propertiesState =
-      s.State<List<Listing>>().obs;
-  final Rx<s.State<bool>> _deletePropertiesState =
-      s.State<bool>().obs;
-  ListingsController(this._getListingsUseCase, this._getLoginIdUseCase,
-      this._deleteListingUseCase);
+  final Rx<s.State<List<Listing>>> _propertiesState = s.State<List<Listing>>().obs;
+  final Rx<s.State<bool>> _deletePropertiesState = s.State<bool>().obs;
+  ListingsController(this._getListingsUseCase, this._getLoginIdUseCase, this._deleteListingUseCase);
+  Worker? userIdSubscription;
+  final Logger _logger = Get.find();
 
   @override
   void onInit() {
@@ -24,7 +25,7 @@ class ListingsController extends GetxController {
     final Stream<Optional<String>> loginIdStream = _getLoginIdUseCase.execute();
     _userId.bindStream(loginIdStream);
 
-    ever(_userId, (value) {
+    userIdSubscription = ever(_userId, (value) {
       final userId = value.value;
       if (userId != null) {
         _getProperties(userId);
@@ -36,8 +37,7 @@ class ListingsController extends GetxController {
     try {
       _propertiesState.value = s.State<List<Listing>>(loading: true);
       final propertiesStream = _getListingsUseCase.execute(userId);
-      final Stream<s.State<List<Listing>>> mappedPropertiesStream =
-          propertiesStream.map<s.State<List<Listing>>>((event) {
+      final Stream<s.State<List<Listing>>> mappedPropertiesStream = propertiesStream.map<s.State<List<Listing>>>((event) {
         return s.State<List<Listing>>(content: event);
       });
 
@@ -79,7 +79,12 @@ class ListingsController extends GetxController {
 
   @override
   void dispose() {
-    _propertiesState.close();
+    try {
+      _propertiesState.close();
+      userIdSubscription?.dispose();
+    } catch (e) {
+      _logger.d("Dispose streams error", e);
+    }
     super.dispose();
   }
 }

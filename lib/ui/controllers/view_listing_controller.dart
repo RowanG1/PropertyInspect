@@ -21,7 +21,7 @@ class ViewListingController extends GetxController {
   final Rx<s.State<Listing>> _propertyState = s.State<Listing>().obs;
   final Rx<s.State<bool>> _checkinExistState = s.State<bool>().obs;
   StreamSubscription? _checkinLumpedInputDataSubscription;
-  Logger logger = Get.find();
+  Logger _logger = Get.find();
 
   ViewListingController(this._getListingUseCase, this._doCheckinsExistForListingUseCase, this._getLoginIdUseCase);
 
@@ -108,18 +108,18 @@ class ViewListingController extends GetxController {
       _propertyState.value = s.State<Listing>(loading: true);
     }
     try {
-      logger.d('Start');
+      _logger.d('Start');
       final checkinsExistStream = _doCheckinsExistForListingUseCase.execute(listerId, propertyId).asBroadcastStream();
 
       final checkinExistStateStream = checkinsExistStream.map((event) => s.State<bool>(content: event));
       _checkinExistState.bindStream(checkinExistStateStream.handleError((onError) {
         _checkinExistState.value = s.State<bool>(error: onError);
-        logger.e('Error', onError);
+        _logger.e('Error', onError);
       }));
-      logger.d('End');
+      _logger.d('End');
     } catch (e) {
       _checkinExistState.value = s.State<bool>(error: Exception('$e'));
-      logger.e('Error', e);
+      _logger.e('Error', e);
     }
   }
 
@@ -138,7 +138,7 @@ class ViewListingController extends GetxController {
       _checkinExistState.close();
       _propertyState.close();
     } catch (e) {
-      logger.d("Dispose streams error", e);
+      _logger.d("Dispose streams error", e);
     }
     super.dispose();
   }

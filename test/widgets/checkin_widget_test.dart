@@ -61,6 +61,7 @@ void main() {
     late PackageController packageController;
 
     setUp(() {
+      Get.put(Logger());
       analyticsRepo = MockAnalyticsRepo();
       analyticsUseCase = AnalyticsUseCase(analyticsRepo);
       loginRepo = LoginRepoTest();
@@ -80,7 +81,6 @@ void main() {
       listingRepo = MockListingRepo();
       getListingUseCase = GetListingUseCase(listingRepo);
       getVisitorUseCase = GetVisitorUseCase(visitorRegistrationRepo);
-      Get.put(Logger());
       checkinController = CheckinController(checkedInUseCase, loginIdUseCase, doCheckinUseCase, getListingUseCase, getVisitorUseCase, analyticsUseCase);
       packageController = MyMockPackageControllerFactory().make();
 

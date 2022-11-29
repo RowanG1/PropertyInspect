@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:property_inspect/application/usecase/analytics_use_case.dart';
 import 'package:property_inspect/application/usecase/get_login_id_use_case.dart';
 import '../../data/types/optional.dart';
@@ -15,9 +16,9 @@ class VisitorRegistrationController extends GetxController {
   FieldValidation validation = FieldValidation();
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<s.State<bool>> _createState = s.State<bool>().obs;
+  final Logger _logger = Get.find();
 
-  VisitorRegistrationController(this.visitorRegistration, this
-      ._loginIdUseCase, this._analyticsUseCase);
+  VisitorRegistrationController(this.visitorRegistration, this._loginIdUseCase, this._analyticsUseCase);
 
   @override
   void onInit() {
@@ -42,8 +43,7 @@ class VisitorRegistrationController extends GetxController {
 
       _createState.value = s.State(loading: true);
       try {
-        await visitorRegistration.execute(userId, name, lastName, email, phone,
-            suburb);
+        await visitorRegistration.execute(userId, name, lastName, email, phone, suburb);
         _createState.value = s.State(content: true);
         _analyticsUseCase.execute('register_visitor', {});
       } catch (e) {
@@ -57,8 +57,7 @@ class VisitorRegistrationController extends GetxController {
     if (controller == emailController) {
       return validation.getEmailValidation(controller.text);
     } else {
-      return validation.getNonEmptyValidation(
-          controller.text);
+      return validation.getNonEmptyValidation(controller.text);
     }
   }
 
@@ -80,7 +79,11 @@ class VisitorRegistrationController extends GetxController {
 
   @override
   void dispose() {
-    _createState.close();
+    try {
+      _createState.close();
+    } catch (e) {
+      _logger.d("Dispose streams error", e);
+    }
     super.dispose();
   }
 }

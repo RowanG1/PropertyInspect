@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:mockito/mockito.dart';
 import 'package:property_inspect/data/types/env.dart';
 import 'package:property_inspect/domain/constants.dart';
@@ -63,6 +64,7 @@ void main() {
       loginController = LoginController(loginStateUseCase, logoutUseCase, analyticsUseCase);
       listerRegistrationRepo = ListerRegistrationRepoTest();
       isListerRegisteredUseCase = IsListerRegisteredUseCase(listerRegistrationRepo);
+      Get.put(Logger());
       listerFlowController = ListerFlowController(isListerRegisteredUseCase, loginIdUseCase);
       createListerRegistrationUseCase = CreateListerRegistrationUseCase(listerRegistrationRepo);
       listerRegistrationController = ListerRegistrationController(createListerRegistrationUseCase, loginIdUseCase, analyticsUseCase);

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:property_inspect/data/types/state.dart' as s;
 import 'package:property_inspect/application/usecase/analytics_use_case.dart';
 import 'package:property_inspect/application/usecase/create_lister_registration.dart';
@@ -10,15 +11,15 @@ import '../../domain/entities/lister.dart';
 import '../../data/utils/field_validation.dart';
 
 class ListerRegistrationController extends GetxController {
-  final CreateListerRegistrationUseCase _listerRegistration;
+  final CreateListerRegistrationUseCase _listerRegistrationUseCase;
   final GetLoginIdUseCase _loginIdUseCase;
   final AnalyticsUseCase _analyticsUseCase;
-  FieldValidation validation = FieldValidation();
+  FieldValidation _validation = FieldValidation();
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<s.State<bool>> _createListerState = s.State<bool>().obs;
+  final Logger _logger = Get.find();
 
-  ListerRegistrationController(this._listerRegistration, this
-      ._loginIdUseCase, this._analyticsUseCase);
+  ListerRegistrationController(this._listerRegistrationUseCase, this._loginIdUseCase, this._analyticsUseCase);
 
   @override
   void onInit() {
@@ -40,20 +41,14 @@ class ListerRegistrationController extends GetxController {
       final company = companyController.value.text;
       final email = emailController.value.text;
       final phone = phoneController.value.text;
-      final lister = Lister(
-          id: userId,
-          name: agentName,
-          lastName: lastName,
-          company: company,
-          email: email,
-          phone: phone);
+      final lister = Lister(id: userId, name: agentName, lastName: lastName, company: company, email: email, phone: phone);
 
       _createListerState.value = s.State(loading: true);
       try {
-        await _listerRegistration.execute(lister);
+        await _listerRegistrationUseCase.execute(lister);
         _createListerState.value = s.State(content: true);
         _analyticsUseCase.execute('register_lister', {});
-      } catch(e) {
+      } catch (e) {
         _createListerState.value = s.State(error: Exception('$e'));
       }
     }
@@ -61,14 +56,14 @@ class ListerRegistrationController extends GetxController {
 
   String? validate(TextEditingController controller) {
     if (controller == emailController) {
-      return validation.getEmailValidation(controller.text);
+      return _validation.getEmailValidation(controller.text);
     } else {
-      return validation.getNonEmptyValidation(controller.text);
+      return _validation.getNonEmptyValidation(controller.text);
     }
   }
 
   getCheckboxValidator() {
-    return validation.getCheckboxValidation;
+    return _validation.getCheckboxValidation;
   }
 
   Optional<String> _getUserId() {
@@ -85,7 +80,11 @@ class ListerRegistrationController extends GetxController {
 
   @override
   void dispose() {
-    _createListerState.close();
+    try {
+      _createListerState.close();
+    } catch (e) {
+      _logger.d("Dispose streams error", e);
+    }
     super.dispose();
   }
 }
