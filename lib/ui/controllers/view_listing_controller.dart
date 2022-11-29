@@ -1,7 +1,6 @@
 // ignore_for_file: unnecessary_cast
 
 import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:property_inspect/application/usecase/do_checkins_exist_use_case.dart';
@@ -21,9 +20,8 @@ class ViewListingController extends GetxController {
   final Rx<Optional<String>> _userId = Optional<String>(null).obs;
   final Rx<s.State<Listing>> _propertyState = s.State<Listing>().obs;
   final Rx<s.State<bool>> _checkinExistState = s.State<bool>().obs;
-  late final Rx<CheckinsExistLumpedInput?> lumpedCheckinsExistDataRx = (null as CheckinsExistLumpedInput?).obs;
+  StreamSubscription? _checkinLumpedInputDataSubscription;
   Logger logger = Get.find();
-  late StreamSubscription<bool?> checkinExistStream;
 
   ViewListingController(this._getListingUseCase, this._doCheckinsExistForListingUseCase, this._getLoginIdUseCase);
 
@@ -34,26 +32,21 @@ class ViewListingController extends GetxController {
   }
 
   setupStreams() {
-    logger.d("Setting up streams.");
     final loginIdStream = _getLoginIdUseCase.execute().asBroadcastStream();
     _userId.bindStream(loginIdStream);
 
     final propertyIdStream = _propertyId.stream.asBroadcastStream();
 
-    final lumpedCheckinsExistData = rx_raw.Rx.combineLatest2(loginIdStream, propertyIdStream, (loginId, propertyId) {
+    final lumpedCheckinInputData = rx_raw.Rx.combineLatest2(loginIdStream, propertyIdStream, (loginId, propertyId) {
       return CheckinsExistLumpedInput(propertyId, loginId.value);
     }).asBroadcastStream();
 
-    lumpedCheckinsExistDataRx.bindStream(lumpedCheckinsExistData);
-
-    ever(lumpedCheckinsExistDataRx, (event) {
-      if (event != null) {
-        final listingId = event.listingId;
-        final listerId = event.listerId;
-        if (listingId != null && listerId != null) {
-          _getProperty();
-          _doCheckinsExist(listerId, listingId);
-        }
+    _checkinLumpedInputDataSubscription = lumpedCheckinInputData.listen((event) {
+      final listingId = event.listingId;
+      final listerId = event.listerId;
+      if (listingId != null && listerId != null) {
+        _getProperty();
+        _doCheckinsExist(listerId, listingId);
       }
     });
   }
@@ -117,11 +110,6 @@ class ViewListingController extends GetxController {
     try {
       logger.d('Start');
       final checkinsExistStream = _doCheckinsExistForListingUseCase.execute(listerId, propertyId).asBroadcastStream();
-      checkinExistStream = checkinsExistStream.listen((event) {
-        logger.d('Got value for checkin exist stream: $event');
-      }, onDone: () {
-        logger.d('Checkin exist stream done.');
-      });
 
       final checkinExistStateStream = checkinsExistStream.map((event) => s.State<bool>(content: event));
       _checkinExistState.bindStream(checkinExistStateStream.handleError((onError) {
@@ -145,10 +133,13 @@ class ViewListingController extends GetxController {
 
   @override
   void dispose() {
-    lumpedCheckinsExistDataRx.close();
-    _checkinExistState.close();
-    _propertyState.close();
-    checkinExistStream.cancel();
+    try {
+      _checkinLumpedInputDataSubscription?.cancel();
+      _checkinExistState.close();
+      _propertyState.close();
+    } catch (e) {
+      logger.d("Dispose streams error", e);
+    }
     super.dispose();
   }
 }
