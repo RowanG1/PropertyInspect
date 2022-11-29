@@ -1,6 +1,6 @@
 import 'dart:async';
-
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:property_inspect/data/types/optional.dart';
 import 'package:property_inspect/domain/entities/visitor.dart';
 import 'package:property_inspect/application/usecase/analytics_use_case.dart';
@@ -28,69 +28,67 @@ class CheckinController extends GetxController {
   final Rx<s.State<bool>> _doCheckInState = s.State<bool>().obs;
   final Rx<s.State<Listing>> _propertyState = s.State<Listing>().obs;
   final Rx<s.State<Visitor>> _getVisitorState = s.State<Visitor>().obs;
-  final Rx<CheckinLumpedInputData> _checkinCombinedInputs =
-      CheckinLumpedInputData().obs;
-  final Rx<GetPropertyLumpedInputData?> _lumpedPropertyInputs =
-      // ignore: unnecessary_cast
-      (null as GetPropertyLumpedInputData?).obs;
 
-  StreamSubscription? getPropertySub;
+  StreamSubscription? _getVisitorSubscription;
+  StreamSubscription? getIsCheckedInSubscription;
+  StreamSubscription? _getPropertySubscription;
 
-  CheckinController(
-      this._isCheckedInUseCase,
-      this._getLoginIdUseCase,
-      this._doCheckinUseCase,
-      this._getListingUseCase,
-      this._getVisitorUseCase,
-      this._analyticsUseCase);
+  Logger logger = Get.find();
+
+  CheckinController(this._isCheckedInUseCase, this._getLoginIdUseCase, this._doCheckinUseCase, this._getListingUseCase,
+      this._getVisitorUseCase, this._analyticsUseCase);
 
   @override
   void onInit() {
     super.onInit();
+    setupStreams();
+  }
+
+  void setupStreams() {
     final Stream<Optional<String>> loginIdStream = _getLoginIdUseCase.execute().asBroadcastStream();
+    _userId.bindStream(loginIdStream.handleError((onError) {}));
 
-    _userId.bindStream(loginIdStream.handleError((onError) {
-    }));
+    setupSubscriptionToGetVisitor(loginIdStream);
+    setupSubscriptionToGetProperty(loginIdStream, _propertyId.stream);
+    setupSubscriptionToGetIsCheckedIn(_propertyState.stream, _getVisitorState.stream, _userId.stream);
+  }
 
-    ever(_userId, (value) {
+  void setupSubscriptionToGetVisitor(Stream<Optional<String>> loginIdStream) {
+    _getVisitorSubscription = loginIdStream.listen((value) {
       if (value.value != null) {
         _getVisitor();
       }
     });
+  }
 
-    final propertyIdStream = _propertyId.stream;
-    final lumpedPropertyInputStream = rx_raw.Rx.combineLatest2(
-        propertyIdStream, loginIdStream, (propertyId, loginId) {
-      return GetPropertyLumpedInputData(
-          propertyId: propertyId, userId: loginId.value);
+  void setupSubscriptionToGetProperty(Stream<Optional<String>> loginIdStream, Stream<String?> propertyIdStream) {
+    final lumpedPropertyInputStream = rx_raw.Rx.combineLatest2(propertyIdStream, loginIdStream, (propertyId, loginId) {
+      return GetPropertyLumpedInputData(propertyId: propertyId, userId: loginId.value);
     });
 
-    _lumpedPropertyInputs.bindStream(lumpedPropertyInputStream);
-
-    ever(_lumpedPropertyInputs, (data) {
-      if (data?.userId != null && data?.propertyId != null) {
+    _getPropertySubscription = lumpedPropertyInputStream.listen((data) {
+      if (data.userId != null && data.propertyId != null) {
         _getProperty();
       }
     });
+  }
 
-    ever(_checkinCombinedInputs, (value) {
-      final visitor = value.visitor;
-      final listing = value.listing;
-      if (visitor != null && listing != null) {
-        _getIsCheckedIn(listing, visitor);
-      }
-    });
-
-    final combinedCheckinInputs = rx_raw.Rx.combineLatest3(
-        _propertyState.stream, _getVisitorState.stream, _userId.stream,
-        (property, visitor, userId) {
+  void setupSubscriptionToGetIsCheckedIn(
+      Stream<s.State<Listing>> propertyStream, Stream<s.State<Visitor>> visitorStream, Stream<Optional<String>> loginIdStream) {
+    final combinedCheckinInputs = rx_raw.Rx.combineLatest3(propertyStream, visitorStream, loginIdStream, (property, visitor, userId) {
       return CheckinLumpedInputData(
         listing: property.content,
         visitor: visitor.content,
       );
     });
 
-    _checkinCombinedInputs.bindStream(combinedCheckinInputs);
+    getIsCheckedInSubscription = combinedCheckinInputs.listen((value) {
+      final visitor = value.visitor;
+      final listing = value.listing;
+      if (visitor != null && listing != null) {
+        _getIsCheckedIn(listing, visitor);
+      }
+    });
   }
 
   Optional<String> _getUserId() {
@@ -106,14 +104,11 @@ class CheckinController extends GetxController {
         final visitorId = visitor.id;
 
         _checkInState.value = s.State<bool>(loading: true);
-        final isCheckedIn =
-            _isCheckedInUseCase.execute(listerId, visitorId, listingId);
+        final isCheckedIn = _isCheckedInUseCase.execute(listerId, visitorId, listingId);
 
-        final mappedCheckin =
-            isCheckedIn.map((event) => s.State<bool>(content: event));
+        final mappedCheckin = isCheckedIn.map((event) => s.State<bool>(content: event));
 
-        _checkInState.bindStream(mappedCheckin.handleError(
-            (onError) => _checkInState.value = s.State<bool>(error: onError)));
+        _checkInState.bindStream(mappedCheckin.handleError((onError) => _checkInState.value = s.State<bool>(error: onError)));
       }
     } catch (e) {
       _checkInState.value = s.State<bool>(error: Exception("$e"));
@@ -125,9 +120,7 @@ class CheckinController extends GetxController {
   }
 
   getIsLoading() {
-    return _propertyState.value.loading == true ||
-        _checkInState.value.loading == true ||
-        _doCheckInState.value.loading == true;
+    return _propertyState.value.loading == true || _checkInState.value.loading == true || _doCheckInState.value.loading == true;
   }
 
   void setPropertyId(String? propertyId) {
@@ -142,8 +135,7 @@ class CheckinController extends GetxController {
     try {
       _propertyState.value = s.State<Listing>(loading: true);
       final property = _getListingUseCase.execute(_propertyId.value!);
-      final Stream<s.State<Listing>> mappedPropertyState =
-          property.map((event) {
+      final Stream<s.State<Listing>> mappedPropertyState = property.map((event) {
         return s.State<Listing>(content: event);
       }).handleError((onError) {
         _propertyState.value = s.State<Listing>(error: onError);
@@ -166,8 +158,7 @@ class CheckinController extends GetxController {
   }
 
   bool isValidConfig() {
-    return _propertyState.value.content != null &&
-        _getVisitorState.value.content != null;
+    return _propertyState.value.content != null && _getVisitorState.value.content != null;
   }
 
   void doCheckin() {
@@ -176,8 +167,7 @@ class CheckinController extends GetxController {
       final visitor = getVisitor();
       final listerId = _propertyState.value.content?.userId;
       final userId = visitor?.id;
-      _doCheckinUseCase.execute(
-          userId!, _propertyId.value!, listerId!, visitor!);
+      _doCheckinUseCase.execute(userId!, _propertyId.value!, listerId!, visitor!);
       _analyticsUseCase.execute('checkin', {"listingId": _propertyId});
       _doCheckInState.value = s.State<bool>(content: true);
     } catch (e) {
@@ -195,8 +185,7 @@ class CheckinController extends GetxController {
       final visitor = _getVisitorUseCase.execute(_getUserId().value!);
       final mappedVisitor = visitor.map((event) => s.State(content: event));
 
-      _getVisitorState.bindStream(mappedVisitor.handleError(
-          (onError) => _getVisitorState.value = s.State(error: onError)));
+      _getVisitorState.bindStream(mappedVisitor.handleError((onError) => _getVisitorState.value = s.State(error: onError)));
     } catch (e) {
       _getVisitorState.value = s.State(error: Exception("$e"));
     }
@@ -208,8 +197,16 @@ class CheckinController extends GetxController {
 
   @override
   void dispose() {
-    _checkInState.close();
-    _propertyState.close();
+    try {
+      _getPropertySubscription?.cancel();
+      getIsCheckedInSubscription?.cancel();
+      _getVisitorSubscription?.cancel();
+
+      _checkInState.close();
+      _propertyState.close();
+    } catch (e) {
+      logger.d('Error on dispose streams', e);
+    }
     super.dispose();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:property_inspect/data/types/env.dart';
@@ -79,6 +80,7 @@ void main() {
       listingRepo = MockListingRepo();
       getListingUseCase = GetListingUseCase(listingRepo);
       getVisitorUseCase = GetVisitorUseCase(visitorRegistrationRepo);
+      Get.put(Logger());
       checkinController = CheckinController(checkedInUseCase, loginIdUseCase, doCheckinUseCase, getListingUseCase, getVisitorUseCase, analyticsUseCase);
       packageController = MyMockPackageControllerFactory().make();
 
