@@ -21,7 +21,7 @@ class ViewListingController extends GetxController {
   final Rx<s.State<Listing>> _propertyState = s.State<Listing>().obs;
   final Rx<s.State<bool>> _checkinExistState = s.State<bool>().obs;
   StreamSubscription? _checkinLumpedInputDataSubscription;
-  Logger _logger = Get.find();
+  final Logger _logger = Get.find();
 
   ViewListingController(this._getListingUseCase, this._doCheckinsExistForListingUseCase, this._getLoginIdUseCase);
 
@@ -55,13 +55,13 @@ class ViewListingController extends GetxController {
     try {
       _propertyState.value = s.State<Listing>(loading: true);
       final propertyStream = _getListingUseCase.execute(_propertyId.value!);
-      final Stream<s.State<Listing>> mappedPropertyStream = propertyStream.map<s.State<Listing>>((event) {
+      final Stream<s.State<Listing>> propertyState = propertyStream.map<s.State<Listing>>((event) {
         return s.State<Listing>(content: event);
       });
-
-      _propertyState.bindStream(mappedPropertyStream.handleError((onError) {
+      propertyState.handleError((onError) {
         _propertyState.value = s.State<Listing>(error: onError);
-      }));
+      });
+      _propertyState.bindStream(propertyState);
     } catch (e) {
       _propertyState.value = s.State<Listing>(
           error: Exception("Could not "
@@ -112,10 +112,12 @@ class ViewListingController extends GetxController {
       final checkinsExistStream = _doCheckinsExistForListingUseCase.execute(listerId, propertyId).asBroadcastStream();
 
       final checkinExistStateStream = checkinsExistStream.map((event) => s.State<bool>(content: event));
-      _checkinExistState.bindStream(checkinExistStateStream.handleError((onError) {
+      checkinExistStateStream.handleError((onError) {
         _checkinExistState.value = s.State<bool>(error: onError);
         _logger.e('Error', onError);
-      }));
+      });
+
+      _checkinExistState.bindStream(checkinExistStateStream);
       _logger.d('End');
     } catch (e) {
       _checkinExistState.value = s.State<bool>(error: Exception('$e'));

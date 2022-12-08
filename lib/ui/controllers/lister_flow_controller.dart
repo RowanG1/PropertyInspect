@@ -37,11 +37,12 @@ class ListerFlowController extends GetxController {
       final isRegistered =
       _isListerRegisteredUseCase.execute(id);
 
-      final mappedIsRegistered =
+      final isRegisteredState =
       isRegistered.map((event) => s.State<bool>(content: event));
+      isRegisteredState.handleError(
+              (onError) => _listerIsRegistered.value = s.State<bool>(error: onError));
 
-      _listerIsRegistered.bindStream(mappedIsRegistered.handleError(
-              (onError) => _listerIsRegistered.value = s.State<bool>(error: onError)));
+      _listerIsRegistered.bindStream(isRegisteredState);
     } catch (e) {
       _listerIsRegistered.value = s.State<bool>(error: Exception("$e"));
     }

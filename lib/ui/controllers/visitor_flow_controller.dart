@@ -32,12 +32,13 @@ class VisitorFlowController extends GetxController {
   _getIsVisitorRegistered(String id) {
     try {
       _visitorIsRegistered.value = s.State<bool>(loading: true);
-      final isRegistered = _isVisitorRegisteredUseCase.execute(id);
 
-      final mappedIsRegistered = isRegistered.map((event) => s.State<bool>(content: event));
+      final isRegistered = _isVisitorRegisteredUseCase.execute(id);
+      final isRegisteredState = isRegistered.map((event) => s.State<bool>(content: event));
+      isRegisteredState.handleError((onError) => _visitorIsRegistered.value = s.State<bool>(error: onError));
 
       _visitorIsRegistered
-          .bindStream(mappedIsRegistered.handleError((onError) => _visitorIsRegistered.value = s.State<bool>(error: onError)));
+          .bindStream(isRegisteredState);
     } catch (e) {
       _visitorIsRegistered.value = s.State<bool>(error: Exception("$e"));
     }

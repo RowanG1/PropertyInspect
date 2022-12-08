@@ -16,6 +16,7 @@ class CheckinsController extends GetxController {
 final Rx<CheckInsLumpedInputData> _checkInsLumpedInput = CheckInsLumpedInputData().obs;
   CheckinsController(this._getLoginIdUseCase, this._checkinsForListingUseCase);
   final Logger _logger = Get.find();
+  Worker? _checkinsLumpedInputSubscription;
 
   @override
   void onInit() {
@@ -28,7 +29,7 @@ final Rx<CheckInsLumpedInputData> _checkInsLumpedInput = CheckInsLumpedInputData
 
     _checkInsLumpedInput.bindStream(lumpedStream);
 
-    ever(_checkInsLumpedInput, (value) {
+    _checkinsLumpedInputSubscription = ever(_checkInsLumpedInput, (value) {
       final userId = value.userId;
       final listingId = value.listingId;
 
@@ -65,6 +66,7 @@ final Rx<CheckInsLumpedInputData> _checkInsLumpedInput = CheckInsLumpedInputData
   void dispose() {
     try {
       _checkedInVisitors.close();
+      _checkinsLumpedInputSubscription?.dispose();
     } catch(e) {
       _logger.d('Error on dispose streams', e);
     }

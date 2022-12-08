@@ -106,9 +106,10 @@ class CheckinController extends GetxController {
         _checkInState.value = s.State<bool>(loading: true);
         final isCheckedIn = _isCheckedInUseCase.execute(listerId, visitorId, listingId);
 
-        final mappedCheckin = isCheckedIn.map((event) => s.State<bool>(content: event));
+        final isCheckedInState = isCheckedIn.map((event) => s.State<bool>(content: event));
+        isCheckedInState.handleError((onError) => _checkInState.value = s.State<bool>(error: onError));
 
-        _checkInState.bindStream(mappedCheckin.handleError((onError) => _checkInState.value = s.State<bool>(error: onError)));
+        _checkInState.bindStream(isCheckedInState);
       }
     } catch (e) {
       _checkInState.value = s.State<bool>(error: Exception("$e"));
@@ -183,9 +184,9 @@ class CheckinController extends GetxController {
     try {
       _getVisitorState.value = s.State(loading: true);
       final visitor = _getVisitorUseCase.execute(_getUserId().value!);
-      final mappedVisitor = visitor.map((event) => s.State(content: event));
-
-      _getVisitorState.bindStream(mappedVisitor.handleError((onError) => _getVisitorState.value = s.State(error: onError)));
+      final visitorState = visitor.map((event) => s.State(content: event));
+      visitorState.handleError((onError) => _getVisitorState.value = s.State(error: onError));
+      _getVisitorState.bindStream(visitorState);
     } catch (e) {
       _getVisitorState.value = s.State(error: Exception("$e"));
     }

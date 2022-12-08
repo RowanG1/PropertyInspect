@@ -37,13 +37,14 @@ class ListingsController extends GetxController {
     try {
       _propertiesState.value = s.State<List<Listing>>(loading: true);
       final propertiesStream = _getListingsUseCase.execute(userId);
-      final Stream<s.State<List<Listing>>> mappedPropertiesStream = propertiesStream.map<s.State<List<Listing>>>((event) {
+      final Stream<s.State<List<Listing>>> propertiesState = propertiesStream.map<s.State<List<Listing>>>((event) {
         return s.State<List<Listing>>(content: event);
       });
-
-      _propertiesState.bindStream(mappedPropertiesStream.handleError((onError) {
+      propertiesState.handleError((onError) {
         _propertiesState.value = s.State<List<Listing>>(error: onError);
-      }));
+      });
+
+      _propertiesState.bindStream(propertiesState);
     } catch (e) {
       _propertiesState.value = s.State<List<Listing>>(
           error: Exception("Could not "
